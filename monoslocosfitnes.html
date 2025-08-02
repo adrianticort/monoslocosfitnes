@@ -1,0 +1,1622 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Monoslocosfitnes - Fitness y Nutrición</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --secondary: #10b981;
+      --secondary-dark: #059669;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f8fafc;
+      --gray: #94a3b8;
+      --accent: #f59e0b;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, var(--darker), var(--dark));
+      color: var(--light);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .logo i {
+      color: var(--primary);
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    
+    nav a {
+      color: var(--gray);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    nav a:hover, nav a.active {
+      color: var(--light);
+    }
+    
+    /* Estilos para la página de Inicio */
+    .hero {
+      text-align: center;
+      padding: 4rem 0;
+    }
+    
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .objetivo {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: rgba(30, 41, 59, 0.5);
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .objetivo strong {
+      font-weight: 600;
+    }
+    
+    .objetivo span {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    
+    .card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border-radius: 16px;
+      padding: 2rem;
+      text-decoration: none;
+      color: var(--light);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+    }
+    
+    .card.ejercicios::before {
+      background: var(--primary);
+    }
+    
+    .card.desayunos::before {
+      background: var(--secondary);
+    }
+    
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+    
+    .card.ejercicios .card-icon {
+      background-color: rgba(59, 130, 246, 0.2);
+      color: var(--primary);
+    }
+    
+    .card.desayunos .card-icon {
+      background-color: rgba(16, 185, 129, 0.2);
+      color: var(--secondary);
+    }
+    
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .card p {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+    
+    .card-badge {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+    
+    .card.ejercicios .card-badge {
+      background-color: rgba(59, 130, 246, 0.2);
+      color: var(--primary);
+    }
+    
+    .card.desayunos .card-badge {
+      background-color: rgba(16, 185, 129, 0.2);
+      color: var(--secondary);
+    }
+    
+    .motivacion {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border-radius: 16px;
+      padding: 2rem;
+      margin-top: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+    
+    .motivacion h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    
+    .motivacion p {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .motivacion small {
+      display: block;
+      color: var(--gray);
+      font-style: italic;
+    }
+    
+    /* Estilos para la página de Ejercicios */
+    .page-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .page-header h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .page-header p {
+      color: var(--gray);
+    }
+    
+    .calendar-container {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border-radius: 16px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .calendar-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .calendar-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+    
+    .calendar-nav-btn {
+      background: rgba(59, 130, 246, 0.2);
+      color: var(--primary);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .calendar-nav-btn:hover {
+      background: rgba(59, 130, 246, 0.4);
+    }
+    
+    .calendar-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 600;
+      color: var(--gray);
+    }
+    
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0.5rem;
+    }
+    
+    .day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(30, 41, 59, 0.5);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .day:hover {
+      background-color: rgba(59, 130, 246, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .day.empty {
+      background-color: transparent;
+      border: none;
+      cursor: default;
+    }
+    
+    .day.weekend {
+      background-color: rgba(245, 158, 11, 0.1);
+      color: var(--accent);
+    }
+    
+    .day.today {
+      background-color: var(--primary);
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    
+    .day.completed::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      width: 6px;
+      height: 6px;
+      background-color: var(--secondary);
+      border-radius: 50%;
+    }
+    
+    .rutina-container {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .rutina-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .rutina-header h2 {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .rutina-date {
+      background-color: rgba(59, 130, 246, 0.2);
+      color: var(--primary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    .ejercicio {
+      background-color: rgba(30, 41, 59, 0.5);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .ejercicio-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      cursor: pointer;
+    }
+    
+    .ejercicio-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    
+    .ejercicio-sets {
+      background-color: rgba(59, 130, 246, 0.2);
+      color: var(--primary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    .ejercicio-detalle {
+      display: none;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeIn 0.3s ease-out;
+    }
+    
+    .ejercicio-detalle.active {
+      display: block;
+    }
+    
+    .ejercicio-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .ejercicio-muscles, .ejercicio-tips {
+      background-color: rgba(15, 23, 42, 0.5);
+      padding: 1rem;
+      border-radius: 8px;
+    }
+    
+    .ejercicio-muscles h4, .ejercicio-tips h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: var(--gray);
+    }
+    
+    .ejercicio-muscles ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    
+    .ejercicio-muscles li {
+      background-color: rgba(59, 130, 246, 0.2);
+      color: var(--primary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+    }
+    
+    .ejercicio-media {
+      margin-top: 1rem;
+    }
+    
+    .ejercicio-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    .video-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .video-btn:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .btn-volver {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+      margin-top: 2rem;
+      transition: background 0.3s;
+    }
+    
+    .btn-volver:hover {
+      background-color: var(--primary-dark);
+    }
+    
+    .objetivo-rutina {
+      background-color: rgba(16, 185, 129, 0.1);
+      color: var(--secondary);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid var(--secondary);
+    }
+    
+    /* Estilos para la página de Nutrición */
+    .days-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .day-btn {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .day-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .day-btn.active {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(15, 23, 42, 0.9));
+      border-color: var(--secondary);
+    }
+    
+    .day-btn i {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--secondary);
+    }
+    
+    .day-btn h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+    
+    .day-btn p {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+    
+    .desayuno-container {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border-radius: 16px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .desayuno-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .desayuno-header h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--secondary);
+    }
+    
+    .desayuno-calorias {
+      display: inline-block;
+      background-color: rgba(16, 185, 129, 0.2);
+      color: var(--secondary);
+      padding: 0.3rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    .desayuno-content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .desayuno-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .desayuno-section {
+      background-color: rgba(15, 23, 42, 0.5);
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+    
+    .desayuno-section h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .desayuno-section h3 i {
+      font-size: 1rem;
+    }
+    
+    .desayuno-section ul, .desayuno-section ol {
+      padding-left: 1.5rem;
+    }
+    
+    .desayuno-section li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .nutrition-facts {
+      background-color: rgba(15, 23, 42, 0.5);
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+    
+    .nutrition-facts h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .nutrition-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      text-align: center;
+    }
+    
+    .nutrition-item {
+      background-color: rgba(16, 185, 129, 0.1);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    
+    .nutrition-value {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--secondary);
+      display: block;
+    }
+    
+    .nutrition-label {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    
+    .btn-volver-nutricion {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+      margin-top: 2rem;
+      transition: background 0.3s;
+    }
+    
+    .btn-volver-nutricion:hover {
+      background-color: var(--secondary-dark);
+    }
+    
+    /* Animaciones y responsive */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      
+      nav ul {
+        gap: 1rem;
+      }
+      
+      .hero {
+        padding: 2rem 0;
+      }
+      
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .days-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .container {
+        padding: 1rem;
+      }
+      
+      .desayuno-container, .rutina-container {
+        padding: 1rem;
+      }
+      
+      .nutrition-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .calendar-header, .calendar {
+        grid-template-columns: repeat(7, 1fr);
+      }
+      
+      .ejercicio-info {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <i class="fas fa-dumbbell"></i>
+      <span>Monoslocosfitnes</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#" class="active" id="nav-inicio">Inicio</a></li>
+        <li><a href="#" id="nav-ejercicios">Ejercicios</a></li>
+        <li><a href="#" id="nav-nutricion">Nutrición</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Sección de Inicio -->
+    <div id="inicio">
+      <div class="hero">
+        <h1>¡Hola, Adrián!</h1>
+        <p class="objetivo">
+          <i class="fas fa-bullseye"></i>
+          Primer objetivo: <strong>15 de septiembre</strong>. Faltan <span id="contador">calculando...</span> días
+        </p>
+      </div>
+
+      <div class="cards">
+        <a class="card ejercicios" href="#" id="card-ejercicios">
+          <div class="card-icon">
+            <i class="fas fa-running"></i>
+          </div>
+          <h2>Rutinas de Ejercicio</h2>
+          <p>Plan semanal estructurado para mejorar tu fuerza, movilidad y habilidades calisténicas.</p>
+          <span class="card-badge">5 días/semana</span>
+        </a>
+        <a class="card desayunos" href="#" id="card-nutricion">
+          <div class="card-icon">
+            <i class="fas fa-utensils"></i>
+          </div>
+          <h2>Plan Nutricional</h2>
+          <p>Desayunos saludables, energéticos y altos en proteína para complementar tu entrenamiento.</p>
+          <span class="card-badge">600-1000 kcal</span>
+        </a>
+      </div>
+
+      <div class="motivacion">
+        <h2>¡Tú puedes lograrlo!</h2>
+        <p>Cada entrenamiento te acerca más a tu meta. La consistencia es la clave del éxito. 💪</p>
+        <small>"La disciplina es el puente entre tus metas y tus logros" — Jim Rohn</small>
+      </div>
+    </div>
+
+    <!-- Sección de Ejercicios -->
+    <div id="ejercicios" style="display: none;">
+      <div class="page-header">
+        <h1>Calendario de Entrenamiento</h1>
+        <p>Sigue tu progreso y completa las rutinas diarias</p>
+      </div>
+
+      <div class="calendar-container">
+        <div class="calendar-nav">
+          <button class="calendar-nav-btn" id="prev-month">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="calendar-title" id="current-month-year"></div>
+          <button class="calendar-nav-btn" id="next-month">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+        
+        <div class="calendar-header">
+          <div>Lun</div>
+          <div>Mar</div>
+          <div>Mié</div>
+          <div>Jue</div>
+          <div>Vie</div>
+          <div>Sáb</div>
+          <div>Dom</div>
+        </div>
+        
+        <div class="calendar" id="calendar"></div>
+      </div>
+
+      <div class="rutina-container" id="rutina">
+        <div class="rutina-header">
+          <h2>Selecciona un día para ver la rutina</h2>
+        </div>
+        <p>Haz clic en cualquier día del calendario para visualizar los ejercicios correspondientes.</p>
+      </div>
+
+      <button class="btn-volver" id="volver-ejercicios">
+        <i class="fas fa-arrow-left"></i>
+        Volver al inicio
+      </button>
+    </div>
+
+    <!-- Sección de Nutrición -->
+    <div id="nutricion" style="display: none;">
+      <div class="page-header">
+        <h1>Plan de Desayunos</h1>
+        <p>Desayunos saludables para complementar tu entrenamiento</p>
+      </div>
+
+      <div class="days-container">
+        <div class="day-btn active" data-dia="L">
+          <i class="fas fa-pancakes"></i>
+          <h3>Lunes</h3>
+          <p>Pancakes</p>
+        </div>
+        <div class="day-btn" data-dia="M">
+          <i class="fas fa-blender"></i>
+          <h3>Martes</h3>
+          <p>Batido</p>
+        </div>
+        <div class="day-btn" data-dia="X">
+          <i class="fas fa-bread-slice"></i>
+          <h3>Miércoles</h3>
+          <p>Tostadas</p>
+        </div>
+        <div class="day-btn" data-dia="J">
+          <i class="fas fa-egg"></i>
+          <h3>Jueves</h3>
+          <p>Tortilla</p>
+        </div>
+        <div class="day-btn" data-dia="V">
+          <i class="fas fa-bowl-food"></i>
+          <h3>Viernes</h3>
+          <p>Yogur</p>
+        </div>
+      </div>
+
+      <div class="desayuno-container" id="desayuno">
+        <div class="desayuno-header">
+          <h2>Lunes: Pancakes estilo stracciatella</h2>
+          <span class="desayuno-calorias">600-700 kcal</span>
+        </div>
+        
+        <div class="desayuno-content">
+          <div class="desayuno-info">
+            <div class="desayuno-section">
+              <h3><i class="fas fa-list"></i> Ingredientes</h3>
+              <ul>
+                <li>1 huevo</li>
+                <li>25g de azúcar (1/8 de taza)</li>
+                <li>1 pizca de sal</li>
+                <li>1/2 cdta de esencia de vainilla</li>
+                <li>35 ml de leche (1/8 de taza aprox)</li>
+                <li>1/2 yogur griego (62.5g)</li>
+                <li>100g de harina de trigo (1/2 taza + 1/3)</li>
+                <li>1/2 cda de levadura química (4g)</li>
+                <li>un poco de aceite</li>
+                <li>complementar al gusto</li>
+              </ul>
+            </div>
+            
+            <div class="desayuno-section">
+              <h3><i class="fas fa-list-ol"></i> Preparación</h3>
+              <ol>
+                <li>Mezcla el huevo con el azúcar, sal y esencia de vainilla hasta integrar.</li>
+                <li>Añade la leche y el yogur griego, mezcla bien.</li>
+                <li>Incorpora la harina y la levadura, mezcla hasta obtener una masa homogénea.</li>
+                <li>Deja reposar la masa 5 minutos.</li>
+                <li>Cocina en sartén antiadherente con un poco de aceite, vuelta y vuelta.</li>
+                <li>Sirve con tus toppings favoritos.</li>
+              </ol>
+            </div>
+            
+            <div class="nutrition-facts">
+              <h3><i class="fas fa-fire"></i> Información Nutricional</h3>
+              <div class="nutrition-grid">
+                <div class="nutrition-item">
+                  <span class="nutrition-value">650</span>
+                  <span class="nutrition-label">kcal</span>
+                </div>
+                <div class="nutrition-item">
+                  <span class="nutrition-value">25g</span>
+                  <span class="nutrition-label">Proteínas</span>
+                </div>
+                <div class="nutrition-item">
+                  <span class="nutrition-value">85g</span>
+                  <span class="nutrition-label">Carbohidratos</span>
+                </div>
+                <div class="nutrition-item">
+                  <span class="nutrition-value">20g</span>
+                  <span class="nutrition-label">Grasas</span>
+                </div>
+                <div class="nutrition-item">
+                  <span class="nutrition-value">8g</span>
+                  <span class="nutrition-label">Fibra</span>
+                </div>
+                <div class="nutrition-item">
+                  <span class="nutrition-value">30g</span>
+                  <span class="nutrition-label">Azúcares</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-volver-nutricion" id="volver-nutricion">
+        <i class="fas fa-arrow-left"></i>
+        Volver al inicio
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Navegación entre secciones
+    document.getElementById('nav-inicio').addEventListener('click', function(e) {
+      e.preventDefault();
+      mostrarSeccion('inicio');
+      actualizarNav('inicio');
+    });
+    
+    document.getElementById('nav-ejercicios').addEventListener('click', function(e) {
+      e.preventDefault();
+      mostrarSeccion('ejercicios');
+      actualizarNav('ejercicios');
+    });
+    
+    document.getElementById('nav-nutricion').addEventListener('click', function(e) {
+      e.preventDefault();
+      mostrarSeccion('nutricion');
+      actualizarNav('nutricion');
+    });
+    
+    document.getElementById('card-ejercicios').addEventListener('click', function(e) {
+      e.preventDefault();
+      mostrarSeccion('ejercicios');
+      actualizarNav('ejercicios');
+    });
+    
+    document.getElementById('card-nutricion').addEventListener('click', function(e) {
+      e.preventDefault();
+      mostrarSeccion('nutricion');
+      actualizarNav('nutricion');
+    });
+    
+    document.getElementById('volver-ejercicios').addEventListener('click', function() {
+      mostrarSeccion('inicio');
+      actualizarNav('inicio');
+    });
+    
+    document.getElementById('volver-nutricion').addEventListener('click', function() {
+      mostrarSeccion('inicio');
+      actualizarNav('inicio');
+    });
+    
+    function mostrarSeccion(seccion) {
+      document.getElementById('inicio').style.display = 'none';
+      document.getElementById('ejercicios').style.display = 'none';
+      document.getElementById('nutricion').style.display = 'none';
+      
+      document.getElementById(seccion).style.display = 'block';
+      
+      // Si es la sección de ejercicios, inicializar el calendario
+      if (seccion === 'ejercicios') {
+        inicializarCalendario();
+      }
+      
+      // Si es la sección de nutrición, inicializar los desayunos
+      if (seccion === 'nutricion') {
+        inicializarDesayunos();
+      }
+    }
+    
+    function actualizarNav(seccion) {
+      document.querySelectorAll('nav a').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      document.getElementById(`nav-${seccion}`).classList.add('active');
+    }
+    
+    // Contador de días para el objetivo
+    function calcularDiasRestantes() {
+      const hoy = new Date();
+      const objetivo = new Date(hoy.getFullYear(), 8, 15);
+      const diferencia = objetivo - hoy;
+      const dias = Math.ceil(diferencia / (1000 * 60 * 60 * 24));
+      document.getElementById("contador").textContent = dias > 0 ? dias : "¡Meta alcanzada!";
+    }
+    calcularDiasRestantes();
+    
+    // Actualizar cada día
+    setInterval(calcularDiasRestantes, 86400000);
+    
+    // Lógica para la sección de Ejercicios
+    function inicializarCalendario() {
+      // Datos de las rutinas
+      const rutinas = {
+        1: { // Lunes - Pecho y core
+          title: "Lunes – Pecho y Core",
+          objetivo: "Desarrollar fuerza en el pecho, hombros y core para mejorar la estabilidad y postura.",
+          ejercicios: [
+            {
+              nombre: "Flexiones estándar",
+              sets: "3x8-12",
+              musculos: ["Pectorales", "Tríceps", "Deltoides frontales"],
+              consejos: "Cuerpo recto, manos a la altura de los hombros. Bajar el pecho hasta casi tocar el suelo y subir estirando brazos.",
+              imagen: "img/pushups.jpg"
+            },
+            {
+              nombre: "Flexiones con protracción escapular",
+              sets: "3x8-10",
+              musculos: ["Serrato anterior", "Trapecios", "Pectorales"],
+              consejos: "Igual posición que la flexión normal, pero al subir empuja el suelo para separar los omóplatos (escápulas).",
+              imagen: "img/protraction-pushups.jpg"
+            },
+            {
+              nombre: "Lean Planche Hold",
+              sets: "3x10-15 seg",
+              musculos: ["Hombros", "Serrato anterior", "Core"],
+              consejos: "En posición de flexión, lleva caderas arriba para que tu cuerpo quede casi horizontal. Mantén escápulas protraídas, abdomen y glúteos apretados.",
+              imagen: "img/planche-lean.jpg"
+            },
+            {
+              nombre: "Plancha frontal",
+              sets: "3x30-45 seg",
+              musculos: ["Recto abdominal", "Oblicuos", "Transverso"],
+              consejos: "En apoyo de antebrazos y puntas de pies, cuerpo recto. Aprieta abdomen y glúteos. Refuerza el core para la estabilidad general del cuerpo.",
+              imagen: "img/plank.jpg"
+            }
+          ]
+        },
+        2: { // Martes - Piernas y espalda baja
+          title: "Martes – Piernas y Espalda Baja (Postura)",
+          objetivo: "Fortalecer piernas y espalda baja para mejorar postura y estabilidad.",
+          ejercicios: [
+            {
+              nombre: "Sentadillas sin peso",
+              sets: "4x10-12",
+              musculos: ["Cuádriceps", "Glúteos", "Core"],
+              consejos: "Pies a la altura de hombros, bajar glúteos hacia atrás/bajo hasta que muslos queden paralelos.",
+              imagen: "img/squats.jpg"
+            },
+            {
+              nombre: "Sentadilla búlgara",
+              sets: "3x8 por pierna",
+              musculos: ["Cuádriceps", "Glúteos", "Isquiotibiales"],
+              consejos: "Poner un pie adelante y otro atrás apoyado en una silla baja. Bajar controlado con la pierna delantera.",
+              imagen: "img/bulgarian-split.jpg"
+            },
+            {
+              nombre: "Puente de glúteos",
+              sets: "3x12",
+              musculos: ["Glúteos", "Espalda baja", "Isquiotibiales"],
+              consejos: "Acostado boca arriba, rodillas flexionadas, empuja caderas hacia arriba apretando glúteos.",
+              imagen: "img/glute-bridge.jpg"
+            },
+            {
+              nombre: "Prone Cobra",
+              sets: "3x20-30 seg",
+              musculos: ["Trapecios", "Romboides", "Erectores espinales"],
+              consejos: "Acostado boca abajo, manos al costado, levanta el pecho contrayendo glúteos y rotando pulgares hacia arriba.",
+              imagen: "img/prone-cobra.jpg"
+            },
+            {
+              nombre: "Puente invertido (Tabletop)",
+              sets: "3x15 seg",
+              musculos: ["Hombros", "Espalda baja", "Glúteos"],
+              consejos: "Sentado con manos atrás apoyadas, elevar caderas empujando con hombros y glúteos.",
+              imagen: "img/tabletop-bridge.jpg"
+            }
+          ]
+        },
+        3: { // Miércoles - Hombros avanzados y planche
+          title: "Miércoles – Hombros Avanzados y Planche",
+          objetivo: "Desarrollar fuerza en hombros y progresar hacia la planche.",
+          ejercicios: [
+            {
+              nombre: "Flexiones Pike (verticales)",
+              sets: "3x8-10",
+              musculos: ["Hombros", "Trapecios superiores", "Core"],
+              consejos: "En posición de 'V' invertida, bajar la cabeza hacia el suelo flexionando codos, luego subir.",
+              imagen: "img/pike-pushups.jpg"
+            },
+            {
+              nombre: "Flexiones Lean Planche",
+              sets: "3x5-8",
+              musculos: ["Hombros", "Serrato anterior", "Pectorales"],
+              consejos: "Manos más cerca de la cintura que de los pies, torso avanzado hacia adelante. Bajar y subir controlando con escápulas protraídas.",
+              imagen: "img/lean-planche-pushups.jpg"
+            },
+            {
+              nombre: "Handstand asistido (contra pared)",
+              sets: "3x20-30 seg",
+              musculos: ["Hombros", "Trapecios", "Core"],
+              consejos: "Apoya pies en pared, cuerpo vertical. Buscar mantener hombros firmes y core activo.",
+              imagen: "img/wall-handstand.jpg"
+            },
+            {
+              nombre: "Hollow Body Hold",
+              sets: "3x20-30 seg",
+              musculos: ["Recto abdominal", "Oblicuos", "Flexores de cadera"],
+              consejos: "Acostado de espalda, elevar hombros y piernas manteniendo lumbares al suelo. Apretar abdomen.",
+              imagen: "img/hollow-body.jpg"
+            }
+          ]
+        },
+        4: { // Jueves - Espalda y postura
+          title: "Jueves – Espalda y Postura",
+          objetivo: "Fortalecer espalda y mejorar la postura contrarrestando hombros adelantados.",
+          ejercicios: [
+            {
+              nombre: "Retracción escapular en suelo",
+              sets: "3x10-12",
+              musculos: ["Trapecios medios", "Romboides"],
+              consejos: "Acostado boca arriba, brazos abiertos en cruz, empuja el suelo con la parte posterior de los brazos.",
+              imagen: "img/floor-scapular-retraction.jpg"
+            },
+            {
+              nombre: "Elevaciones 'Y' prono",
+              sets: "3x10-12",
+              musculos: ["Trapecio medio", "Romboides", "Deltoides posteriores"],
+              consejos: "Acostado boca abajo con brazos en 'Y', eleva los brazos contrayendo omóplatos juntos.",
+              imagen: "img/prone-y-raise.jpg"
+            },
+            {
+              nombre: "Superman",
+              sets: "3x12-15",
+              musculos: ["Erectores espinales", "Glúteos", "Hombros posteriores"],
+              consejos: "Boca abajo, levanta simultáneamente brazos/pecho y piernas unos centímetros.",
+              imagen: "img/superman.jpg"
+            },
+            {
+              nombre: "Prone Scapular Squeezes",
+              sets: "3x12-15",
+              musculos: ["Trapecio medio", "Romboides"],
+              consejos: "Boca abajo con brazos extendidos, junta fuerte omóplatos manteniendo brazos elevados 2-3 seg.",
+              imagen: "img/scapular-squeeze.jpg"
+            }
+          ]
+        },
+        5: { // Viernes - Full body y movilidad
+          title: "Viernes – Full Body y Movilidad",
+          objetivo: "Trabajo completo de cuerpo con énfasis en movilidad y control corporal.",
+          ejercicios: [
+            {
+              nombre: "Sentadilla pistol asistida",
+              sets: "3x5 por pierna",
+              musculos: ["Cuádriceps", "Glúteos", "Estabilidad"],
+              consejos: "Baja con una pierna intentando llegar lo más abajo posible, usando poco apoyo con la otra.",
+              imagen: "img/pistol-squat.jpg"
+            },
+            {
+              nombre: "Flexiones pliométricas (con palmadas)",
+              sets: "3x6-8",
+              musculos: ["Pectorales", "Tríceps", "Potencia"],
+              consejos: "Flexión explosiva: al subir, impulsa el pecho del suelo con tal fuerza que aplaudes en el aire.",
+              imagen: "img/plyo-pushups.jpg"
+            },
+            {
+              nombre: "Hold de Planche Lean avanzado",
+              sets: "2x8-10 seg",
+              musculos: ["Hombros", "Serrato anterior", "Core"],
+              consejos: "Mayor inclinación que el básico, con pies más adelante. Enfatiza posición horizontal.",
+              imagen: "img/advanced-planche-lean.jpg"
+            },
+            {
+              nombre: "Back Bridge (puente completo)",
+              sets: "3x6-8",
+              musculos: ["Espalda baja", "Hombros", "Flexibilidad"],
+              consejos: "Eleva caderas y espalda alta todo lo posible. Abre hombros y fortalece lumbar.",
+              imagen: "img/back-bridge.jpg"
+            },
+            {
+              nombre: "Plank lateral y frontal",
+              sets: "2x30 seg cada",
+              musculos: ["Oblicuos", "Recto abdominal", "Hombros"],
+              consejos: "Alternar plancha frontal y de costado para reforzar el core por completo.",
+              imagen: "img/side-plank.jpg"
+            }
+          ]
+        },
+        6: { // Sábado
+          title: "Sábado: Descanso activo",
+          ejercicios: [],
+          descanso: "Caminata, movilidad o estiramientos suaves. Recuperación activa para prepararte para la próxima semana."
+        },
+        0: { // Domingo
+          title: "Domingo: Descanso total",
+          ejercicios: [],
+          descanso: "Recarga energía. Mañana se entrena fuerte 💪 Descansa y permite que tu cuerpo se recupere completamente."
+        }
+      };
+
+      // Generar calendario
+      const calendar = document.getElementById('calendar');
+      const rutinaDiv = document.getElementById('rutina');
+      const currentMonthYear = document.getElementById('current-month-year');
+      const prevMonthBtn = document.getElementById('prev-month');
+      const nextMonthBtn = document.getElementById('next-month');
+      
+      const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+      
+      let currentDate = new Date();
+      let currentMonth = currentDate.getMonth();
+      let currentYear = currentDate.getFullYear();
+      
+      function updateCalendarTitle() {
+        currentMonthYear.textContent = `${meses[currentMonth]} ${currentYear}`;
+      }
+      
+      function generarCalendario(mes, año) {
+        calendar.innerHTML = '';
+        
+        const primerDia = new Date(año, mes, 1).getDay();
+        const diasMes = new Date(año, mes + 1, 0).getDate();
+        const offset = primerDia === 0 ? 6 : primerDia - 1;
+        
+        // Días vacíos al inicio
+        for (let i = 0; i < offset; i++) {
+          const div = document.createElement('div');
+          div.classList.add('day', 'empty');
+          calendar.appendChild(div);
+        }
+        
+        // Días del mes
+        for (let dia = 1; dia <= diasMes; dia++) {
+          const fecha = new Date(año, mes, dia);
+          const diaSemana = fecha.getDay();
+          const div = document.createElement('div');
+          div.classList.add('day');
+          
+          if (diaSemana === 0 || diaSemana === 6) {
+            div.classList.add('weekend');
+          }
+          
+          // Marcar día actual
+          const hoy = new Date();
+          if (dia === hoy.getDate() && mes === hoy.getMonth() && año === hoy.getFullYear()) {
+            div.classList.add('today');
+          }
+          
+          // Marcar días completados (ejemplo)
+          if (dia < hoy.getDate() && mes === hoy.getMonth() && año === hoy.getFullYear()) {
+            div.classList.add('completed');
+          }
+          
+          div.textContent = dia;
+          
+          div.addEventListener('click', () => {
+            mostrarRutina(dia, mes, año, diaSemana);
+          });
+          
+          calendar.appendChild(div);
+        }
+      }
+      
+      function mostrarRutina(dia, mes, año, diaSemana) {
+        const rutina = rutinas[diaSemana];
+        let html = `
+          <div class="rutina-header">
+            <h2>${rutina.title}</h2>
+            <span class="rutina-date">${dia}/${mes + 1}/${año}</span>
+          </div>
+        `;
+        
+        if (rutina.objetivo) {
+          html += `<div class="objetivo-rutina"><strong>Objetivo:</strong> ${rutina.objetivo}</div>`;
+        }
+        
+        if (rutina.ejercicios.length > 0) {
+          rutina.ejercicios.forEach(ejercicio => {
+            html += `
+              <div class="ejercicio">
+                <div class="ejercicio-header" onclick="toggleDetalle(this)">
+                  <div class="ejercicio-title">${ejercicio.nombre}</div>
+                  <div class="ejercicio-sets">${ejercicio.sets}</div>
+                </div>
+                <div class="ejercicio-detalle">
+                  <div class="ejercicio-info">
+                    <div class="ejercicio-muscles">
+                      <h4>Músculos trabajados</h4>
+                      <ul>
+                        ${ejercicio.musculos.map(m => `<li>${m}</li>`).join('')}
+                      </ul>
+                    </div>
+                    <div class="ejercicio-tips">
+                      <h4>Consejos</h4>
+                      <p>${ejercicio.consejos}</p>
+                    </div>
+                  </div>
+                  <div class="ejercicio-media">
+                    <img class="ejercicio-img" src="${ejercicio.imagen}" alt="${ejercicio.nombre}">
+                    <button class="video-btn">
+                      <i class="fas fa-play"></i> Ver demostración
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+          });
+        } else {
+          html += `
+            <div class="ejercicio">
+              <p>${rutina.descanso}</p>
+            </div>
+          `;
+        }
+        
+        rutinaDiv.innerHTML = html;
+        rutinaDiv.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      // Navegación entre meses
+      prevMonthBtn.addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        updateCalendarTitle();
+        generarCalendario(currentMonth, currentYear);
+      });
+      
+      nextMonthBtn.addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        }
+        updateCalendarTitle();
+        generarCalendario(currentMonth, currentYear);
+      });
+      
+      // Inicializar
+      updateCalendarTitle();
+      generarCalendario(currentMonth, currentYear);
+      
+      // Simular progreso (en una app real esto vendría de localStorage)
+      setTimeout(() => {
+        const days = document.querySelectorAll('.day:not(.empty)');
+        days.forEach(day => {
+          if (parseInt(day.textContent) < new Date().getDate() && 
+              currentMonth === new Date().getMonth() && 
+              currentYear === new Date().getFullYear() && 
+              Math.random() > 0.3) {
+            day.classList.add('completed');
+          }
+        });
+      }, 500);
+    }
+    
+    // Lógica para la sección de Nutrición
+    function inicializarDesayunos() {
+      // Datos de los desayunos
+      const desayunos = {
+        L: {
+          nombre: "Pancakes estilo stracciatella",
+          calorias: "600-700 kcal",
+          ingredientes: [
+            "1 huevo",
+            "25g de azúcar (1/8 de taza)",
+            "1 pizca de sal",
+            "1/2 cdta de esencia de vainilla",
+            "35 ml de leche (1/8 de taza aprox)",
+            "1/2 yogur griego (62.5g)",
+            "100g de harina de trigo (1/2 taza + 1/3)",
+            "1/2 cda de levadura química (4g)",
+            "un poco de aceite",
+            "complementar al gusto"
+          ],
+          preparacion: [
+            "Mezcla el huevo con el azúcar, sal y esencia de vainilla hasta integrar.",
+            "Añade la leche y el yogur griego, mezcla bien.",
+            "Incorpora la harina y la levadura, mezcla hasta obtener una masa homogénea.",
+            "Deja reposar la masa 5 minutos.",
+            "Cocina en sartén antiadherente con un poco de aceite, vuelta y vuelta.",
+            "Sirve con tus toppings favoritos."
+          ],
+          nutricion: {
+            kcal: 650,
+            proteinas: 25,
+            carbohidratos: 85,
+            grasas: 20,
+            fibra: 8,
+            azucares: 30
+          }
+        },
+        M: {
+          nombre: "Batido energético estilo stracciatella",
+          calorias: "900-1000 kcal",
+          ingredientes: [
+            "500 ml de leche entera",
+            "1 plátano",
+            "100 g de avena",
+            "30 g de nueces",
+            "2 cucharadas de crema de cacahuete",
+            "1 cucharada de ColaCao",
+            "1 yogur griego de stracciatella"
+          ],
+          preparacion: [
+            "Coloca todos los ingredientes en la licuadora.",
+            "Licúa hasta obtener una mezcla suave y homogénea.",
+            "Sirve frío. Puedes acompañarlo con una tostada para sumar aún más calorías."
+          ],
+          nutricion: {
+            kcal: 950,
+            proteinas: 35,
+            carbohidratos: 120,
+            grasas: 35,
+            fibra: 12,
+            azucares: 45
+          }
+        },
+        X: {
+          nombre: "Tostadas con aguacate, huevo y tomate",
+          calorias: "600-700 kcal",
+          ingredientes: [
+            "2 rebanadas de pan integral o de centeno",
+            "1 aguacate maduro",
+            "2 huevos",
+            "1 tomate mediano",
+            "Aceite de oliva virgen extra",
+            "Sal y pimienta"
+          ],
+          preparacion: [
+            "Tuesta el pan.",
+            "Fríe o cuece los huevos a tu gusto.",
+            "Tritura el aguacate y úntalo sobre el pan.",
+            "Añade rodajas de tomate y coloca los huevos encima.",
+            "Rocía con aceite de oliva, sal y pimienta."
+          ],
+          nutricion: {
+            kcal: 650,
+            proteinas: 22,
+            carbohidratos: 45,
+            grasas: 40,
+            fibra: 10,
+            azucares: 5
+          }
+        },
+        J: {
+          nombre: "Tortilla francesa con atún y pan con aceite",
+          calorias: "600-650 kcal",
+          ingredientes: [
+            "2-3 huevos",
+            "1 lata de atún en aceite de oliva escurrida",
+            "2 rebanadas de pan integral",
+            "Aceite de oliva virgen extra",
+            "Sal al gusto"
+          ],
+          preparacion: [
+            "Bate los huevos y añade el atún escurrido.",
+            "Cocina en sartén caliente hasta que cuaje.",
+            "Sirve con pan tostado y un chorro de aceite por encima."
+          ],
+          nutricion: {
+            kcal: 625,
+            proteinas: 45,
+            carbohidratos: 35,
+            grasas: 35,
+            fibra: 5,
+            azucares: 2
+          }
+        },
+        V: {
+          nombre: "Yogur natural con granola casera y fruta",
+          calorias: "650-750 kcal",
+          ingredientes: [
+            "1 taza de yogur natural entero o griego",
+            "½ taza de granola casera o sin azúcares añadidos",
+            "1 plátano o un puñado de frutos rojos",
+            "1 cucharada de miel o sirope de agave",
+            "1 cucharada de nueces o almendras picadas"
+          ],
+          preparacion: [
+            "Vierte el yogur en un bol.",
+            "Añade la fruta cortada y la granola.",
+            "Espolvorea los frutos secos.",
+            "Agrega miel al gusto y mezcla bien."
+          ],
+          nutricion: {
+            kcal: 700,
+            proteinas: 25,
+            carbohidratos: 90,
+            grasas: 25,
+            fibra: 8,
+            azucares: 40
+          }
+        }
+      };
+      
+      // Cambiar día activo
+      document.querySelectorAll('.day-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          const dia = this.getAttribute('data-dia');
+          mostrarDesayuno(dia);
+        });
+      });
+      
+      function mostrarDesayuno(dia) {
+        const desayuno = desayunos[dia];
+        const container = document.getElementById('desayuno');
+        
+        container.innerHTML = `
+          <div class="desayuno-header">
+            <h2>${dia === 'L' ? 'Lunes' : dia === 'M' ? 'Martes' : dia === 'X' ? 'Miércoles' : dia === 'J' ? 'Jueves' : 'Viernes'}: ${desayuno.nombre}</h2>
+            <span class="desayuno-calorias">${desayuno.calorias}</span>
+          </div>
+          
+          <div class="desayuno-content">
+            <div class="desayuno-info">
+              <div class="desayuno-section">
+                <h3><i class="fas fa-list"></i> Ingredientes</h3>
+                <ul>
+                  ${desayuno.ingredientes.map(i => `<li>${i}</li>`).join('')}
+                </ul>
+              </div>
+              
+              <div class="desayuno-section">
+                <h3><i class="fas fa-list-ol"></i> Preparación</h3>
+                <ol>
+                  ${desayuno.preparacion.map(p => `<li>${p}</li>`).join('')}
+                </ol>
+              </div>
+              
+              <div class="nutrition-facts">
+                <h3><i class="fas fa-fire"></i> Información Nutricional</h3>
+                <div class="nutrition-grid">
+                  <div class="nutrition-item">
+                    <span class="nutrition-value">${desayuno.nutricion.kcal}</span>
+                    <span class="nutrition-label">kcal</span>
+                  </div>
+                  <div class="nutrition-item">
+                    <span class="nutrition-value">${desayuno.nutricion.proteinas}g</span>
+                    <span class="nutrition-label">Proteínas</span>
+                  </div>
+                  <div class="nutrition-item">
+                    <span class="nutrition-value">${desayuno.nutricion.carbohidratos}g</span>
+                    <span class="nutrition-label">Carbohidratos</span>
+                  </div>
+                  <div class="nutrition-item">
+                    <span class="nutrition-value">${desayuno.nutricion.grasas}g</span>
+                    <span class="nutrition-label">Grasas</span>
+                  </div>
+                  <div class="nutrition-item">
+                    <span class="nutrition-value">${desayuno.nutricion.fibra}g</span>
+                    <span class="nutrition-label">Fibra</span>
+                  </div>
+                  <div class="nutrition-item">
+                    <span class="nutrition-value">${desayuno.nutricion.azucares}g</span>
+                    <span class="nutrition-label">Azúcares</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        container.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    
+    // Hacer toggleDetalle accesible globalmente
+    window.toggleDetalle = function(elemento) {
+      const detalle = elemento.parentElement.querySelector('.ejercicio-detalle');
+      detalle.classList.toggle('active');
+    };
+    
+    // Mostrar la sección de inicio por defecto
+    mostrarSeccion('inicio');
+    actualizarNav('inicio');
+  </script>
+</body>
+</html>
