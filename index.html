@@ -477,30 +477,6 @@
       border-radius: 8px;
       margin-bottom: 1rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      display: none;
-    }
-    
-    .ejercicio-img.active {
-      display: block;
-      animation: fadeIn 0.5s ease-out;
-    }
-    
-    .video-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    
-    .video-btn:hover {
-      background-color: var(--primary-dark);
     }
     
     .btn-volver {
@@ -1102,7 +1078,7 @@
       }
     };
 
-    // Datos de las rutinas
+    // Datos de las rutinas con imágenes reales
     const rutinas = {
       1: { // Lunes - Pecho y core
         title: "Lunes – Pecho y Core",
@@ -1115,7 +1091,8 @@
             "Estiramiento de pecho en puerta: 2x15 segundos",
             "Movilidad escapular: 2x10 (elevación/retracción)",
             "Flexiones dinámicas: 2x10 (media amplitud)"
-          ]
+          ],
+          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/shoulder-rotator-cuff.jpg?w=800&quality=86&strip=all"
         },
         estiramiento: {
           nombre: "Estiramiento de pecho y core",
@@ -1125,32 +1102,37 @@
             "Estiramiento de hombros con toalla: 30 segundos",
             "Estiramiento de gato-vaca: 10 repeticiones",
             "Estiramiento de oblicuos: 20 segundos cada lado"
-          ]
+          ],
+          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/chest-stretch.jpg?w=800&quality=86&strip=all"
         },
         ejercicios: [
           {
             nombre: "Flexiones estándar",
             sets: "3x8-12",
             musculos: ["Pectorales", "Tríceps", "Deltoides frontales"],
-            consejos: "Cuerpo recto, manos a la altura de los hombros. Bajar el pecho hasta casi tocar el suelo y subir estirando brazos."
+            consejos: "Cuerpo recto, manos a la altura de los hombros. Bajar el pecho hasta casi tocar el suelo y subir estirando brazos.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/push-up.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Flexiones con protracción escapular",
             sets: "3x8-10",
             musculos: ["Serrato anterior", "Trapecios", "Pectorales"],
-            consejos: "Igual posición que la flexión normal, pero al subir empuja el suelo para separar los omóplatos (escápulas)."
+            consejos: "Igual posición que la flexión normal, pero al subir empuja el suelo para separar los omóplatos (escápulas).",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/scapular-push-up.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Lean Planche Hold",
             sets: "3x10-15 seg",
             musculos: ["Hombros", "Serrato anterior", "Core"],
-            consejos: "En posición de flexión, lleva caderas arriba para que tu cuerpo quede casi horizontal. Mantén escápulas protraídas, abdomen y glúteos apretados."
+            consejos: "En posición de flexión, lleva caderas arriba para que tu cuerpo quede casi horizontal. Mantén escápulas protraídas, abdomen y glúteos apretados.",
+            imagen: "https://www.calisthenics-education.co.uk/wp-content/uploads/2020/05/lean-planche-1024x683.jpg"
           },
           {
             nombre: "Plancha frontal",
             sets: "3x30-45 seg",
             musculos: ["Recto abdominal", "Oblicuos", "Transverso"],
-            consejos: "En apoyo de antebrazos y puntas de pies, cuerpo recto. Aprieta abdomen y glúteos. Refuerza el core para la estabilidad general del cuerpo."
+            consejos: "En apoyo de antebrazos y puntas de pies, cuerpo recto. Aprieta abdomen y glúteos. Refuerza el core para la estabilidad general del cuerpo.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/plank.jpg?w=800&quality=86&strip=all"
           }
         ]
       },
@@ -1165,7 +1147,8 @@
             "Balanceos de piernas: 2x10 cada pierna",
             "Movilidad de cadera: círculos 10 cada lado",
             "Estiramiento dinámico de isquiotibiales: 2x10"
-          ]
+          ],
+          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/leg-swing.jpg?w=800&quality=86&strip=all"
         },
         estiramiento: {
           nombre: "Estiramiento de piernas y espalda",
@@ -1175,38 +1158,44 @@
             "Estiramiento de isquiotibiales: 30 segundos cada pierna",
             "Estiramiento de espalda baja (rodillas al pecho): 30 segundos",
             "Estiramiento de glúteos: 20 segundos cada lado"
-          ]
+          ],
+          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/quad-stretch.jpg?w=800&quality=86&strip=all"
         },
         ejercicios: [
           {
             nombre: "Sentadillas sin peso",
             sets: "4x10-12",
             musculos: ["Cuádriceps", "Glúteos", "Core"],
-            consejos: "Pies a la altura de hombros, bajar glúteos hacia atrás/bajo hasta que muslos queden paralelos."
+            consejos: "Pies a la altura de hombros, bajar glúteos hacia atrás/bajo hasta que muslos queden paralelos.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/squat.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Sentadilla búlgara",
             sets: "3x8 por pierna",
             musculos: ["Cuádriceps", "Glúteos", "Isquiotibiales"],
-            consejos: "Poner un pie adelante y otro atrás apoyado en una silla baja. Bajar controlado con la pierna delantera."
+            consejos: "Poner un pie adelante y otro atrás apoyado en una silla baja. Bajar controlado con la pierna delantera.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/bulgarian-split-squat.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Puente de glúteos",
             sets: "3x12",
             musculos: ["Glúteos", "Espalda baja", "Isquiotibiales"],
-            consejos: "Acostado boca arriba, rodillas flexionadas, empuja caderas hacia arriba apretando glúteos."
+            consejos: "Acostado boca arriba, rodillas flexionadas, empuja caderas hacia arriba apretando glúteos.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/glute-bridge.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Prone Cobra",
             sets: "3x20-30 seg",
             musculos: ["Trapecios", "Romboides", "Erectores espinales"],
-            consejos: "Acostado boca abajo, manos al costado, levanta el pecho contrayendo glúteos y rotando pulgares hacia arriba."
+            consejos: "Acostado boca abajo, manos al costado, levanta el pecho contrayendo glúteos y rotando pulgares hacia arriba.",
+            imagen: "https://www.yogajournal.com/wp-content/uploads/2019/07/cobra-pose.jpg"
           },
           {
             nombre: "Puente invertido (Tabletop)",
             sets: "3x15 seg",
             musculos: ["Hombros", "Espalda baja", "Glúteos"],
-            consejos: "Sentado con manos atrás apoyadas, elevar caderas empujando con hombros y glúteos."
+            consejos: "Sentado con manos atrás apoyadas, elevar caderas empujando con hombros y glúteos.",
+            imagen: "https://www.yogajournal.com/wp-content/uploads/2019/07/reverse-tabletop-pose.jpg"
           }
         ]
       },
@@ -1221,7 +1210,8 @@
             "Movilidad escapular: 2x10 (elevación/retracción)",
             "Estiramiento dinámico de hombros: 2x10",
             "Plancha dinámica: 2x10 segundos"
-          ]
+          ],
+          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/arm-circles.jpg?w=800&quality=86&strip=all"
         },
         estiramiento: {
           nombre: "Estiramiento de hombros y core",
@@ -1231,32 +1221,37 @@
             "Estiramiento de tríceps: 20 segundos cada brazo",
             "Estiramiento de gato-vaca: 10 repeticiones",
             "Estiramiento de hombros con toalla: 30 segundos"
-          ]
+          ],
+          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/shoulder-stretch.jpg?w=800&quality=86&strip=all"
         },
         ejercicios: [
           {
             nombre: "Flexiones Pike (verticales)",
             sets: "3x8-10",
             musculos: ["Hombros", "Trapecios superiores", "Core"],
-            consejos: "En posición de 'V' invertida, bajar la cabeza hacia el suelo flexionando codos, luego subir."
+            consejos: "En posición de 'V' invertida, bajar la cabeza hacia el suelo flexionando codos, luego subir.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/pike-push-up.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Flexiones Lean Planche",
             sets: "3x5-8",
             musculos: ["Hombros", "Serrato anterior", "Pectorales"],
-            consejos: "Manos más cerca de la cintura que de los pies, torso avanzado hacia adelante. Bajar y subir controlando con escápulas protraídas."
+            consejos: "Manos más cerca de la cintura que de los pies, torso avanzado hacia adelante. Bajar y subir controlando con escápulas protraídas.",
+            imagen: "https://www.calisthenics-education.co.uk/wp-content/uploads/2020/05/lean-planche-1024x683.jpg"
           },
           {
             nombre: "Handstand asistido (contra pared)",
             sets: "3x20-30 seg",
             musculos: ["Hombros", "Trapecios", "Core"],
-            consejos: "Apoya pies en pared, cuerpo vertical. Buscar mantener hombros firmes y core activo."
+            consejos: "Apoya pies en pared, cuerpo vertical. Buscar mantener hombros firmes y core activo.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/handstand.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Hollow Body Hold",
             sets: "3x20-30 seg",
             musculos: ["Recto abdominal", "Oblicuos", "Flexores de cadera"],
-            consejos: "Acostado de espalda, elevar hombros y piernas manteniendo lumbares al suelo. Aprieta abdomen."
+            consejos: "Acostado de espalda, elevar hombros y piernas manteniendo lumbares al suelo. Aprieta abdomen.",
+            imagen: "https://www.gymnasticshq.com/wp-content/uploads/2020/05/hollow-body-hold.jpg"
           }
         ]
       },
@@ -1271,7 +1266,8 @@
             "Círculos de brazos: 2x10 (adelante y atrás)",
             "Movilidad torácica: 2x10 (rotaciones)",
             "Estiramiento dinámico de espalda: 2x10"
-          ]
+          ],
+          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/back-warmup.jpg?w=800&quality=86&strip=all"
         },
         estiramiento: {
           nombre: "Estiramiento de espalda y hombros",
@@ -1281,32 +1277,37 @@
             "Estiramiento de hombros con toalla: 30 segundos",
             "Estiramiento de gato-vaca: 10 repeticiones",
             "Estiramiento de brazos cruzados: 20 segundos cada brazo"
-          ]
+          ],
+          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/back-stretch.jpg?w=800&quality=86&strip=all"
         },
         ejercicios: [
           {
             nombre: "Retracción escapular en suelo",
             sets: "3x10-12",
             musculos: ["Trapecios medios", "Romboides"],
-            consejos: "Acostado boca arriba, brazos abiertos en cruz, empuja el suelo con la parte posterior de los brazos."
+            consejos: "Acostado boca arriba, brazos abiertos en cruz, empuja el suelo con la parte posterior de los brazos.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/scapular-retraction.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Elevaciones 'Y' prono",
             sets: "3x10-12",
             musculos: ["Trapecio medio", "Romboides", "Deltoides posteriores"],
-            consejos: "Acostado boca abajo con brazos en 'Y', eleva los brazos contrayendo omóplatos juntos."
+            consejos: "Acostado boca abajo con brazos en 'Y', eleva los brazos contrayendo omóplatos juntos.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/y-raise.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Superman",
             sets: "3x12-15",
             musculos: ["Erectores espinales", "Glúteos", "Hombros posteriores"],
-            consejos: "Boca abajo, levanta simultáneamente brazos/pecho y piernas unos centímetros."
+            consejos: "Boca abajo, levanta simultáneamente brazos/pecho y piernas unos centímetros.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/superman.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Prone Scapular Squeezes",
             sets: "3x12-15",
             musculos: ["Trapecio medio", "Romboides"],
-            consejos: "Boca abajo con brazos extendidos, junta fuerte omóplatos manteniendo brazos elevados 2-3 seg."
+            consejos: "Boca abajo con brazos extendidos, junta fuerte omóplatos manteniendo brazos elevados 2-3 seg.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/scapular-squeeze.jpg?w=800&quality=86&strip=all"
           }
         ]
       },
@@ -1321,7 +1322,8 @@
             "Sentadillas sin peso: 2x12",
             "Flexiones dinámicas: 2x10",
             "Estiramiento dinámico de isquiotibiales: 2x10"
-          ]
+          ],
+          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/full-body-warmup.jpg?w=800&quality=86&strip=all"
         },
         estiramiento: {
           nombre: "Estiramiento completo",
@@ -1331,38 +1333,44 @@
             "Estiramiento de isquiotibiales: 30 segundos cada pierna",
             "Estiramiento de hombros: 30 segundos cada brazo",
             "Estiramiento de espalda (gato-vaca): 10 repeticiones"
-          ]
+          ],
+          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/full-body-stretch.jpg?w=800&quality=86&strip=all"
         },
         ejercicios: [
           {
             nombre: "Sentadilla pistol asistida",
             sets: "3x5 por pierna",
             musculos: ["Cuádriceps", "Glúteos", "Estabilidad"],
-            consejos: "Baja con una pierna intentando llegar lo más abajo posible, usando poco apoyo con la otra."
+            consejos: "Baja con una pierna intentando llegar lo más abajo posible, usando poco apoyo con la otra.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/pistol-squat.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Flexiones pliométricas (con palmadas)",
             sets: "3x6-8",
             musculos: ["Pectorales", "Tríceps", "Potencia"],
-            consejos: "Flexión explosiva: al subir, impulsa el pecho del suelo con tal fuerza que aplaudes en el aire."
+            consejos: "Flexión explosiva: al subir, impulsa el pecho del suelo con tal fuerza que aplaudes en el aire.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/plyo-push-up.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Hold de Planche Lean avanzado",
             sets: "2x8-10 seg",
             musculos: ["Hombros", "Serrato anterior", "Core"],
-            consejos: "Mayor inclinación que el básico, con pies más adelante. Enfatiza posición horizontal."
+            consejos: "Mayor inclinación que el básico, con pies más adelante. Enfatiza posición horizontal.",
+            imagen: "https://www.calisthenics-education.co.uk/wp-content/uploads/2020/05/planche-lean.jpg"
           },
           {
             nombre: "Back Bridge (puente completo)",
             sets: "3x6-8",
             musculos: ["Espalda baja", "Hombros", "Flexibilidad"],
-            consejos: "Eleva caderas y espalda alta todo lo posible. Abre hombros y fortalece lumbar."
+            consejos: "Eleva caderas y espalda alta todo lo posible. Abre hombros y fortalece lumbar.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/back-bridge.jpg?w=800&quality=86&strip=all"
           },
           {
             nombre: "Plank lateral y frontal",
             sets: "2x30 seg cada",
             musculos: ["Oblicuos", "Recto abdominal", "Hombros"],
-            consejos: "Alternar plancha frontal y de costado para reforzar el core por completo."
+            consejos: "Alternar plancha frontal y de costado para reforzar el core por completo.",
+            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/side-plank.jpg?w=800&quality=86&strip=all"
           }
         ]
       },
@@ -1572,10 +1580,7 @@
                   </ul>
                 </div>
                 <div class="ejercicio-media">
-                  <img class="ejercicio-img" alt="Imagen generada para ${rutina.calentamiento.nombre}" data-prompt="Two black-and-white digital sketches depict a muscular man performing ${rutina.calentamiento.nombre} in two key stages, set against a beige backdrop. The first image shows the starting position, while the second shows the end of the movement. The illustrations emphasize form, body tension, and clear anatomy, with bold outlines and no background distractions — perfect for instructional purposes.">
-                  <button class="video-btn" onclick="mostrarImagen(this)">
-                    <i class="fas fa-play"></i> Ver demostración
-                  </button>
+                  <img class="ejercicio-img" src="${rutina.calentamiento.imagen}" alt="${rutina.calentamiento.nombre}">
                 </div>
               </div>
             </div>
@@ -1604,10 +1609,7 @@
                     </div>
                   </div>
                   <div class="ejercicio-media">
-                    <img class="ejercicio-img" alt="Imagen generada para ${ejercicio.nombre}" data-prompt="Two black-and-white digital sketches depict a muscular man performing ${ejercicio.nombre} in two key stages, set against a beige backdrop. The first image shows the starting position, while the second shows the end of the movement. The illustrations emphasize form, body tension, and clear anatomy, with bold outlines and no background distractions — perfect for instructional purposes.">
-                    <button class="video-btn" onclick="mostrarImagen(this)">
-                      <i class="fas fa-play"></i> Ver demostración
-                    </button>
+                    <img class="ejercicio-img" src="${ejercicio.imagen}" alt="${ejercicio.nombre}">
                   </div>
                 </div>
               </div>
@@ -1639,10 +1641,7 @@
                   </ul>
                 </div>
                 <div class="ejercicio-media">
-                  <img class="ejercicio-img" alt="Imagen generada para ${rutina.estiramiento.nombre}" data-prompt="Two black-and-white digital sketches depict a muscular man performing ${rutina.estiramiento.nombre} in two key stages, set against a beige backdrop. The first image shows the starting position, while the second shows the end of the movement. The illustrations emphasize form, body tension, and clear anatomy, with bold outlines and no background distractions — perfect for instructional purposes.">
-                  <button class="video-btn" onclick="mostrarImagen(this)">
-                    <i class="fas fa-play"></i> Ver demostración
-                  </button>
+                  <img class="ejercicio-img" src="${rutina.estiramiento.imagen}" alt="${rutina.estiramiento.nombre}">
                 </div>
               </div>
             </div>
@@ -1697,20 +1696,6 @@
       const detalle = elemento.parentElement.querySelector('.ejercicio-detalle');
       detalle.classList.toggle('active');
     }
-    
-    function mostrarImagen(boton) {
-      const contenedorMedia = boton.parentElement;
-      const img = contenedorMedia.querySelector('.ejercicio-img');
-      const prompt = img.getAttribute('data-prompt');
-      
-      // Aquí iría la lógica para generar o cargar la imagen basada en el prompt
-      // Por ahora simulamos que se carga una imagen
-      img.src = `https://via.placeholder.com/600x400/333/fff?text=${encodeURIComponent(prompt)}`;
-      img.classList.add('active');
-      
-      // Ocultar el botón después de hacer clic
-      boton.style.display = 'none';
-    }
 
     // Contador de días
     function calcularDiasRestantes() {
@@ -1727,7 +1712,6 @@
 
     // Hacer funciones accesibles globalmente
     window.toggleDetalle = toggleDetalle;
-    window.mostrarImagen = mostrarImagen;
   </script>
 </body>
 </html>
