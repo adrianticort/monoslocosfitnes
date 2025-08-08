@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monoslocosfitnes - Fitness y Nutrición</title>
+  <title>Monoslocos Fitness - Entrenamiento y Nutrición</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -82,7 +82,7 @@
       color: var(--light);
     }
     
-    /* Estilos para la página de Inicio */
+    /* Estilos para la página de inicio */
     .hero {
       text-align: center;
       padding: 4rem 0;
@@ -235,7 +235,7 @@
       font-style: italic;
     }
     
-    /* Estilos para la página de Ejercicios */
+    /* Estilos para la página de ejercicios */
     .page-header {
       text-align: center;
       margin-bottom: 2rem;
@@ -477,6 +477,12 @@
       border-radius: 8px;
       margin-bottom: 1rem;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      display: none;
+    }
+    
+    .ejercicio-img.active {
+      display: block;
+      animation: fadeIn 0.5s ease-out;
     }
     
     .video-btn {
@@ -525,7 +531,17 @@
       border-left: 4px solid var(--secondary);
     }
     
-    /* Estilos para la página de Nutrición */
+    .calentamiento {
+      background-color: rgba(16, 185, 129, 0.1);
+      border-left: 4px solid var(--secondary);
+    }
+    
+    .estiramiento {
+      background-color: rgba(245, 158, 11, 0.1);
+      border-left: 4px solid var(--accent);
+    }
+    
+    /* Estilos para la página de nutrición */
     .days-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -679,31 +695,13 @@
       color: var(--gray);
     }
     
-    .btn-volver-nutricion {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background-color: var(--secondary);
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 500;
-      text-decoration: none;
-      margin-top: 2rem;
-      transition: background 0.3s;
-    }
-    
-    .btn-volver-nutricion:hover {
-      background-color: var(--secondary-dark);
-    }
-    
-    /* Animaciones y responsive */
+    /* Estilos generales */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
     
+    /* Estilos responsivos */
     @media (max-width: 768px) {
       header {
         flex-direction: column;
@@ -727,18 +725,6 @@
         grid-template-columns: repeat(2, 1fr);
       }
       
-      .container {
-        padding: 1rem;
-      }
-      
-      .desayuno-container, .rutina-container {
-        padding: 1rem;
-      }
-      
-      .nutrition-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
       .calendar-header, .calendar {
         grid-template-columns: repeat(7, 1fr);
       }
@@ -746,6 +732,27 @@
       .ejercicio-info {
         grid-template-columns: 1fr;
       }
+      
+      .container {
+        padding: 1rem;
+      }
+      
+      .calendar-container, .rutina-container, .desayuno-container {
+        padding: 1rem;
+      }
+      
+      .nutrition-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    /* Estilos para ocultar/mostrar secciones */
+    .page-section {
+      display: none;
+    }
+    
+    .page-section.active {
+      display: block;
     }
   </style>
 </head>
@@ -757,16 +764,16 @@
     </div>
     <nav>
       <ul>
-        <li><a href="#" class="active" id="nav-inicio">Inicio</a></li>
-        <li><a href="#" id="nav-ejercicios">Ejercicios</a></li>
-        <li><a href="#" id="nav-nutricion">Nutrición</a></li>
+        <li><a href="#" class="nav-link active" data-target="inicio">Inicio</a></li>
+        <li><a href="#" class="nav-link" data-target="ejercicios">Ejercicios</a></li>
+        <li><a href="#" class="nav-link" data-target="nutricion">Nutrición</a></li>
       </ul>
     </nav>
   </header>
 
   <div class="container">
     <!-- Sección de Inicio -->
-    <div id="inicio">
+    <section id="inicio" class="page-section active">
       <div class="hero">
         <h1>¡Hola, Adrián!</h1>
         <p class="objetivo">
@@ -776,7 +783,7 @@
       </div>
 
       <div class="cards">
-        <a class="card ejercicios" href="#" id="card-ejercicios">
+        <a class="card ejercicios" href="#" data-target="ejercicios">
           <div class="card-icon">
             <i class="fas fa-running"></i>
           </div>
@@ -784,7 +791,7 @@
           <p>Plan semanal estructurado para mejorar tu fuerza, movilidad y habilidades calisténicas.</p>
           <span class="card-badge">5 días/semana</span>
         </a>
-        <a class="card desayunos" href="#" id="card-nutricion">
+        <a class="card desayunos" href="#" data-target="nutricion">
           <div class="card-icon">
             <i class="fas fa-utensils"></i>
           </div>
@@ -799,10 +806,10 @@
         <p>Cada entrenamiento te acerca más a tu meta. La consistencia es la clave del éxito. 💪</p>
         <small>"La disciplina es el puente entre tus metas y tus logros" — Jim Rohn</small>
       </div>
-    </div>
+    </section>
 
     <!-- Sección de Ejercicios -->
-    <div id="ejercicios" style="display: none;">
+    <section id="ejercicios" class="page-section">
       <div class="page-header">
         <h1>Calendario de Entrenamiento</h1>
         <p>Sigue tu progreso y completa las rutinas diarias</p>
@@ -839,14 +846,14 @@
         <p>Haz clic en cualquier día del calendario para visualizar los ejercicios correspondientes.</p>
       </div>
 
-      <button class="btn-volver" id="volver-ejercicios">
+      <a href="#" class="btn-volver" data-target="inicio">
         <i class="fas fa-arrow-left"></i>
         Volver al inicio
-      </button>
-    </div>
+      </a>
+    </section>
 
     <!-- Sección de Nutrición -->
-    <div id="nutricion" style="display: none;">
+    <section id="nutricion" class="page-section">
       <div class="page-header">
         <h1>Plan de Desayunos</h1>
         <p>Desayunos saludables para complementar tu entrenamiento</p>
@@ -949,295 +956,529 @@
         </div>
       </div>
 
-      <button class="btn-volver-nutricion" id="volver-nutricion">
+      <a href="#" class="btn-volver" data-target="inicio">
         <i class="fas fa-arrow-left"></i>
         Volver al inicio
-      </button>
-    </div>
+      </a>
+    </section>
   </div>
 
   <script>
-    // Navegación entre secciones
-    document.getElementById('nav-inicio').addEventListener('click', function(e) {
-      e.preventDefault();
-      mostrarSeccion('inicio');
-      actualizarNav('inicio');
-    });
-    
-    document.getElementById('nav-ejercicios').addEventListener('click', function(e) {
-      e.preventDefault();
-      mostrarSeccion('ejercicios');
-      actualizarNav('ejercicios');
-    });
-    
-    document.getElementById('nav-nutricion').addEventListener('click', function(e) {
-      e.preventDefault();
-      mostrarSeccion('nutricion');
-      actualizarNav('nutricion');
-    });
-    
-    document.getElementById('card-ejercicios').addEventListener('click', function(e) {
-      e.preventDefault();
-      mostrarSeccion('ejercicios');
-      actualizarNav('ejercicios');
-    });
-    
-    document.getElementById('card-nutricion').addEventListener('click', function(e) {
-      e.preventDefault();
-      mostrarSeccion('nutricion');
-      actualizarNav('nutricion');
-    });
-    
-    document.getElementById('volver-ejercicios').addEventListener('click', function() {
-      mostrarSeccion('inicio');
-      actualizarNav('inicio');
-    });
-    
-    document.getElementById('volver-nutricion').addEventListener('click', function() {
-      mostrarSeccion('inicio');
-      actualizarNav('inicio');
-    });
-    
-    function mostrarSeccion(seccion) {
-      document.getElementById('inicio').style.display = 'none';
-      document.getElementById('ejercicios').style.display = 'none';
-      document.getElementById('nutricion').style.display = 'none';
-      
-      document.getElementById(seccion).style.display = 'block';
-      
-      // Si es la sección de ejercicios, inicializar el calendario
-      if (seccion === 'ejercicios') {
-        inicializarCalendario();
-      }
-      
-      // Si es la sección de nutrición, inicializar los desayunos
-      if (seccion === 'nutricion') {
-        inicializarDesayunos();
-      }
-    }
-    
-    function actualizarNav(seccion) {
-      document.querySelectorAll('nav a').forEach(link => {
-        link.classList.remove('active');
-      });
-      
-      document.getElementById(`nav-${seccion}`).classList.add('active');
-    }
-    
-    // Contador de días para el objetivo
-    function calcularDiasRestantes() {
-      const hoy = new Date();
-      const objetivo = new Date(hoy.getFullYear(), 8, 15);
-      const diferencia = objetivo - hoy;
-      const dias = Math.ceil(diferencia / (1000 * 60 * 60 * 24));
-      document.getElementById("contador").textContent = dias > 0 ? dias : "¡Meta alcanzada!";
-    }
-    calcularDiasRestantes();
-    
-    // Actualizar cada día
-    setInterval(calcularDiasRestantes, 86400000);
-    
-    // Lógica para la sección de Ejercicios
-    function inicializarCalendario() {
-      // Datos de las rutinas
-      const rutinas = {
-        1: { // Lunes - Pecho y core
-          title: "Lunes – Pecho y Core",
-          objetivo: "Desarrollar fuerza en el pecho, hombros y core para mejorar la estabilidad y postura.",
-          ejercicios: [
-            {
-              nombre: "Flexiones estándar",
-              sets: "3x8-12",
-              musculos: ["Pectorales", "Tríceps", "Deltoides frontales"],
-              consejos: "Cuerpo recto, manos a la altura de los hombros. Bajar el pecho hasta casi tocar el suelo y subir estirando brazos.",
-              imagen: "img/pushups.jpg"
-            },
-            {
-              nombre: "Flexiones con protracción escapular",
-              sets: "3x8-10",
-              musculos: ["Serrato anterior", "Trapecios", "Pectorales"],
-              consejos: "Igual posición que la flexión normal, pero al subir empuja el suelo para separar los omóplatos (escápulas).",
-              imagen: "img/protraction-pushups.jpg"
-            },
-            {
-              nombre: "Lean Planche Hold",
-              sets: "3x10-15 seg",
-              musculos: ["Hombros", "Serrato anterior", "Core"],
-              consejos: "En posición de flexión, lleva caderas arriba para que tu cuerpo quede casi horizontal. Mantén escápulas protraídas, abdomen y glúteos apretados.",
-              imagen: "img/planche-lean.jpg"
-            },
-            {
-              nombre: "Plancha frontal",
-              sets: "3x30-45 seg",
-              musculos: ["Recto abdominal", "Oblicuos", "Transverso"],
-              consejos: "En apoyo de antebrazos y puntas de pies, cuerpo recto. Aprieta abdomen y glúteos. Refuerza el core para la estabilidad general del cuerpo.",
-              imagen: "img/plank.jpg"
-            }
-          ]
-        },
-        2: { // Martes - Piernas y espalda baja
-          title: "Martes – Piernas y Espalda Baja (Postura)",
-          objetivo: "Fortalecer piernas y espalda baja para mejorar postura y estabilidad.",
-          ejercicios: [
-            {
-              nombre: "Sentadillas sin peso",
-              sets: "4x10-12",
-              musculos: ["Cuádriceps", "Glúteos", "Core"],
-              consejos: "Pies a la altura de hombros, bajar glúteos hacia atrás/bajo hasta que muslos queden paralelos.",
-              imagen: "img/squats.jpg"
-            },
-            {
-              nombre: "Sentadilla búlgara",
-              sets: "3x8 por pierna",
-              musculos: ["Cuádriceps", "Glúteos", "Isquiotibiales"],
-              consejos: "Poner un pie adelante y otro atrás apoyado en una silla baja. Bajar controlado con la pierna delantera.",
-              imagen: "img/bulgarian-split.jpg"
-            },
-            {
-              nombre: "Puente de glúteos",
-              sets: "3x12",
-              musculos: ["Glúteos", "Espalda baja", "Isquiotibiales"],
-              consejos: "Acostado boca arriba, rodillas flexionadas, empuja caderas hacia arriba apretando glúteos.",
-              imagen: "img/glute-bridge.jpg"
-            },
-            {
-              nombre: "Prone Cobra",
-              sets: "3x20-30 seg",
-              musculos: ["Trapecios", "Romboides", "Erectores espinales"],
-              consejos: "Acostado boca abajo, manos al costado, levanta el pecho contrayendo glúteos y rotando pulgares hacia arriba.",
-              imagen: "img/prone-cobra.jpg"
-            },
-            {
-              nombre: "Puente invertido (Tabletop)",
-              sets: "3x15 seg",
-              musculos: ["Hombros", "Espalda baja", "Glúteos"],
-              consejos: "Sentado con manos atrás apoyadas, elevar caderas empujando con hombros y glúteos.",
-              imagen: "img/tabletop-bridge.jpg"
-            }
-          ]
-        },
-        3: { // Miércoles - Hombros avanzados y planche
-          title: "Miércoles – Hombros Avanzados y Planche",
-          objetivo: "Desarrollar fuerza en hombros y progresar hacia la planche.",
-          ejercicios: [
-            {
-              nombre: "Flexiones Pike (verticales)",
-              sets: "3x8-10",
-              musculos: ["Hombros", "Trapecios superiores", "Core"],
-              consejos: "En posición de 'V' invertida, bajar la cabeza hacia el suelo flexionando codos, luego subir.",
-              imagen: "img/pike-pushups.jpg"
-            },
-            {
-              nombre: "Flexiones Lean Planche",
-              sets: "3x5-8",
-              musculos: ["Hombros", "Serrato anterior", "Pectorales"],
-              consejos: "Manos más cerca de la cintura que de los pies, torso avanzado hacia adelante. Bajar y subir controlando con escápulas protraídas.",
-              imagen: "img/lean-planche-pushups.jpg"
-            },
-            {
-              nombre: "Handstand asistido (contra pared)",
-              sets: "3x20-30 seg",
-              musculos: ["Hombros", "Trapecios", "Core"],
-              consejos: "Apoya pies en pared, cuerpo vertical. Buscar mantener hombros firmes y core activo.",
-              imagen: "img/wall-handstand.jpg"
-            },
-            {
-              nombre: "Hollow Body Hold",
-              sets: "3x20-30 seg",
-              musculos: ["Recto abdominal", "Oblicuos", "Flexores de cadera"],
-              consejos: "Acostado de espalda, elevar hombros y piernas manteniendo lumbares al suelo. Apretar abdomen.",
-              imagen: "img/hollow-body.jpg"
-            }
-          ]
-        },
-        4: { // Jueves - Espalda y postura
-          title: "Jueves – Espalda y Postura",
-          objetivo: "Fortalecer espalda y mejorar la postura contrarrestando hombros adelantados.",
-          ejercicios: [
-            {
-              nombre: "Retracción escapular en suelo",
-              sets: "3x10-12",
-              musculos: ["Trapecios medios", "Romboides"],
-              consejos: "Acostado boca arriba, brazos abiertos en cruz, empuja el suelo con la parte posterior de los brazos.",
-              imagen: "img/floor-scapular-retraction.jpg"
-            },
-            {
-              nombre: "Elevaciones 'Y' prono",
-              sets: "3x10-12",
-              musculos: ["Trapecio medio", "Romboides", "Deltoides posteriores"],
-              consejos: "Acostado boca abajo con brazos en 'Y', eleva los brazos contrayendo omóplatos juntos.",
-              imagen: "img/prone-y-raise.jpg"
-            },
-            {
-              nombre: "Superman",
-              sets: "3x12-15",
-              musculos: ["Erectores espinales", "Glúteos", "Hombros posteriores"],
-              consejos: "Boca abajo, levanta simultáneamente brazos/pecho y piernas unos centímetros.",
-              imagen: "img/superman.jpg"
-            },
-            {
-              nombre: "Prone Scapular Squeezes",
-              sets: "3x12-15",
-              musculos: ["Trapecio medio", "Romboides"],
-              consejos: "Boca abajo con brazos extendidos, junta fuerte omóplatos manteniendo brazos elevados 2-3 seg.",
-              imagen: "img/scapular-squeeze.jpg"
-            }
-          ]
-        },
-        5: { // Viernes - Full body y movilidad
-          title: "Viernes – Full Body y Movilidad",
-          objetivo: "Trabajo completo de cuerpo con énfasis en movilidad y control corporal.",
-          ejercicios: [
-            {
-              nombre: "Sentadilla pistol asistida",
-              sets: "3x5 por pierna",
-              musculos: ["Cuádriceps", "Glúteos", "Estabilidad"],
-              consejos: "Baja con una pierna intentando llegar lo más abajo posible, usando poco apoyo con la otra.",
-              imagen: "img/pistol-squat.jpg"
-            },
-            {
-              nombre: "Flexiones pliométricas (con palmadas)",
-              sets: "3x6-8",
-              musculos: ["Pectorales", "Tríceps", "Potencia"],
-              consejos: "Flexión explosiva: al subir, impulsa el pecho del suelo con tal fuerza que aplaudes en el aire.",
-              imagen: "img/plyo-pushups.jpg"
-            },
-            {
-              nombre: "Hold de Planche Lean avanzado",
-              sets: "2x8-10 seg",
-              musculos: ["Hombros", "Serrato anterior", "Core"],
-              consejos: "Mayor inclinación que el básico, con pies más adelante. Enfatiza posición horizontal.",
-              imagen: "img/advanced-planche-lean.jpg"
-            },
-            {
-              nombre: "Back Bridge (puente completo)",
-              sets: "3x6-8",
-              musculos: ["Espalda baja", "Hombros", "Flexibilidad"],
-              consejos: "Eleva caderas y espalda alta todo lo posible. Abre hombros y fortalece lumbar.",
-              imagen: "img/back-bridge.jpg"
-            },
-            {
-              nombre: "Plank lateral y frontal",
-              sets: "2x30 seg cada",
-              musculos: ["Oblicuos", "Recto abdominal", "Hombros"],
-              consejos: "Alternar plancha frontal y de costado para reforzar el core por completo.",
-              imagen: "img/side-plank.jpg"
-            }
-          ]
-        },
-        6: { // Sábado
-          title: "Sábado: Descanso activo",
-          ejercicios: [],
-          descanso: "Caminata, movilidad o estiramientos suaves. Recuperación activa para prepararte para la próxima semana."
-        },
-        0: { // Domingo
-          title: "Domingo: Descanso total",
-          ejercicios: [],
-          descanso: "Recarga energía. Mañana se entrena fuerte 💪 Descansa y permite que tu cuerpo se recupere completamente."
+    // Datos de los desayunos
+    const desayunos = {
+      L: {
+        nombre: "Pancakes estilo stracciatella",
+        calorias: "600-700 kcal",
+        ingredientes: [
+          "1 huevo",
+          "25g de azúcar (1/8 de taza)",
+          "1 pizca de sal",
+          "1/2 cdta de esencia de vainilla",
+          "35 ml de leche (1/8 de taza aprox)",
+          "1/2 yogur griego (62.5g)",
+          "100g de harina de trigo (1/2 taza + 1/3)",
+          "1/2 cda de levadura química (4g)",
+          "un poco de aceite",
+          "complementar al gusto"
+        ],
+        preparacion: [
+          "Mezcla el huevo con el azúcar, sal y esencia de vainilla hasta integrar.",
+          "Añade la leche y el yogur griego, mezcla bien.",
+          "Incorpora la harina y la levadura, mezcla hasta obtener una masa homogénea.",
+          "Deja reposar la masa 5 minutos.",
+          "Cocina en sartén antiadherente con un poco de aceite, vuelta y vuelta.",
+          "Sirve con tus toppings favoritos."
+        ],
+        nutricion: {
+          kcal: 650,
+          proteinas: 25,
+          carbohidratos: 85,
+          grasas: 20,
+          fibra: 8,
+          azucares: 30
         }
-      };
+      },
+      M: {
+        nombre: "Batido energético estilo stracciatella",
+        calorias: "900-1000 kcal",
+        ingredientes: [
+          "500 ml de leche entera",
+          "1 plátano",
+          "100 g de avena",
+          "30 g de nueces",
+          "2 cucharadas de crema de cacahuete",
+          "1 cucharada de ColaCao",
+          "1 yogur griego de stracciatella"
+        ],
+        preparacion: [
+          "Coloca todos los ingredientes en la licuadora.",
+          "Licúa hasta obtener una mezcla suave y homogénea.",
+          "Sirve frío. Puedes acompañarlo con una tostada para sumar aún más calorías."
+        ],
+        nutricion: {
+          kcal: 950,
+          proteinas: 35,
+          carbohidratos: 120,
+          grasas: 35,
+          fibra: 12,
+          azucares: 45
+        }
+      },
+      X: {
+        nombre: "Tostadas con aguacate, huevo y tomate",
+        calorias: "600-700 kcal",
+        ingredientes: [
+          "2 rebanadas de pan integral o de centeno",
+          "1 aguacate maduro",
+          "2 huevos",
+          "1 tomate mediano",
+          "Aceite de oliva virgen extra",
+          "Sal y pimienta"
+        ],
+        preparacion: [
+          "Tuesta el pan.",
+          "Fríe o cuece los huevos a tu gusto.",
+          "Tritura el aguacate y úntalo sobre el pan.",
+          "Añade rodajas de tomate y coloca los huevos encima.",
+          "Rocía con aceite de oliva, sal y pimienta."
+        ],
+        nutricion: {
+          kcal: 650,
+          proteinas: 22,
+          carbohidratos: 45,
+          grasas: 40,
+          fibra: 10,
+          azucares: 5
+        }
+      },
+      J: {
+        nombre: "Tortilla francesa con atún y pan con aceite",
+        calorias: "600-650 kcal",
+        ingredientes: [
+          "2-3 huevos",
+          "1 lata de atún en aceite de oliva escurrida",
+          "2 rebanadas de pan integral",
+          "Aceite de oliva virgen extra",
+          "Sal al gusto"
+        ],
+        preparacion: [
+          "Bate los huevos y añade el atún escurrido.",
+          "Cocina en sartén caliente hasta que cuaje.",
+          "Sirve con pan tostado y un chorro de aceite por encima."
+        ],
+        nutricion: {
+          kcal: 625,
+          proteinas: 45,
+          carbohidratos: 35,
+          grasas: 35,
+          fibra: 5,
+          azucares: 2
+        }
+      },
+      V: {
+        nombre: "Yogur natural con granola casera y fruta",
+        calorias: "650-750 kcal",
+        ingredientes: [
+          "1 taza de yogur natural entero o griego",
+          "½ taza de granola casera o sin azúcares añadidos",
+          "1 plátano o un puñado de frutos rojos",
+          "1 cucharada de miel o sirope de agave",
+          "1 cucharada de nueces o almendras picadas"
+        ],
+        preparacion: [
+          "Vierte el yogur en un bol.",
+          "Añade la fruta cortada y la granola.",
+          "Espolvorea los frutos secos.",
+          "Agrega miel al gusto y mezcla bien."
+        ],
+        nutricion: {
+          kcal: 700,
+          proteinas: 25,
+          carbohidratos: 90,
+          grasas: 25,
+          fibra: 8,
+          azucares: 40
+        }
+      }
+    };
 
-      // Generar calendario
+    // Datos de las rutinas
+    const rutinas = {
+      1: { // Lunes - Pecho y core
+        title: "Lunes – Pecho y Core",
+        objetivo: "Desarrollar fuerza en el pecho, hombros y core para mejorar la estabilidad y postura.",
+        calentamiento: {
+          nombre: "Calentamiento de pecho y hombros",
+          descripcion: "Prepara tus músculos para el entrenamiento y previene lesiones",
+          ejercicios: [
+            "Rotaciones de hombros: 2x15 (adelante y atrás)",
+            "Estiramiento de pecho en puerta: 2x15 segundos",
+            "Movilidad escapular: 2x10 (elevación/retracción)",
+            "Flexiones dinámicas: 2x10 (media amplitud)"
+          ]
+        },
+        estiramiento: {
+          nombre: "Estiramiento de pecho y core",
+          descripcion: "Mejora la flexibilidad y recuperación muscular",
+          ejercicios: [
+            "Estiramiento de pectoral en pared: 30 segundos cada lado",
+            "Estiramiento de hombros con toalla: 30 segundos",
+            "Estiramiento de gato-vaca: 10 repeticiones",
+            "Estiramiento de oblicuos: 20 segundos cada lado"
+          ]
+        },
+        ejercicios: [
+          {
+            nombre: "Flexiones estándar",
+            sets: "3x8-12",
+            musculos: ["Pectorales", "Tríceps", "Deltoides frontales"],
+            consejos: "Cuerpo recto, manos a la altura de los hombros. Bajar el pecho hasta casi tocar el suelo y subir estirando brazos."
+          },
+          {
+            nombre: "Flexiones con protracción escapular",
+            sets: "3x8-10",
+            musculos: ["Serrato anterior", "Trapecios", "Pectorales"],
+            consejos: "Igual posición que la flexión normal, pero al subir empuja el suelo para separar los omóplatos (escápulas)."
+          },
+          {
+            nombre: "Lean Planche Hold",
+            sets: "3x10-15 seg",
+            musculos: ["Hombros", "Serrato anterior", "Core"],
+            consejos: "En posición de flexión, lleva caderas arriba para que tu cuerpo quede casi horizontal. Mantén escápulas protraídas, abdomen y glúteos apretados."
+          },
+          {
+            nombre: "Plancha frontal",
+            sets: "3x30-45 seg",
+            musculos: ["Recto abdominal", "Oblicuos", "Transverso"],
+            consejos: "En apoyo de antebrazos y puntas de pies, cuerpo recto. Aprieta abdomen y glúteos. Refuerza el core para la estabilidad general del cuerpo."
+          }
+        ]
+      },
+      2: { // Martes - Piernas y espalda baja
+        title: "Martes – Piernas y Espalda Baja (Postura)",
+        objetivo: "Fortalecer piernas y espalda baja para mejorar postura y estabilidad.",
+        calentamiento: {
+          nombre: "Calentamiento de piernas y espalda",
+          descripcion: "Prepara tus músculos para el entrenamiento y previene lesiones",
+          ejercicios: [
+            "Sentadillas sin peso: 2x15",
+            "Balanceos de piernas: 2x10 cada pierna",
+            "Movilidad de cadera: círculos 10 cada lado",
+            "Estiramiento dinámico de isquiotibiales: 2x10"
+          ]
+        },
+        estiramiento: {
+          nombre: "Estiramiento de piernas y espalda",
+          descripcion: "Mejora la flexibilidad y recuperación muscular",
+          ejercicios: [
+            "Estiramiento de cuádriceps: 30 segundos cada pierna",
+            "Estiramiento de isquiotibiales: 30 segundos cada pierna",
+            "Estiramiento de espalda baja (rodillas al pecho): 30 segundos",
+            "Estiramiento de glúteos: 20 segundos cada lado"
+          ]
+        },
+        ejercicios: [
+          {
+            nombre: "Sentadillas sin peso",
+            sets: "4x10-12",
+            musculos: ["Cuádriceps", "Glúteos", "Core"],
+            consejos: "Pies a la altura de hombros, bajar glúteos hacia atrás/bajo hasta que muslos queden paralelos."
+          },
+          {
+            nombre: "Sentadilla búlgara",
+            sets: "3x8 por pierna",
+            musculos: ["Cuádriceps", "Glúteos", "Isquiotibiales"],
+            consejos: "Poner un pie adelante y otro atrás apoyado en una silla baja. Bajar controlado con la pierna delantera."
+          },
+          {
+            nombre: "Puente de glúteos",
+            sets: "3x12",
+            musculos: ["Glúteos", "Espalda baja", "Isquiotibiales"],
+            consejos: "Acostado boca arriba, rodillas flexionadas, empuja caderas hacia arriba apretando glúteos."
+          },
+          {
+            nombre: "Prone Cobra",
+            sets: "3x20-30 seg",
+            musculos: ["Trapecios", "Romboides", "Erectores espinales"],
+            consejos: "Acostado boca abajo, manos al costado, levanta el pecho contrayendo glúteos y rotando pulgares hacia arriba."
+          },
+          {
+            nombre: "Puente invertido (Tabletop)",
+            sets: "3x15 seg",
+            musculos: ["Hombros", "Espalda baja", "Glúteos"],
+            consejos: "Sentado con manos atrás apoyadas, elevar caderas empujando con hombros y glúteos."
+          }
+        ]
+      },
+      3: { // Miércoles - Hombros avanzados y planche
+        title: "Miércoles – Hombros Avanzados y Planche",
+        objetivo: "Desarrollar fuerza en hombros y progresar hacia la planche.",
+        calentamiento: {
+          nombre: "Calentamiento de hombros y core",
+          descripcion: "Prepara tus músculos para el entrenamiento y previene lesiones",
+          ejercicios: [
+            "Rotaciones de brazos: 2x15 (pequeños y grandes círculos)",
+            "Movilidad escapular: 2x10 (elevación/retracción)",
+            "Estiramiento dinámico de hombros: 2x10",
+            "Plancha dinámica: 2x10 segundos"
+          ]
+        },
+        estiramiento: {
+          nombre: "Estiramiento de hombros y core",
+          descripcion: "Mejora la flexibilidad y recuperación muscular",
+          ejercicios: [
+            "Estiramiento de hombros cruzados: 30 segundos cada brazo",
+            "Estiramiento de tríceps: 20 segundos cada brazo",
+            "Estiramiento de gato-vaca: 10 repeticiones",
+            "Estiramiento de hombros con toalla: 30 segundos"
+          ]
+        },
+        ejercicios: [
+          {
+            nombre: "Flexiones Pike (verticales)",
+            sets: "3x8-10",
+            musculos: ["Hombros", "Trapecios superiores", "Core"],
+            consejos: "En posición de 'V' invertida, bajar la cabeza hacia el suelo flexionando codos, luego subir."
+          },
+          {
+            nombre: "Flexiones Lean Planche",
+            sets: "3x5-8",
+            musculos: ["Hombros", "Serrato anterior", "Pectorales"],
+            consejos: "Manos más cerca de la cintura que de los pies, torso avanzado hacia adelante. Bajar y subir controlando con escápulas protraídas."
+          },
+          {
+            nombre: "Handstand asistido (contra pared)",
+            sets: "3x20-30 seg",
+            musculos: ["Hombros", "Trapecios", "Core"],
+            consejos: "Apoya pies en pared, cuerpo vertical. Buscar mantener hombros firmes y core activo."
+          },
+          {
+            nombre: "Hollow Body Hold",
+            sets: "3x20-30 seg",
+            musculos: ["Recto abdominal", "Oblicuos", "Flexores de cadera"],
+            consejos: "Acostado de espalda, elevar hombros y piernas manteniendo lumbares al suelo. Aprieta abdomen."
+          }
+        ]
+      },
+      4: { // Jueves - Espalda y postura
+        title: "Jueves – Espalda y Postura",
+        objetivo: "Fortalecer espalda y mejorar la postura contrarrestando hombros adelantados.",
+        calentamiento: {
+          nombre: "Calentamiento de espalda y postura",
+          descripcion: "Prepara tus músculos para el entrenamiento y previene lesiones",
+          ejercicios: [
+            "Retracción escapular de pie: 2x15",
+            "Círculos de brazos: 2x10 (adelante y atrás)",
+            "Movilidad torácica: 2x10 (rotaciones)",
+            "Estiramiento dinámico de espalda: 2x10"
+          ]
+        },
+        estiramiento: {
+          nombre: "Estiramiento de espalda y hombros",
+          descripcion: "Mejora la flexibilidad y recuperación muscular",
+          ejercicios: [
+            "Estiramiento de trapecios: 30 segundos cada lado",
+            "Estiramiento de hombros con toalla: 30 segundos",
+            "Estiramiento de gato-vaca: 10 repeticiones",
+            "Estiramiento de brazos cruzados: 20 segundos cada brazo"
+          ]
+        },
+        ejercicios: [
+          {
+            nombre: "Retracción escapular en suelo",
+            sets: "3x10-12",
+            musculos: ["Trapecios medios", "Romboides"],
+            consejos: "Acostado boca arriba, brazos abiertos en cruz, empuja el suelo con la parte posterior de los brazos."
+          },
+          {
+            nombre: "Elevaciones 'Y' prono",
+            sets: "3x10-12",
+            musculos: ["Trapecio medio", "Romboides", "Deltoides posteriores"],
+            consejos: "Acostado boca abajo con brazos en 'Y', eleva los brazos contrayendo omóplatos juntos."
+          },
+          {
+            nombre: "Superman",
+            sets: "3x12-15",
+            musculos: ["Erectores espinales", "Glúteos", "Hombros posteriores"],
+            consejos: "Boca abajo, levanta simultáneamente brazos/pecho y piernas unos centímetros."
+          },
+          {
+            nombre: "Prone Scapular Squeezes",
+            sets: "3x12-15",
+            musculos: ["Trapecio medio", "Romboides"],
+            consejos: "Boca abajo con brazos extendidos, junta fuerte omóplatos manteniendo brazos elevados 2-3 seg."
+          }
+        ]
+      },
+      5: { // Viernes - Full body y movilidad
+        title: "Viernes – Full Body y Movilidad",
+        objetivo: "Trabajo completo de cuerpo con énfasis en movilidad y control corporal.",
+        calentamiento: {
+          nombre: "Calentamiento completo",
+          descripcion: "Prepara todo tu cuerpo para el entrenamiento y previene lesiones",
+          ejercicios: [
+            "Movilidad articular general: 2 minutos",
+            "Sentadillas sin peso: 2x12",
+            "Flexiones dinámicas: 2x10",
+            "Estiramiento dinámico de isquiotibiales: 2x10"
+          ]
+        },
+        estiramiento: {
+          nombre: "Estiramiento completo",
+          descripcion: "Mejora la flexibilidad general y recuperación muscular",
+          ejercicios: [
+            "Estiramiento de cuádriceps: 30 segundos cada pierna",
+            "Estiramiento de isquiotibiales: 30 segundos cada pierna",
+            "Estiramiento de hombros: 30 segundos cada brazo",
+            "Estiramiento de espalda (gato-vaca): 10 repeticiones"
+          ]
+        },
+        ejercicios: [
+          {
+            nombre: "Sentadilla pistol asistida",
+            sets: "3x5 por pierna",
+            musculos: ["Cuádriceps", "Glúteos", "Estabilidad"],
+            consejos: "Baja con una pierna intentando llegar lo más abajo posible, usando poco apoyo con la otra."
+          },
+          {
+            nombre: "Flexiones pliométricas (con palmadas)",
+            sets: "3x6-8",
+            musculos: ["Pectorales", "Tríceps", "Potencia"],
+            consejos: "Flexión explosiva: al subir, impulsa el pecho del suelo con tal fuerza que aplaudes en el aire."
+          },
+          {
+            nombre: "Hold de Planche Lean avanzado",
+            sets: "2x8-10 seg",
+            musculos: ["Hombros", "Serrato anterior", "Core"],
+            consejos: "Mayor inclinación que el básico, con pies más adelante. Enfatiza posición horizontal."
+          },
+          {
+            nombre: "Back Bridge (puente completo)",
+            sets: "3x6-8",
+            musculos: ["Espalda baja", "Hombros", "Flexibilidad"],
+            consejos: "Eleva caderas y espalda alta todo lo posible. Abre hombros y fortalece lumbar."
+          },
+          {
+            nombre: "Plank lateral y frontal",
+            sets: "2x30 seg cada",
+            musculos: ["Oblicuos", "Recto abdominal", "Hombros"],
+            consejos: "Alternar plancha frontal y de costado para reforzar el core por completo."
+          }
+        ]
+      },
+      6: { // Sábado
+        title: "Sábado: Descanso activo",
+        ejercicios: [],
+        descanso: "Caminata, movilidad o estiramientos suaves. Recuperación activa para prepararte para la próxima semana."
+      },
+      0: { // Domingo
+        title: "Domingo: Descanso total",
+        ejercicios: [],
+        descanso: "Recarga energía. Mañana se entrena fuerte 💪 Descansa y permite que tu cuerpo se recupere completamente."
+      }
+    };
+
+    // Navegación entre secciones
+    document.querySelectorAll('.nav-link, [data-target]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = this.getAttribute('data-target');
+        
+        // Actualizar navegación activa
+        document.querySelectorAll('.nav-link').forEach(navLink => {
+          navLink.classList.remove('active');
+        });
+        this.classList.add('active');
+        
+        // Ocultar todas las secciones
+        document.querySelectorAll('.page-section').forEach(section => {
+          section.classList.remove('active');
+        });
+        
+        // Mostrar sección objetivo
+        document.getElementById(target).classList.add('active');
+        
+        // Si es la sección de ejercicios, inicializar el calendario
+        if (target === 'ejercicios') {
+          initCalendar();
+        }
+      });
+    });
+
+    // Mostrar desayuno al hacer clic en día
+    document.querySelectorAll('.day-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const dia = this.getAttribute('data-dia');
+        mostrarDesayuno(dia);
+      });
+    });
+
+    function mostrarDesayuno(dia) {
+      const desayuno = desayunos[dia];
+      const container = document.getElementById('desayuno');
+      
+      container.innerHTML = `
+        <div class="desayuno-header">
+          <h2>${dia === 'L' ? 'Lunes' : dia === 'M' ? 'Martes' : dia === 'X' ? 'Miércoles' : dia === 'J' ? 'Jueves' : 'Viernes'}: ${desayuno.nombre}</h2>
+          <span class="desayuno-calorias">${desayuno.calorias}</span>
+        </div>
+        
+        <div class="desayuno-content">
+          <div class="desayuno-info">
+            <div class="desayuno-section">
+              <h3><i class="fas fa-list"></i> Ingredientes</h3>
+              <ul>
+                ${desayuno.ingredientes.map(i => `<li>${i}</li>`).join('')}
+              </ul>
+            </div>
+            
+            <div class="desayuno-section">
+              <h3><i class="fas fa-list-ol"></i> Preparación</h3>
+              <ol>
+                ${desayuno.preparacion.map(p => `<li>${p}</li>`).join('')}
+              </ol>
+            </div>
+            
+            <div class="nutrition-facts">
+              <h3><i class="fas fa-fire"></i> Información Nutricional</h3>
+              <div class="nutrition-grid">
+                <div class="nutrition-item">
+                  <span class="nutrition-value">${desayuno.nutricion.kcal}</span>
+                  <span class="nutrition-label">kcal</span>
+                </div>
+                <div class="nutrition-item">
+                  <span class="nutrition-value">${desayuno.nutricion.proteinas}g</span>
+                  <span class="nutrition-label">Proteínas</span>
+                </div>
+                <div class="nutrition-item">
+                  <span class="nutrition-value">${desayuno.nutricion.carbohidratos}g</span>
+                  <span class="nutrition-label">Carbohidratos</span>
+                </div>
+                <div class="nutrition-item">
+                  <span class="nutrition-value">${desayuno.nutricion.grasas}g</span>
+                  <span class="nutrition-label">Grasas</span>
+                </div>
+                <div class="nutrition-item">
+                  <span class="nutrition-value">${desayuno.nutricion.fibra}g</span>
+                  <span class="nutrition-label">Fibra</span>
+                </div>
+                <div class="nutrition-item">
+                  <span class="nutrition-value">${desayuno.nutricion.azucares}g</span>
+                  <span class="nutrition-label">Azúcares</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      container.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Funciones para el calendario de ejercicios
+    function initCalendar() {
       const calendar = document.getElementById('calendar');
       const rutinaDiv = document.getElementById('rutina');
       const currentMonthYear = document.getElementById('current-month-year');
@@ -1313,6 +1554,34 @@
           html += `<div class="objetivo-rutina"><strong>Objetivo:</strong> ${rutina.objetivo}</div>`;
         }
         
+        // Mostrar calentamiento si existe
+        if (rutina.calentamiento) {
+          html += `
+            <div class="ejercicio calentamiento">
+              <div class="ejercicio-header" onclick="toggleDetalle(this)">
+                <div class="ejercicio-title">${rutina.calentamiento.nombre}</div>
+                <div class="ejercicio-sets">Calentamiento</div>
+              </div>
+              <div class="ejercicio-detalle">
+                <div class="ejercicio-tips">
+                  <h4>Descripción</h4>
+                  <p>${rutina.calentamiento.descripcion}</p>
+                  <h4 style="margin-top: 1rem;">Ejercicios</h4>
+                  <ul>
+                    ${rutina.calentamiento.ejercicios.map(e => `<li>${e}</li>`).join('')}
+                  </ul>
+                </div>
+                <div class="ejercicio-media">
+                  <img class="ejercicio-img" alt="Imagen generada para ${rutina.calentamiento.nombre}" data-prompt="Two black-and-white digital sketches depict a muscular man performing ${rutina.calentamiento.nombre} in two key stages, set against a beige backdrop. The first image shows the starting position, while the second shows the end of the movement. The illustrations emphasize form, body tension, and clear anatomy, with bold outlines and no background distractions — perfect for instructional purposes.">
+                  <button class="video-btn" onclick="mostrarImagen(this)">
+                    <i class="fas fa-play"></i> Ver demostración
+                  </button>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+        
         if (rutina.ejercicios.length > 0) {
           rutina.ejercicios.forEach(ejercicio => {
             html += `
@@ -1335,8 +1604,8 @@
                     </div>
                   </div>
                   <div class="ejercicio-media">
-                    <img class="ejercicio-img" src="${ejercicio.imagen}" alt="${ejercicio.nombre}">
-                    <button class="video-btn">
+                    <img class="ejercicio-img" alt="Imagen generada para ${ejercicio.nombre}" data-prompt="Two black-and-white digital sketches depict a muscular man performing ${ejercicio.nombre} in two key stages, set against a beige backdrop. The first image shows the starting position, while the second shows the end of the movement. The illustrations emphasize form, body tension, and clear anatomy, with bold outlines and no background distractions — perfect for instructional purposes.">
+                    <button class="video-btn" onclick="mostrarImagen(this)">
                       <i class="fas fa-play"></i> Ver demostración
                     </button>
                   </div>
@@ -1348,6 +1617,34 @@
           html += `
             <div class="ejercicio">
               <p>${rutina.descanso}</p>
+            </div>
+          `;
+        }
+        
+        // Mostrar estiramiento si existe
+        if (rutina.estiramiento) {
+          html += `
+            <div class="ejercicio estiramiento">
+              <div class="ejercicio-header" onclick="toggleDetalle(this)">
+                <div class="ejercicio-title">${rutina.estiramiento.nombre}</div>
+                <div class="ejercicio-sets">Estiramiento</div>
+              </div>
+              <div class="ejercicio-detalle">
+                <div class="ejercicio-tips">
+                  <h4>Descripción</h4>
+                  <p>${rutina.estiramiento.descripcion}</p>
+                  <h4 style="margin-top: 1rem;">Ejercicios</h4>
+                  <ul>
+                    ${rutina.estiramiento.ejercicios.map(e => `<li>${e}</li>`).join('')}
+                  </ul>
+                </div>
+                <div class="ejercicio-media">
+                  <img class="ejercicio-img" alt="Imagen generada para ${rutina.estiramiento.nombre}" data-prompt="Two black-and-white digital sketches depict a muscular man performing ${rutina.estiramiento.nombre} in two key stages, set against a beige backdrop. The first image shows the starting position, while the second shows the end of the movement. The illustrations emphasize form, body tension, and clear anatomy, with bold outlines and no background distractions — perfect for instructional purposes.">
+                  <button class="video-btn" onclick="mostrarImagen(this)">
+                    <i class="fas fa-play"></i> Ver demostración
+                  </button>
+                </div>
+              </div>
             </div>
           `;
         }
@@ -1394,229 +1691,43 @@
         });
       }, 500);
     }
-    
-    // Lógica para la sección de Nutrición
-    function inicializarDesayunos() {
-      // Datos de los desayunos
-      const desayunos = {
-        L: {
-          nombre: "Pancakes estilo stracciatella",
-          calorias: "600-700 kcal",
-          ingredientes: [
-            "1 huevo",
-            "25g de azúcar (1/8 de taza)",
-            "1 pizca de sal",
-            "1/2 cdta de esencia de vainilla",
-            "35 ml de leche (1/8 de taza aprox)",
-            "1/2 yogur griego (62.5g)",
-            "100g de harina de trigo (1/2 taza + 1/3)",
-            "1/2 cda de levadura química (4g)",
-            "un poco de aceite",
-            "complementar al gusto"
-          ],
-          preparacion: [
-            "Mezcla el huevo con el azúcar, sal y esencia de vainilla hasta integrar.",
-            "Añade la leche y el yogur griego, mezcla bien.",
-            "Incorpora la harina y la levadura, mezcla hasta obtener una masa homogénea.",
-            "Deja reposar la masa 5 minutos.",
-            "Cocina en sartén antiadherente con un poco de aceite, vuelta y vuelta.",
-            "Sirve con tus toppings favoritos."
-          ],
-          nutricion: {
-            kcal: 650,
-            proteinas: 25,
-            carbohidratos: 85,
-            grasas: 20,
-            fibra: 8,
-            azucares: 30
-          }
-        },
-        M: {
-          nombre: "Batido energético estilo stracciatella",
-          calorias: "900-1000 kcal",
-          ingredientes: [
-            "500 ml de leche entera",
-            "1 plátano",
-            "100 g de avena",
-            "30 g de nueces",
-            "2 cucharadas de crema de cacahuete",
-            "1 cucharada de ColaCao",
-            "1 yogur griego de stracciatella"
-          ],
-          preparacion: [
-            "Coloca todos los ingredientes en la licuadora.",
-            "Licúa hasta obtener una mezcla suave y homogénea.",
-            "Sirve frío. Puedes acompañarlo con una tostada para sumar aún más calorías."
-          ],
-          nutricion: {
-            kcal: 950,
-            proteinas: 35,
-            carbohidratos: 120,
-            grasas: 35,
-            fibra: 12,
-            azucares: 45
-          }
-        },
-        X: {
-          nombre: "Tostadas con aguacate, huevo y tomate",
-          calorias: "600-700 kcal",
-          ingredientes: [
-            "2 rebanadas de pan integral o de centeno",
-            "1 aguacate maduro",
-            "2 huevos",
-            "1 tomate mediano",
-            "Aceite de oliva virgen extra",
-            "Sal y pimienta"
-          ],
-          preparacion: [
-            "Tuesta el pan.",
-            "Fríe o cuece los huevos a tu gusto.",
-            "Tritura el aguacate y úntalo sobre el pan.",
-            "Añade rodajas de tomate y coloca los huevos encima.",
-            "Rocía con aceite de oliva, sal y pimienta."
-          ],
-          nutricion: {
-            kcal: 650,
-            proteinas: 22,
-            carbohidratos: 45,
-            grasas: 40,
-            fibra: 10,
-            azucares: 5
-          }
-        },
-        J: {
-          nombre: "Tortilla francesa con atún y pan con aceite",
-          calorias: "600-650 kcal",
-          ingredientes: [
-            "2-3 huevos",
-            "1 lata de atún en aceite de oliva escurrida",
-            "2 rebanadas de pan integral",
-            "Aceite de oliva virgen extra",
-            "Sal al gusto"
-          ],
-          preparacion: [
-            "Bate los huevos y añade el atún escurrido.",
-            "Cocina en sartén caliente hasta que cuaje.",
-            "Sirve con pan tostado y un chorro de aceite por encima."
-          ],
-          nutricion: {
-            kcal: 625,
-            proteinas: 45,
-            carbohidratos: 35,
-            grasas: 35,
-            fibra: 5,
-            azucares: 2
-          }
-        },
-        V: {
-          nombre: "Yogur natural con granola casera y fruta",
-          calorias: "650-750 kcal",
-          ingredientes: [
-            "1 taza de yogur natural entero o griego",
-            "½ taza de granola casera o sin azúcares añadidos",
-            "1 plátano o un puñado de frutos rojos",
-            "1 cucharada de miel o sirope de agave",
-            "1 cucharada de nueces o almendras picadas"
-          ],
-          preparacion: [
-            "Vierte el yogur en un bol.",
-            "Añade la fruta cortada y la granola.",
-            "Espolvorea los frutos secos.",
-            "Agrega miel al gusto y mezcla bien."
-          ],
-          nutricion: {
-            kcal: 700,
-            proteinas: 25,
-            carbohidratos: 90,
-            grasas: 25,
-            fibra: 8,
-            azucares: 40
-          }
-        }
-      };
-      
-      // Cambiar día activo
-      document.querySelectorAll('.day-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
-          const dia = this.getAttribute('data-dia');
-          mostrarDesayuno(dia);
-        });
-      });
-      
-      function mostrarDesayuno(dia) {
-        const desayuno = desayunos[dia];
-        const container = document.getElementById('desayuno');
-        
-        container.innerHTML = `
-          <div class="desayuno-header">
-            <h2>${dia === 'L' ? 'Lunes' : dia === 'M' ? 'Martes' : dia === 'X' ? 'Miércoles' : dia === 'J' ? 'Jueves' : 'Viernes'}: ${desayuno.nombre}</h2>
-            <span class="desayuno-calorias">${desayuno.calorias}</span>
-          </div>
-          
-          <div class="desayuno-content">
-            <div class="desayuno-info">
-              <div class="desayuno-section">
-                <h3><i class="fas fa-list"></i> Ingredientes</h3>
-                <ul>
-                  ${desayuno.ingredientes.map(i => `<li>${i}</li>`).join('')}
-                </ul>
-              </div>
-              
-              <div class="desayuno-section">
-                <h3><i class="fas fa-list-ol"></i> Preparación</h3>
-                <ol>
-                  ${desayuno.preparacion.map(p => `<li>${p}</li>`).join('')}
-                </ol>
-              </div>
-              
-              <div class="nutrition-facts">
-                <h3><i class="fas fa-fire"></i> Información Nutricional</h3>
-                <div class="nutrition-grid">
-                  <div class="nutrition-item">
-                    <span class="nutrition-value">${desayuno.nutricion.kcal}</span>
-                    <span class="nutrition-label">kcal</span>
-                  </div>
-                  <div class="nutrition-item">
-                    <span class="nutrition-value">${desayuno.nutricion.proteinas}g</span>
-                    <span class="nutrition-label">Proteínas</span>
-                  </div>
-                  <div class="nutrition-item">
-                    <span class="nutrition-value">${desayuno.nutricion.carbohidratos}g</span>
-                    <span class="nutrition-label">Carbohidratos</span>
-                  </div>
-                  <div class="nutrition-item">
-                    <span class="nutrition-value">${desayuno.nutricion.grasas}g</span>
-                    <span class="nutrition-label">Grasas</span>
-                  </div>
-                  <div class="nutrition-item">
-                    <span class="nutrition-value">${desayuno.nutricion.fibra}g</span>
-                    <span class="nutrition-label">Fibra</span>
-                  </div>
-                  <div class="nutrition-item">
-                    <span class="nutrition-value">${desayuno.nutricion.azucares}g</span>
-                    <span class="nutrition-label">Azúcares</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-        
-        container.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-    
-    // Hacer toggleDetalle accesible globalmente
-    window.toggleDetalle = function(elemento) {
+
+    // Funciones globales
+    function toggleDetalle(elemento) {
       const detalle = elemento.parentElement.querySelector('.ejercicio-detalle');
       detalle.classList.toggle('active');
-    };
+    }
     
-    // Mostrar la sección de inicio por defecto
-    mostrarSeccion('inicio');
-    actualizarNav('inicio');
+    function mostrarImagen(boton) {
+      const contenedorMedia = boton.parentElement;
+      const img = contenedorMedia.querySelector('.ejercicio-img');
+      const prompt = img.getAttribute('data-prompt');
+      
+      // Aquí iría la lógica para generar o cargar la imagen basada en el prompt
+      // Por ahora simulamos que se carga una imagen
+      img.src = `https://via.placeholder.com/600x400/333/fff?text=${encodeURIComponent(prompt)}`;
+      img.classList.add('active');
+      
+      // Ocultar el botón después de hacer clic
+      boton.style.display = 'none';
+    }
+
+    // Contador de días
+    function calcularDiasRestantes() {
+      const hoy = new Date();
+      const objetivo = new Date(hoy.getFullYear(), 8, 15);
+      const diferencia = objetivo - hoy;
+      const dias = Math.ceil(diferencia / (1000 * 60 * 60 * 24));
+      document.getElementById("contador").textContent = dias > 0 ? dias : "¡Meta alcanzada!";
+    }
+    calcularDiasRestantes();
+    
+    // Actualizar cada día
+    setInterval(calcularDiasRestantes, 86400000);
+
+    // Hacer funciones accesibles globalmente
+    window.toggleDetalle = toggleDetalle;
+    window.mostrarImagen = mostrarImagen;
   </script>
 </body>
 </html>
