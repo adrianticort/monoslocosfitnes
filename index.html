@@ -754,8 +754,13 @@
         <h1>¡Hola, Adrián!</h1>
         <p class="objetivo">
           <i class="fas fa-bullseye"></i>
-          Primer objetivo: <strong>15 de septiembre</strong>. Faltan <span id="contador">calculando...</span> días
+          Primer objetivo: <strong>1 de noviembre</strong>. Faltan <span id="contador">calculando...</span> días
         </p>
+
+      <p class="objetivo">
+        <i class="fas fa-bullseye"></i>
+        Segundo objetivo: <strong>1 de enero</strong>. Faltan <span id="contador2">calculando...</span> días
+      </p>
       </div>
 
       <div class="cards">
@@ -1697,14 +1702,25 @@
       detalle.classList.toggle('active');
     }
 
-    // Contador de días
+    // Contador de objetivos
     function calcularDiasRestantes() {
       const hoy = new Date();
-      const objetivo = new Date(hoy.getFullYear(), 8, 15);
-      const diferencia = objetivo - hoy;
-      const dias = Math.ceil(diferencia / (1000 * 60 * 60 * 24));
-      document.getElementById("contador").textContent = dias > 0 ? dias : "¡Meta alcanzada!";
-    }
+    // Objetivo 1: 1 de noviembre (mes 10 porque enero=0)
+  const objetivo1 = new Date(hoy.getFullYear(), 10, 1);
+
+  // Si ya pasó noviembre, que se calcule para el próximo año
+  if (hoy > objetivo1) objetivo1.setFullYear(objetivo1.getFullYear() + 1);
+
+  const dias1 = Math.ceil((objetivo1 - hoy) / (1000 * 60 * 60 * 24));
+  document.getElementById("contador1").textContent = dias1 > 0 ? dias1 : "¡Meta alcanzada!";
+
+  // Objetivo 2: 1 de enero
+  const objetivo2 = new Date(hoy.getFullYear() + 1, 0, 1); 
+  // Siempre el próximo enero
+
+  const dias2 = Math.ceil((objetivo2 - hoy) / (1000 * 60 * 60 * 24));
+  document.getElementById("contador2").textContent = dias2 > 0 ? dias2 : "¡Meta alcanzada!";
+}
     calcularDiasRestantes();
     
     // Actualizar cada día
@@ -1715,6 +1731,7 @@
   </script>
 </body>
 </html>
+
 
 
 
