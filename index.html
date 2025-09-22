@@ -1920,7 +1920,7 @@
 
     function calcularDiasRestantes() {
       const hoy = new Date();
-      const objetivo = new Date(hoy.getFullYear(), 1, 1);
+      const objetivo = new Date(hoy.getFullYear(), 0, 1);
       if (objetivo < hoy) objetivo.setFullYear(hoy.getFullYear() + 1);
       const dias = Math.ceil((objetivo - hoy) / (1000 * 60 * 60 * 24));
       const contador = document.getElementById("contador");
@@ -1960,5 +1960,6 @@
   </script>
 </body>
 </html>
+
 
 
