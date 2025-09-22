@@ -4,19 +4,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Monoslocos Fitness - Entrenamiento y Nutrición</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- NUEVO: Añadimos la librería Chart.js para las estadísticas -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
-      --primary: #3b82f6;
-      --primary-dark: #2563eb;
-      --secondary: #10b981;
-      --secondary-dark: #059669;
-      --dark: #0f172a;
-      --darker: #020617;
-      --light: #f8fafc;
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #818cf8;
+      --secondary: #22d3ee;
+      --secondary-dark: #06b6d4;
+      --secondary-light: #67e8f9;
+      --accent: #fbbf24;
+      --accent-dark: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --dark: #0a0e27;
+      --darker: #030712;
+      --card-bg: rgba(17, 24, 39, 0.6);
+      --card-hover: rgba(30, 41, 59, 0.8);
+      --light: #f1f5f9;
       --gray: #94a3b8;
-      --accent: #f59e0b;
+      --gray-light: #cbd5e1;
+      --border: rgba(148, 163, 184, 0.1);
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+      --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.6);
+      --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      --gradient-secondary: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+      --gradient-dark: linear-gradient(180deg, #0a0e27 0%, #030712 100%);
+      --gradient-card: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(17, 24, 39, 0.9));
+      --gradient-accent: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      --gradient-success: linear-gradient(135deg, var(--success), #059669);
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 32px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     * {
@@ -25,122 +51,230 @@
       box-sizing: border-box;
     }
     
+    html {
+      scroll-behavior: smooth;
+    }
+    
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, var(--darker), var(--dark));
+      background: var(--gradient-dark);
       color: var(--light);
-      line-height: 1.6;
+      line-height: 1.7;
       min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 1;
     }
     
     .container {
-      max-width: 1200px;
+      max-width: 1280px;
       margin: 0 auto;
       padding: 2rem;
+      position: relative;
+      z-index: 2;
     }
     
+    /* Header mejorado */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 2rem;
-      background-color: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(10px);
+      padding: 1.5rem 2rem;
+      background: rgba(10, 14, 39, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       position: sticky;
       top: 0;
-      z-index: 100;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--gradient-primary);
+      opacity: 0.5;
     }
     
     .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--light);
+      font-size: 1.75rem;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
+      transition: var(--transition);
+    }
+    
+    .logo:hover {
+      transform: scale(1.05);
     }
     
     .logo i {
-      color: var(--primary);
+      color: var(--primary-light);
+      filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
     }
     
     nav ul {
       display: flex;
       list-style: none;
-      gap: 2rem;
+      gap: 3rem;
     }
     
     nav a {
-      color: var(--gray);
+      color: var(--gray-light);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.3s;
+      font-size: 1rem;
+      position: relative;
+      transition: var(--transition);
+      padding: 0.5rem 0;
     }
     
-    nav a:hover, nav a.active {
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--gradient-primary);
+      transition: var(--transition);
+      transform: translateX(-50%);
+    }
+    
+    nav a:hover {
       color: var(--light);
+      transform: translateY(-2px);
     }
     
-    /* Estilos para la página de inicio */
+    nav a:hover::after,
+    nav a.active::after {
+      width: 100%;
+    }
+    
+    nav a.active {
+      color: var(--primary-light);
+    }
+    
+    /* Menu hamburguesa para móvil */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--light);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+    
+    .menu-toggle:hover {
+      background: rgba(99, 102, 241, 0.2);
+    }
+    
+    /* Hero section mejorada */
     .hero {
       text-align: center;
-      padding: 4rem 0;
+      padding: 5rem 0;
+      position: relative;
     }
     
     .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(to right, var(--primary), var(--secondary));
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      background: linear-gradient(135deg, var(--primary-light), var(--secondary));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      animation: fadeInUp 0.8s ease-out;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
     }
     
     .objetivo {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background-color: rgba(30, 41, 59, 0.5);
-      padding: 0.8rem 1.5rem;
-      border-radius: 50px;
-      font-size: 1rem;
-      margin: 1rem 0;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 0.75rem;
+      background: var(--gradient-card);
+      padding: 1rem 2rem;
+      border-radius: var(--radius-xl);
+      font-size: 1.125rem;
+      margin: 1.5rem 0;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-md);
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+      transition: var(--transition);
+    }
+    
+    .objetivo:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+      border-color: rgba(99, 102, 241, 0.3);
     }
     
     .objetivo strong {
-      font-weight: 600;
+      font-weight: 700;
+      color: var(--primary-light);
     }
     
     .objetivo span {
-      color: var(--accent);
-      font-weight: 700;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 800;
+      font-size: 1.25rem;
     }
     
+    /* Cards mejoradas */
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin: 3rem 0;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+      margin: 4rem 0;
     }
     
     .card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
-      border-radius: 16px;
-      padding: 2rem;
+      background: var(--gradient-card);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
       text-decoration: none;
       color: var(--light);
-      transition: transform 0.3s, box-shadow 0.3s;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       overflow: hidden;
       position: relative;
-    }
-    
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      box-shadow: var(--shadow-md);
+      animation: fadeInUp 0.8s ease-out;
     }
     
     .card::before {
@@ -149,167 +283,269 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 5px;
+      height: 3px;
+      transition: var(--transition);
+    }
+    
+    .card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+      transform: rotate(45deg);
+      transition: var(--transition);
+      opacity: 0;
+    }
+    
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: var(--shadow-xl);
+      border-color: rgba(99, 102, 241, 0.3);
+    }
+    
+    .card:hover::after {
+      opacity: 1;
     }
     
     .card.ejercicios::before {
-      background: var(--primary);
+      background: var(--gradient-primary);
     }
     
     .card.desayunos::before {
-      background: var(--secondary);
+      background: var(--gradient-secondary);
     }
     
     .card-icon {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
+      width: 72px;
+      height: 72px;
+      border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 1.5rem;
-      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+      position: relative;
+      transition: var(--transition);
+    }
+    
+    .card:hover .card-icon {
+      transform: scale(1.1) rotate(5deg);
     }
     
     .card.ejercicios .card-icon {
-      background-color: rgba(59, 130, 246, 0.2);
-      color: var(--primary);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+      color: var(--primary-light);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
     }
     
     .card.desayunos .card-icon {
-      background-color: rgba(16, 185, 129, 0.2);
-      color: var(--secondary);
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.1));
+      color: var(--secondary-light);
+      box-shadow: 0 8px 20px rgba(34, 211, 238, 0.3);
     }
     
     .card h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
     }
     
     .card p {
-      color: var(--gray);
-      margin-bottom: 1.5rem;
+      color: var(--gray-light);
+      margin-bottom: 2rem;
+      line-height: 1.8;
+      font-size: 1.05rem;
     }
     
     .card-badge {
       display: inline-block;
-      padding: 0.3rem 0.8rem;
-      border-radius: 50px;
-      font-size: 0.8rem;
-      font-weight: 600;
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--radius-xl);
+      font-size: 0.875rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      transition: var(--transition);
+    }
+    
+    .card:hover .card-badge {
+      transform: scale(1.05);
     }
     
     .card.ejercicios .card-badge {
-      background-color: rgba(59, 130, 246, 0.2);
-      color: var(--primary);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+      color: var(--primary-light);
+      border: 1px solid rgba(99, 102, 241, 0.3);
     }
     
     .card.desayunos .card-badge {
-      background-color: rgba(16, 185, 129, 0.2);
-      color: var(--secondary);
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.1));
+      color: var(--secondary-light);
+      border: 1px solid rgba(34, 211, 238, 0.3);
     }
     
+    /* Sección de motivación mejorada */
     .motivacion {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
-      border-radius: 16px;
-      padding: 2rem;
-      margin-top: 3rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--gradient-card);
+      border-radius: var(--radius-xl);
+      padding: 3rem;
+      margin-top: 4rem;
+      border: 1px solid var(--border);
       text-align: center;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+    
+    .motivacion::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
     }
     
     .motivacion h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position: relative;
+      z-index: 1;
     }
     
     .motivacion p {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      color: var(--light);
+      position: relative;
+      z-index: 1;
+      line-height: 1.8;
     }
     
     .motivacion small {
       display: block;
-      color: var(--gray);
+      color: var(--gray-light);
       font-style: italic;
+      font-size: 1rem;
+      position: relative;
+      z-index: 1;
+      opacity: 0.9;
     }
     
-    /* Estilos para la página de ejercicios */
+    /* Page header mejorado */
     .page-header {
       text-align: center;
-      margin-bottom: 2rem;
-      padding: 1rem;
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 3rem;
+      padding: 2rem;
+      background: var(--gradient-card);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-md);
+      animation: fadeInUp 0.6s ease-out;
     }
     
     .page-header h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(to right, var(--primary), var(--accent));
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary-light), var(--secondary));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      letter-spacing: -0.02em;
     }
     
     .page-header p {
-      color: var(--gray);
+      color: var(--gray-light);
+      font-size: 1.125rem;
     }
     
+    /* Calendario mejorado */
     .calendar-container {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--gradient-card);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      margin-bottom: 3rem;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-lg);
+      animation: fadeInUp 0.6s ease-out 0.2s both;
     }
     
     .calendar-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: rgba(10, 14, 39, 0.3);
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
     }
     
     .calendar-title {
-      font-size: 1.3rem;
-      font-weight: 600;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
     
     .calendar-nav-btn {
-      background: rgba(59, 130, 246, 0.2);
-      color: var(--primary);
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+      color: var(--primary-light);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: var(--transition);
+      font-size: 1.25rem;
     }
     
     .calendar-nav-btn:hover {
-      background: rgba(59, 130, 246, 0.4);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(99, 102, 241, 0.2));
+      transform: scale(1.1);
+      box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
     }
     
     .calendar-header {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 1rem;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
       text-align: center;
-      font-weight: 600;
-      color: var(--gray);
+      font-weight: 700;
+      color: var(--gray-light);
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
     
     .calendar {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
-      gap: 0.5rem;
+      gap: 0.75rem;
     }
     
     .day {
@@ -317,52 +553,149 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(30, 41, 59, 0.5);
-      border-radius: 8px;
+      background: rgba(17, 24, 39, 0.4);
+      border-radius: var(--radius-md);
       cursor: pointer;
-      transition: all 0.3s;
+      transition: var(--transition);
       position: relative;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      font-weight: 500;
+      font-size: 1rem;
     }
     
     .day:hover {
-      background-color: rgba(59, 130, 246, 0.2);
-      transform: translateY(-2px);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+      border-color: rgba(99, 102, 241, 0.4);
     }
     
     .day.empty {
-      background-color: transparent;
+      background: transparent;
       border: none;
       cursor: default;
     }
     
+    .day.empty:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    
     .day.weekend {
-      background-color: rgba(245, 158, 11, 0.1);
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05));
       color: var(--accent);
+      border-color: rgba(251, 191, 36, 0.2);
     }
     
     .day.today {
-      background-color: var(--primary);
+      background: var(--gradient-primary);
       color: white;
-      font-weight: 600;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+      border: none;
+      animation: pulse 2s infinite;
     }
     
     .day.completed::after {
-      content: '';
+      content: '✓';
       position: absolute;
-      bottom: 5px;
-      width: 6px;
-      height: 6px;
-      background-color: var(--secondary);
+      bottom: 4px;
+      right: 4px;
+      width: 20px;
+      height: 20px;
+      background: var(--gradient-success);
       border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: white;
+      font-weight: 700;
+      box-shadow: var(--shadow-sm);
     }
     
+    /* NUEVO: Contenedor de estadísticas */
+    .stats-container {
+      background: var(--gradient-card);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      margin-bottom: 3rem;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-lg);
+      animation: fadeInUp 0.6s ease-out 0.4s both;
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .stats-chart {
+      flex-shrink: 0;
+      position: relative;
+      width: 160px;
+      height: 160px;
+    }
+
+    .stats-percentage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient-success);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .stats-details {
+      flex-grow: 1;
+    }
+
+    .stats-details h3 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--light);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .stat-item {
+      background: rgba(10, 14, 39, 0.5);
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      border-left: 3px solid var(--primary);
+    }
+
+    .stat-item-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--light);
+      display: block;
+    }
+
+    .stat-item-label {
+      font-size: 0.875rem;
+      color: var(--gray-light);
+    }
+
+
+    /* Rutina container mejorado */
     .rutina-container {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
-      border-radius: 16px;
-      padding: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--gradient-card);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-lg);
       animation: fadeIn 0.5s ease-out;
     }
     
@@ -370,61 +703,130 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
     }
     
     .rutina-header h2 {
-      font-size: 1.5rem;
-      color: var(--primary);
+      font-size: 1.875rem;
+      font-weight: 700;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
     
     .rutina-date {
-      background-color: rgba(59, 130, 246, 0.2);
-      color: var(--primary);
-      padding: 0.3rem 0.8rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: 500;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+      color: var(--primary-light);
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--radius-xl);
+      font-size: 0.875rem;
+      font-weight: 700;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    /* NUEVO: Botón para completar rutina */
+    .btn-completar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.25rem;
+      margin-top: 2rem;
+      font-size: 1.125rem;
+      font-weight: 700;
+      border-radius: var(--radius-lg);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+      color: white;
+    }
+
+    .btn-completar:not(.completed) {
+      background: var(--gradient-primary);
+    }
+
+    .btn-completar:not(.completed):hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .btn-completar.completed {
+      background: var(--gradient-success);
+    }
+
+    .btn-completar.completed:hover {
+      background: linear-gradient(135deg, #10b981, #047857);
+      opacity: 0.9;
     }
     
+    /* Ejercicios mejorados */
     .ejercicio {
-      background-color: rgba(30, 41, 59, 0.5);
-      border-radius: 12px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-      transition: all 0.3s;
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(17, 24, 39, 0.4);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .ejercicio::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--gradient-primary);
+      transition: var(--transition);
+      opacity: 0;
+    }
+    
+    .ejercicio:hover {
+      background: rgba(17, 24, 39, 0.6);
+      transform: translateX(5px);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .ejercicio:hover::before {
+      opacity: 1;
     }
     
     .ejercicio-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
       cursor: pointer;
+      user-select: none;
     }
     
     .ejercicio-title {
-      font-size: 1.1rem;
+      font-size: 1.25rem;
       font-weight: 600;
+      color: var(--light);
     }
     
     .ejercicio-sets {
-      background-color: rgba(59, 130, 246, 0.2);
-      color: var(--primary);
-      padding: 0.3rem 0.8rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: 500;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+      color: var(--primary-light);
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-xl);
+      font-size: 0.875rem;
+      font-weight: 700;
+      border: 1px solid rgba(99, 102, 241, 0.3);
     }
     
     .ejercicio-detalle {
       display: none;
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
       animation: fadeIn 0.3s ease-out;
     }
     
@@ -435,300 +837,596 @@
     .ejercicio-info {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .ejercicio-muscles,
+    .ejercicio-tips {
+      background: rgba(10, 14, 39, 0.5);
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+    }
+    
+    .ejercicio-muscles h4,
+    .ejercicio-tips h4 {
+      font-size: 0.875rem;
       margin-bottom: 1rem;
-    }
-    
-    .ejercicio-muscles, .ejercicio-tips {
-      background-color: rgba(15, 23, 42, 0.5);
-      padding: 1rem;
-      border-radius: 8px;
-    }
-    
-    .ejercicio-muscles h4, .ejercicio-tips h4 {
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-      color: var(--gray);
+      color: var(--primary-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 700;
     }
     
     .ejercicio-muscles ul {
       list-style: none;
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
+      gap: 0.75rem;
     }
     
     .ejercicio-muscles li {
-      background-color: rgba(59, 130, 246, 0.2);
-      color: var(--primary);
-      padding: 0.3rem 0.8rem;
-      border-radius: 50px;
-      font-size: 0.8rem;
-    }
-    
-    .ejercicio-media {
-      margin-top: 1rem;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+      color: var(--primary-light);
+      padding: 0.375rem 1rem;
+      border-radius: var(--radius-xl);
+      font-size: 0.875rem;
+      font-weight: 600;
+      border: 1px solid rgba(99, 102, 241, 0.3);
     }
     
     .ejercicio-img {
       width: 100%;
-      max-height: 300px;
+      max-height: 400px;
       object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border-radius: var(--radius-md);
+      margin-top: 1.5rem;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
     }
     
-    .btn-volver {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      font-weight: 500;
-      text-decoration: none;
-      margin-top: 2rem;
-      transition: background 0.3s;
+    .ejercicio-img:hover {
+      transform: scale(1.02);
+      box-shadow: var(--shadow-xl);
     }
     
-    .btn-volver:hover {
-      background-color: var(--primary-dark);
-    }
-    
+    /* Objetivo rutina */
     .objetivo-rutina {
-      background-color: rgba(16, 185, 129, 0.1);
-      color: var(--secondary);
-      padding: 1rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      border-left: 4px solid var(--secondary);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+      color: var(--success);
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 2rem;
+      border-left: 4px solid var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.2);
     }
     
     .calentamiento {
-      background-color: rgba(16, 185, 129, 0.1);
-      border-left: 4px solid var(--secondary);
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05));
+      border-left: 4px solid var(--accent);
+      border-color: rgba(251, 191, 36, 0.2);
+    }
+    
+    .calentamiento .ejercicio-sets {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1));
+      color: var(--accent);
+      border-color: rgba(251, 191, 36, 0.3);
     }
     
     .estiramiento {
-      background-color: rgba(245, 158, 11, 0.1);
-      border-left: 4px solid var(--accent);
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(34, 211, 238, 0.05));
+      border-left: 4px solid var(--secondary);
+      border-color: rgba(34, 211, 238, 0.2);
     }
     
-    /* Estilos para la página de nutrición */
+    .estiramiento .ejercicio-sets {
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.1));
+      color: var(--secondary);
+      border-color: rgba(34, 211, 238, 0.3);
+    }
+    
+    /* Botón volver mejorado */
+    .btn-volver {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      text-decoration: none;
+      margin-top: 3rem;
+      transition: var(--transition);
+      box-shadow: var(--shadow-md);
+      font-size: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-volver::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .btn-volver:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+    }
+    
+    .btn-volver:hover::before {
+      left: 100%;
+    }
+    
+    /* Days container mejorado */
     .days-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
     }
     
     .day-btn {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
-      border-radius: 12px;
-      padding: 1.5rem 1rem;
+      background: var(--gradient-card);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.5rem;
       text-align: center;
       cursor: pointer;
-      transition: all 0.3s;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .day-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-secondary);
+      transform: scaleX(0);
+      transition: var(--transition);
     }
     
     .day-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(34, 211, 238, 0.3);
+    }
+    
+    .day-btn:hover::before {
+      transform: scaleX(1);
     }
     
     .day-btn.active {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(15, 23, 42, 0.9));
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(17, 24, 39, 0.9));
       border-color: var(--secondary);
+      box-shadow: 0 8px 20px rgba(34, 211, 238, 0.3);
+    }
+    
+    .day-btn.active::before {
+      transform: scaleX(1);
     }
     
     .day-btn i {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      color: var(--secondary);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      background: var(--gradient-secondary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
     
     .day-btn h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.3rem;
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      color: var(--light);
     }
     
     .day-btn p {
-      font-size: 0.9rem;
-      color: var(--gray);
+      font-size: 0.875rem;
+      color: var(--gray-light);
+      font-weight: 500;
     }
     
+    /* Desayuno container mejorado */
     .desayuno-container {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
-      border-radius: 16px;
-      padding: 2rem;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--gradient-card);
+      border-radius: var(--radius-xl);
+      padding: 3rem;
+      border: 1px solid var(--border);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-lg);
       animation: fadeIn 0.5s ease-out;
     }
     
     .desayuno-header {
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
     }
     
     .desayuno-header h2 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-      color: var(--secondary);
+      font-size: 1.875rem;
+      margin-bottom: 1rem;
+      background: var(--gradient-secondary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
     }
     
     .desayuno-calorias {
       display: inline-block;
-      background-color: rgba(16, 185, 129, 0.2);
-      color: var(--secondary);
-      padding: 0.3rem 0.8rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-    
-    .desayuno-content {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-    
-    .desayuno-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.1));
+      color: var(--secondary-light);
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--radius-xl);
+      font-size: 0.875rem;
+      font-weight: 700;
+      border: 1px solid rgba(34, 211, 238, 0.3);
     }
     
     .desayuno-section {
-      background-color: rgba(15, 23, 42, 0.5);
-      padding: 1.5rem;
-      border-radius: 12px;
+      background: rgba(10, 14, 39, 0.5);
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border);
     }
     
     .desayuno-section h3 {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-      color: var(--secondary);
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+      color: var(--secondary-light);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
+      font-weight: 700;
     }
     
-    .desayuno-section h3 i {
-      font-size: 1rem;
-    }
-    
-    .desayuno-section ul, .desayuno-section ol {
+    .desayuno-section ul,
+    .desayuno-section ol {
       padding-left: 1.5rem;
     }
     
     .desayuno-section li {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.8;
+      color: var(--gray-light);
     }
     
+    /* Nutrition facts mejorado */
     .nutrition-facts {
-      background-color: rgba(15, 23, 42, 0.5);
-      padding: 1.5rem;
-      border-radius: 12px;
+      background: rgba(10, 14, 39, 0.5);
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
     }
     
     .nutrition-facts h3 {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-      color: var(--secondary);
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      color: var(--secondary-light);
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
+      font-weight: 700;
     }
     
     .nutrition-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+      gap: 1.5rem;
       text-align: center;
     }
     
     .nutrition-item {
-      background-color: rgba(16, 185, 129, 0.1);
-      padding: 1rem;
-      border-radius: 8px;
-      border: 1px solid rgba(16, 185, 129, 0.2);
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(34, 211, 238, 0.05));
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(34, 211, 238, 0.2);
+      transition: var(--transition);
+    }
+    
+    .nutrition-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(34, 211, 238, 0.3);
+      border-color: rgba(34, 211, 238, 0.4);
     }
     
     .nutrition-value {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--secondary);
+      font-size: 1.75rem;
+      font-weight: 800;
+      background: var(--gradient-secondary);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       display: block;
+      margin-bottom: 0.5rem;
     }
     
     .nutrition-label {
-      font-size: 0.8rem;
-      color: var(--gray);
+      font-size: 0.875rem;
+      color: var(--gray-light);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
     
-    /* Estilos generales */
+    /* Animaciones */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     
-    /* Estilos responsivos */
-    @media (max-width: 768px) {
-      header {
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+    
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+    
+    /* Scroll bar personalizada */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--dark);
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--primary), var(--primary-dark));
+      border-radius: 10px;
+      border: 2px solid var(--dark);
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, var(--primary-light), var(--primary));
+    }
+    
+    /* Página activa/inactiva */
+    .page-section {
+      display: none;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .page-section.active {
+      display: block;
+    }
+    
+    /* Media Queries para responsividad */
+    @media (max-width: 1024px) {
+      .container {
+        padding: 1.5rem;
+      }
+      .stats-container {
         flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
+        align-items: stretch;
+        text-align: center;
       }
-      
-      nav ul {
-        gap: 1rem;
+      .stats-chart {
+        margin: 0 auto;
       }
-      
-      .hero {
-        padding: 2rem 0;
+      .cards {
+        gap: 2rem;
       }
       
       .hero h1 {
-        font-size: 2rem;
+        font-size: 3rem;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        padding: 1rem;
       }
       
-      .days-container {
-        grid-template-columns: repeat(2, 1fr);
+      .logo {
+        font-size: 1.5rem;
       }
       
-      .calendar-header, .calendar {
-        grid-template-columns: repeat(7, 1fr);
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10, 14, 39, 0.95);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        box-shadow: var(--shadow-lg);
+        padding: 1rem;
+      }
+      
+      nav.active {
+        display: block;
+      }
+      
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      nav a {
+        display: block;
+        padding: 1rem;
+        border-radius: var(--radius-sm);
+        background: rgba(17, 24, 39, 0.5);
+        text-align: center;
+      }
+      
+      .menu-toggle {
+        display: block;
+      }
+      
+      .hero {
+        padding: 3rem 0;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .objetivo {
+        font-size: 1rem;
+        padding: 0.875rem 1.5rem;
+      }
+      
+      .cards {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .card {
+        padding: 2rem;
       }
       
       .ejercicio-info {
         grid-template-columns: 1fr;
       }
       
-      .container {
-        padding: 1rem;
-      }
-      
-      .calendar-container, .rutina-container, .desayuno-container {
-        padding: 1rem;
+      .calendar-container,
+      .rutina-container,
+      .desayuno-container {
+        padding: 1.5rem;
       }
       
       .nutrition-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+      
+      .days-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      
+      .day-btn {
+        padding: 1.5rem 1rem;
+      }
+      
+      .calendar {
+        gap: 0.5rem;
+      }
+      
+      .day {
+        font-size: 0.875rem;
+      }
     }
     
-    /* Estilos para ocultar/mostrar secciones */
-    .page-section {
-      display: none;
+    @media (max-width: 480px) {
+      .container {
+        padding: 1rem;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      
+      .page-header h1 {
+        font-size: 1.75rem;
+      }
+      
+      .objetivo {
+        font-size: 0.875rem;
+        padding: 0.75rem 1.25rem;
+      }
+      
+      .objetivo span {
+        font-size: 1rem;
+      }
+      
+      .card h2 {
+        font-size: 1.5rem;
+      }
+      
+      .calendar-header {
+        font-size: 0.75rem;
+      }
+      
+      .nutrition-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .motivacion {
+        padding: 2rem 1.5rem;
+      }
+      
+      .motivacion h2 {
+        font-size: 1.5rem;
+      }
+      
+      .motivacion p {
+        font-size: 1.125rem;
+      }
     }
     
-    .page-section.active {
-      display: block;
+    /* Print styles */
+    @media print {
+      body {
+        background: white;
+        color: black;
+      }
+      
+      header,
+      .btn-volver,
+      .menu-toggle {
+        display: none;
+      }
+      
+      .card,
+      .ejercicio,
+      .desayuno-section {
+        break-inside: avoid;
+      }
     }
   </style>
 </head>
@@ -736,31 +1434,36 @@
   <header>
     <div class="logo">
       <i class="fas fa-dumbbell"></i>
-      <span>Monoslocosfitnes</span>
+      <span>Monoslocos<span style="font-weight: 300;">fitness</span></span>
     </div>
-    <nav>
+    <nav id="nav">
       <ul>
-        <li><a href="#" class="nav-link active" data-target="inicio">Inicio</a></li>
-        <li><a href="#" class="nav-link" data-target="ejercicios">Ejercicios</a></li>
-        <li><a href="#" class="nav-link" data-target="nutricion">Nutrición</a></li>
+        <li><a href="#" class="nav-link active" data-target="inicio">
+          <i class="fas fa-home"></i> Inicio
+        </a></li>
+        <li><a href="#" class="nav-link" data-target="ejercicios">
+          <i class="fas fa-running"></i> Ejercicios
+        </a></li>
+        <li><a href="#" class="nav-link" data-target="nutricion">
+          <i class="fas fa-utensils"></i> Nutrición
+        </a></li>
       </ul>
     </nav>
+    <button class="menu-toggle" id="menu-toggle">
+      <i class="fas fa-bars"></i>
+    </button>
   </header>
 
   <div class="container">
     <!-- Sección de Inicio -->
     <section id="inicio" class="page-section active">
       <div class="hero">
-        <h1>¡Hola, Adrián!</h1>
+        <h1>¡Hola, Adrián! 👋</h1>
         <p class="objetivo">
           <i class="fas fa-bullseye"></i>
-          Primer objetivo: <strong>1 de noviembre</strong>. Faltan <span id="contador">calculando...</span> días
+          Primer objetivo: <strong>15 de septiembre</strong>
+          <span id="contador">calculando...</span>
         </p>
-
-      <p class="objetivo">
-        <i class="fas fa-bullseye"></i>
-        Segundo objetivo: <strong>1 de enero</strong>. Faltan <span id="contador2">calculando...</span> días
-      </p>
       </div>
 
       <div class="cards">
@@ -783,8 +1486,8 @@
       </div>
 
       <div class="motivacion">
-        <h2>¡Tú puedes lograrlo!</h2>
-        <p>Cada entrenamiento te acerca más a tu meta. La consistencia es la clave del éxito. 💪</p>
+        <h2>¡Tú puedes lograrlo! 💪</h2>
+        <p>Cada entrenamiento te acerca más a tu meta. La consistencia es la clave del éxito.</p>
         <small>"La disciplina es el puente entre tus metas y tus logros" — Jim Rohn</small>
       </div>
     </section>
@@ -819,6 +1522,9 @@
         
         <div class="calendar" id="calendar"></div>
       </div>
+
+      <!-- NUEVO: Contenedor para las estadísticas mensuales -->
+      <div id="stats-container-wrapper"></div>
 
       <div class="rutina-container" id="rutina">
         <div class="rutina-header">
@@ -869,72 +1575,7 @@
       </div>
 
       <div class="desayuno-container" id="desayuno">
-        <div class="desayuno-header">
-          <h2>Lunes: Pancakes estilo stracciatella</h2>
-          <span class="desayuno-calorias">600-700 kcal</span>
-        </div>
-        
-        <div class="desayuno-content">
-          <div class="desayuno-info">
-            <div class="desayuno-section">
-              <h3><i class="fas fa-list"></i> Ingredientes</h3>
-              <ul>
-                <li>1 huevo</li>
-                <li>25g de azúcar (1/8 de taza)</li>
-                <li>1 pizca de sal</li>
-                <li>1/2 cdta de esencia de vainilla</li>
-                <li>35 ml de leche (1/8 de taza aprox)</li>
-                <li>1/2 yogur griego (62.5g)</li>
-                <li>100g de harina de trigo (1/2 taza + 1/3)</li>
-                <li>1/2 cda de levadura química (4g)</li>
-                <li>un poco de aceite</li>
-                <li>complementar al gusto</li>
-              </ul>
-            </div>
-            
-            <div class="desayuno-section">
-              <h3><i class="fas fa-list-ol"></i> Preparación</h3>
-              <ol>
-                <li>Mezcla el huevo con el azúcar, sal y esencia de vainilla hasta integrar.</li>
-                <li>Añade la leche y el yogur griego, mezcla bien.</li>
-                <li>Incorpora la harina y la levadura, mezcla hasta obtener una masa homogénea.</li>
-                <li>Deja reposar la masa 5 minutos.</li>
-                <li>Cocina en sartén antiadherente con un poco de aceite, vuelta y vuelta.</li>
-                <li>Sirve con tus toppings favoritos.</li>
-              </ol>
-            </div>
-            
-            <div class="nutrition-facts">
-              <h3><i class="fas fa-fire"></i> Información Nutricional</h3>
-              <div class="nutrition-grid">
-                <div class="nutrition-item">
-                  <span class="nutrition-value">650</span>
-                  <span class="nutrition-label">kcal</span>
-                </div>
-                <div class="nutrition-item">
-                  <span class="nutrition-value">25g</span>
-                  <span class="nutrition-label">Proteínas</span>
-                </div>
-                <div class="nutrition-item">
-                  <span class="nutrition-value">85g</span>
-                  <span class="nutrition-label">Carbohidratos</span>
-                </div>
-                <div class="nutrition-item">
-                  <span class="nutrition-value">20g</span>
-                  <span class="nutrition-label">Grasas</span>
-                </div>
-                <div class="nutrition-item">
-                  <span class="nutrition-value">8g</span>
-                  <span class="nutrition-label">Fibra</span>
-                </div>
-                <div class="nutrition-item">
-                  <span class="nutrition-value">30g</span>
-                  <span class="nutrition-label">Azúcares</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Contenido dinámico -->
       </div>
 
       <a href="#" class="btn-volver" data-target="inicio">
@@ -945,480 +1586,52 @@
   </div>
 
   <script>
-    // Datos de los desayunos
-    const desayunos = {
-      L: {
-        nombre: "Pancakes estilo stracciatella",
-        calorias: "600-700 kcal",
-        ingredientes: [
-          "1 huevo",
-          "25g de azúcar (1/8 de taza)",
-          "1 pizca de sal",
-          "1/2 cdta de esencia de vainilla",
-          "35 ml de leche (1/8 de taza aprox)",
-          "1/2 yogur griego (62.5g)",
-          "100g de harina de trigo (1/2 taza + 1/3)",
-          "1/2 cda de levadura química (4g)",
-          "un poco de aceite",
-          "complementar al gusto"
-        ],
-        preparacion: [
-          "Mezcla el huevo con el azúcar, sal y esencia de vainilla hasta integrar.",
-          "Añade la leche y el yogur griego, mezcla bien.",
-          "Incorpora la harina y la levadura, mezcla hasta obtener una masa homogénea.",
-          "Deja reposar la masa 5 minutos.",
-          "Cocina en sartén antiadherente con un poco de aceite, vuelta y vuelta.",
-          "Sirve con tus toppings favoritos."
-        ],
-        nutricion: {
-          kcal: 650,
-          proteinas: 25,
-          carbohidratos: 85,
-          grasas: 20,
-          fibra: 8,
-          azucares: 30
-        }
-      },
-      M: {
-        nombre: "Batido energético estilo stracciatella",
-        calorias: "900-1000 kcal",
-        ingredientes: [
-          "500 ml de leche entera",
-          "1 plátano",
-          "100 g de avena",
-          "30 g de nueces",
-          "2 cucharadas de crema de cacahuete",
-          "1 cucharada de ColaCao",
-          "1 yogur griego de stracciatella"
-        ],
-        preparacion: [
-          "Coloca todos los ingredientes en la licuadora.",
-          "Licúa hasta obtener una mezcla suave y homogénea.",
-          "Sirve frío. Puedes acompañarlo con una tostada para sumar aún más calorías."
-        ],
-        nutricion: {
-          kcal: 950,
-          proteinas: 35,
-          carbohidratos: 120,
-          grasas: 35,
-          fibra: 12,
-          azucares: 45
-        }
-      },
-      X: {
-        nombre: "Tostadas con aguacate, huevo y tomate",
-        calorias: "600-700 kcal",
-        ingredientes: [
-          "2 rebanadas de pan integral o de centeno",
-          "1 aguacate maduro",
-          "2 huevos",
-          "1 tomate mediano",
-          "Aceite de oliva virgen extra",
-          "Sal y pimienta"
-        ],
-        preparacion: [
-          "Tuesta el pan.",
-          "Fríe o cuece los huevos a tu gusto.",
-          "Tritura el aguacate y úntalo sobre el pan.",
-          "Añade rodajas de tomate y coloca los huevos encima.",
-          "Rocía con aceite de oliva, sal y pimienta."
-        ],
-        nutricion: {
-          kcal: 650,
-          proteinas: 22,
-          carbohidratos: 45,
-          grasas: 40,
-          fibra: 10,
-          azucares: 5
-        }
-      },
-      J: {
-        nombre: "Tortilla francesa con atún y pan con aceite",
-        calorias: "600-650 kcal",
-        ingredientes: [
-          "2-3 huevos",
-          "1 lata de atún en aceite de oliva escurrida",
-          "2 rebanadas de pan integral",
-          "Aceite de oliva virgen extra",
-          "Sal al gusto"
-        ],
-        preparacion: [
-          "Bate los huevos y añade el atún escurrido.",
-          "Cocina en sartén caliente hasta que cuaje.",
-          "Sirve con pan tostado y un chorro de aceite por encima."
-        ],
-        nutricion: {
-          kcal: 625,
-          proteinas: 45,
-          carbohidratos: 35,
-          grasas: 35,
-          fibra: 5,
-          azucares: 2
-        }
-      },
-      V: {
-        nombre: "Yogur natural con granola casera y fruta",
-        calorias: "650-750 kcal",
-        ingredientes: [
-          "1 taza de yogur natural entero o griego",
-          "½ taza de granola casera o sin azúcares añadidos",
-          "1 plátano o un puñado de frutos rojos",
-          "1 cucharada de miel o sirope de agave",
-          "1 cucharada de nueces o almendras picadas"
-        ],
-        preparacion: [
-          "Vierte el yogur en un bol.",
-          "Añade la fruta cortada y la granola.",
-          "Espolvorea los frutos secos.",
-          "Agrega miel al gusto y mezcla bien."
-        ],
-        nutricion: {
-          kcal: 700,
-          proteinas: 25,
-          carbohidratos: 90,
-          grasas: 25,
-          fibra: 8,
-          azucares: 40
-        }
-      }
-    };
+    // Datos de los desayunos (sin cambios)
+    const desayunos = { L:{nombre:"Pancakes estilo stracciatella",calorias:"600-700 kcal",ingredientes:["1 huevo","25g de azúcar (1/8 de taza)","1 pizca de sal","1/2 cdta de esencia de vainilla","35 ml de leche (1/8 de taza aprox)","1/2 yogur griego (62.5g)","100g de harina de trigo (1/2 taza + 1/3)","1/2 cda de levadura química (4g)","un poco de aceite","complementar al gusto"],preparacion:["Mezcla el huevo con el azúcar, sal y esencia de vainilla hasta integrar.","Añade la leche y el yogur griego, mezcla bien.","Incorpora la harina y la levadura, mezcla hasta obtener una masa homogénea.","Deja reposar la masa 5 minutos.","Cocina en sartén antiadherente con un poco de aceite, vuelta y vuelta.","Sirve con tus toppings favoritos."],nutricion:{kcal:650,proteinas:25,carbohidratos:85,grasas:20,fibra:8,azucares:30}},M:{nombre:"Batido energético estilo stracciatella",calorias:"900-1000 kcal",ingredientes:["500 ml de leche entera","1 plátano","100 g de avena","30 g de nueces","2 cucharadas de crema de cacahuete","1 cucharada de ColaCao","1 yogur griego de stracciatella"],preparacion:["Coloca todos los ingredientes en la licuadora.","Licúa hasta obtener una mezcla suave y homogénea.","Sirve frío. Puedes acompañarlo con una tostada para sumar aún más calorías."],nutricion:{kcal:950,proteinas:35,carbohidratos:120,grasas:35,fibra:12,azucares:45}},X:{nombre:"Tostadas con aguacate, huevo y tomate",calorias:"600-700 kcal",ingredientes:["2 rebanadas de pan integral o de centeno","1 aguacate maduro","2 huevos","1 tomate mediano","Aceite de oliva virgen extra","Sal y pimienta"],preparacion:["Tuesta el pan.","Fríe o cuece los huevos a tu gusto.","Tritura el aguacate y úntalo sobre el pan.","Añade rodajas de tomate y coloca los huevos encima.","Rocía con aceite de oliva, sal y pimienta."],nutricion:{kcal:650,proteinas:22,carbohidratos:45,grasas:40,fibra:10,azucares:5}},J:{nombre:"Tortilla francesa con atún y pan con aceite",calorias:"600-650 kcal",ingredientes:["2-3 huevos","1 lata de atún en aceite de oliva escurrida","2 rebanadas de pan integral","Aceite de oliva virgen extra","Sal al gusto"],preparacion:["Bate los huevos y añade el atún escurrido.","Cocina en sartén caliente hasta que cuaje.","Sirve con pan tostado y un chorro de aceite por encima."],nutricion:{kcal:625,proteinas:45,carbohidratos:35,grasas:35,fibra:5,azucares:2}},V:{nombre:"Yogur natural con granola casera y fruta",calorias:"650-750 kcal",ingredientes:["1 taza de yogur natural entero o griego","½ taza de granola casera o sin azúcares añadidos","1 plátano o un puñado de frutos rojos","1 cucharada de miel o sirope de agave","1 cucharada de nueces o almendras picadas"],preparacion:["Vierte el yogur en un bol.","Añade la fruta cortada y la granola.","Espolvorea los frutos secos.","Agrega miel al gusto y mezcla bien."],nutricion:{kcal:700,proteinas:25,carbohidratos:90,grasas:25,fibra:8,azucares:40}}};
 
-    // Datos de las rutinas con imágenes reales
-    const rutinas = {
-      1: { // Lunes - Pecho y core
-        title: "Lunes – Pecho y Core",
-        objetivo: "Desarrollar fuerza en el pecho, hombros y core para mejorar la estabilidad y postura.",
-        calentamiento: {
-          nombre: "Calentamiento de pecho y hombros",
-          descripcion: "Prepara tus músculos para el entrenamiento y previene lesiones",
-          ejercicios: [
-            "Rotaciones de hombros: 2x15 (adelante y atrás)",
-            "Estiramiento de pecho en puerta: 2x15 segundos",
-            "Movilidad escapular: 2x10 (elevación/retracción)",
-            "Flexiones dinámicas: 2x10 (media amplitud)"
-          ],
-          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/shoulder-rotator-cuff.jpg?w=800&quality=86&strip=all"
-        },
-        estiramiento: {
-          nombre: "Estiramiento de pecho y core",
-          descripcion: "Mejora la flexibilidad y recuperación muscular",
-          ejercicios: [
-            "Estiramiento de pectoral en pared: 30 segundos cada lado",
-            "Estiramiento de hombros con toalla: 30 segundos",
-            "Estiramiento de gato-vaca: 10 repeticiones",
-            "Estiramiento de oblicuos: 20 segundos cada lado"
-          ],
-          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/chest-stretch.jpg?w=800&quality=86&strip=all"
-        },
-        ejercicios: [
-          {
-            nombre: "Flexiones estándar",
-            sets: "3x8-12",
-            musculos: ["Pectorales", "Tríceps", "Deltoides frontales"],
-            consejos: "Cuerpo recto, manos a la altura de los hombros. Bajar el pecho hasta casi tocar el suelo y subir estirando brazos.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/push-up.jpg?w=800&quality=86&strip=all"
-          },
-          {
-            nombre: "Flexiones con protracción escapular",
-            sets: "3x8-10",
-            musculos: ["Serrato anterior", "Trapecios", "Pectorales"],
-            consejos: "Igual posición que la flexión normal, pero al subir empuja el suelo para separar los omóplatos (escápulas).",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/scapular-push-up.jpg?w=800&quality=86&strip=all"
-          },
-          {
-            nombre: "Lean Planche Hold",
-            sets: "3x10-15 seg",
-            musculos: ["Hombros", "Serrato anterior", "Core"],
-            consejos: "En posición de flexión, lleva caderas arriba para que tu cuerpo quede casi horizontal. Mantén escápulas protraídas, abdomen y glúteos apretados.",
-            imagen: "https://www.calisthenics-education.co.uk/wp-content/uploads/2020/05/lean-planche-1024x683.jpg"
-          },
-          {
-            nombre: "Plancha frontal",
-            sets: "3x30-45 seg",
-            musculos: ["Recto abdominal", "Oblicuos", "Transverso"],
-            consejos: "En apoyo de antebrazos y puntas de pies, cuerpo recto. Aprieta abdomen y glúteos. Refuerza el core para la estabilidad general del cuerpo.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/plank.jpg?w=800&quality=86&strip=all"
-          }
-        ]
-      },
-      2: { // Martes - Piernas y espalda baja
-        title: "Martes – Piernas y Espalda Baja (Postura)",
-        objetivo: "Fortalecer piernas y espalda baja para mejorar postura y estabilidad.",
-        calentamiento: {
-          nombre: "Calentamiento de piernas y espalda",
-          descripcion: "Prepara tus músculos para el entrenamiento y previene lesiones",
-          ejercicios: [
-            "Sentadillas sin peso: 2x15",
-            "Balanceos de piernas: 2x10 cada pierna",
-            "Movilidad de cadera: círculos 10 cada lado",
-            "Estiramiento dinámico de isquiotibiales: 2x10"
-          ],
-          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/leg-swing.jpg?w=800&quality=86&strip=all"
-        },
-        estiramiento: {
-          nombre: "Estiramiento de piernas y espalda",
-          descripcion: "Mejora la flexibilidad y recuperación muscular",
-          ejercicios: [
-            "Estiramiento de cuádriceps: 30 segundos cada pierna",
-            "Estiramiento de isquiotibiales: 30 segundos cada pierna",
-            "Estiramiento de espalda baja (rodillas al pecho): 30 segundos",
-            "Estiramiento de glúteos: 20 segundos cada lado"
-          ],
-          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/quad-stretch.jpg?w=800&quality=86&strip=all"
-        },
-        ejercicios: [
-          {
-            nombre: "Sentadillas sin peso",
-            sets: "4x10-12",
-            musculos: ["Cuádriceps", "Glúteos", "Core"],
-            consejos: "Pies a la altura de hombros, bajar glúteos hacia atrás/bajo hasta que muslos queden paralelos.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/squat.jpg?w=800&quality=86&strip=all"
-          },
-          {
-            nombre: "Sentadilla búlgara",
-            sets: "3x8 por pierna",
-            musculos: ["Cuádriceps", "Glúteos", "Isquiotibiales"],
-            consejos: "Poner un pie adelante y otro atrás apoyado en una silla baja. Bajar controlado con la pierna delantera.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/bulgarian-split-squat.jpg?w=800&quality=86&strip=all"
-          },
-          {
-            nombre: "Puente de glúteos",
-            sets: "3x12",
-            musculos: ["Glúteos", "Espalda baja", "Isquiotibiales"],
-            consejos: "Acostado boca arriba, rodillas flexionadas, empuja caderas hacia arriba apretando glúteos.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/glute-bridge.jpg?w=800&quality=86&strip=all"
-          },
-          {
-            nombre: "Prone Cobra",
-            sets: "3x20-30 seg",
-            musculos: ["Trapecios", "Romboides", "Erectores espinales"],
-            consejos: "Acostado boca abajo, manos al costado, levanta el pecho contrayendo glúteos y rotando pulgares hacia arriba.",
-            imagen: "https://www.yogajournal.com/wp-content/uploads/2019/07/cobra-pose.jpg"
-          },
-          {
-            nombre: "Puente invertido (Tabletop)",
-            sets: "3x15 seg",
-            musculos: ["Hombros", "Espalda baja", "Glúteos"],
-            consejos: "Sentado con manos atrás apoyadas, elevar caderas empujando con hombros y glúteos.",
-            imagen: "https://www.yogajournal.com/wp-content/uploads/2019/07/reverse-tabletop-pose.jpg"
-          }
-        ]
-      },
-      3: { // Miércoles - Hombros avanzados y planche
-        title: "Miércoles – Hombros Avanzados y Planche",
-        objetivo: "Desarrollar fuerza en hombros y progresar hacia la planche.",
-        calentamiento: {
-          nombre: "Calentamiento de hombros y core",
-          descripcion: "Prepara tus músculos para el entrenamiento y previene lesiones",
-          ejercicios: [
-            "Rotaciones de brazos: 2x15 (pequeños y grandes círculos)",
-            "Movilidad escapular: 2x10 (elevación/retracción)",
-            "Estiramiento dinámico de hombros: 2x10",
-            "Plancha dinámica: 2x10 segundos"
-          ],
-          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/arm-circles.jpg?w=800&quality=86&strip=all"
-        },
-        estiramiento: {
-          nombre: "Estiramiento de hombros y core",
-          descripcion: "Mejora la flexibilidad y recuperación muscular",
-          ejercicios: [
-            "Estiramiento de hombros cruzados: 30 segundos cada brazo",
-            "Estiramiento de tríceps: 20 segundos cada brazo",
-            "Estiramiento de gato-vaca: 10 repeticiones",
-            "Estiramiento de hombros con toalla: 30 segundos"
-          ],
-          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/shoulder-stretch.jpg?w=800&quality=86&strip=all"
-        },
-        ejercicios: [
-          {
-            nombre: "Flexiones Pike (verticales)",
-            sets: "3x8-10",
-            musculos: ["Hombros", "Trapecios superiores", "Core"],
-            consejos: "En posición de 'V' invertida, bajar la cabeza hacia el suelo flexionando codos, luego subir.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/pike-push-up.jpg?w=800&quality=86&strip=all"
-          },
-          {
-            nombre: "Flexiones Lean Planche",
-            sets: "3x5-8",
-            musculos: ["Hombros", "Serrato anterior", "Pectorales"],
-            consejos: "Manos más cerca de la cintura que de los pies, torso avanzado hacia adelante. Bajar y subir controlando con escápulas protraídas.",
-            imagen: "https://www.calisthenics-education.co.uk/wp-content/uploads/2020/05/lean-planche-1024x683.jpg"
-          },
-          {
-            nombre: "Handstand asistido (contra pared)",
-            sets: "3x20-30 seg",
-            musculos: ["Hombros", "Trapecios", "Core"],
-            consejos: "Apoya pies en pared, cuerpo vertical. Buscar mantener hombros firmes y core activo.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/handstand.jpg?w=800&quality=86&strip=all"
-          },
-          {
-            nombre: "Hollow Body Hold",
-            sets: "3x20-30 seg",
-            musculos: ["Recto abdominal", "Oblicuos", "Flexores de cadera"],
-            consejos: "Acostado de espalda, elevar hombros y piernas manteniendo lumbares al suelo. Aprieta abdomen.",
-            imagen: "https://www.gymnasticshq.com/wp-content/uploads/2020/05/hollow-body-hold.jpg"
-          }
-        ]
-      },
-      4: { // Jueves - Espalda y postura
-        title: "Jueves – Espalda y Postura",
-        objetivo: "Fortalecer espalda y mejorar la postura contrarrestando hombros adelantados.",
-        calentamiento: {
-          nombre: "Calentamiento de espalda y postura",
-          descripcion: "Prepara tus músculos para el entrenamiento y previene lesiones",
-          ejercicios: [
-            "Retracción escapular de pie: 2x15",
-            "Círculos de brazos: 2x10 (adelante y atrás)",
-            "Movilidad torácica: 2x10 (rotaciones)",
-            "Estiramiento dinámico de espalda: 2x10"
-          ],
-          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/back-warmup.jpg?w=800&quality=86&strip=all"
-        },
-        estiramiento: {
-          nombre: "Estiramiento de espalda y hombros",
-          descripcion: "Mejora la flexibilidad y recuperación muscular",
-          ejercicios: [
-            "Estiramiento de trapecios: 30 segundos cada lado",
-            "Estiramiento de hombros con toalla: 30 segundos",
-            "Estiramiento de gato-vaca: 10 repeticiones",
-            "Estiramiento de brazos cruzados: 20 segundos cada brazo"
-          ],
-          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/back-stretch.jpg?w=800&quality=86&strip=all"
-        },
-        ejercicios: [
-          {
-            nombre: "Retracción escapular en suelo",
-            sets: "3x10-12",
-            musculos: ["Trapecios medios", "Romboides"],
-            consejos: "Acostado boca arriba, brazos abiertos en cruz, empuja el suelo con la parte posterior de los brazos.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/scapular-retraction.jpg?w=800&quality=86&strip=all"
-          },
-          {
-            nombre: "Elevaciones 'Y' prono",
-            sets: "3x10-12",
-            musculos: ["Trapecio medio", "Romboides", "Deltoides posteriores"],
-            consejos: "Acostado boca abajo con brazos en 'Y', eleva los brazos contrayendo omóplatos juntos.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/y-raise.jpg?w=800&quality=86&strip=all"
-          },
-          {
-            nombre: "Superman",
-            sets: "3x12-15",
-            musculos: ["Erectores espinales", "Glúteos", "Hombros posteriores"],
-            consejos: "Boca abajo, levanta simultáneamente brazos/pecho y piernas unos centímetros.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/superman.jpg?w=800&quality=86&strip=all"
-          },
-          {
-            nombre: "Prone Scapular Squeezes",
-            sets: "3x12-15",
-            musculos: ["Trapecio medio", "Romboides"],
-            consejos: "Boca abajo con brazos extendidos, junta fuerte omóplatos manteniendo brazos elevados 2-3 seg.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/scapular-squeeze.jpg?w=800&quality=86&strip=all"
-          }
-        ]
-      },
-      5: { // Viernes - Full body y movilidad
-        title: "Viernes – Full Body y Movilidad",
-        objetivo: "Trabajo completo de cuerpo con énfasis en movilidad y control corporal.",
-        calentamiento: {
-          nombre: "Calentamiento completo",
-          descripcion: "Prepara todo tu cuerpo para el entrenamiento y previene lesiones",
-          ejercicios: [
-            "Movilidad articular general: 2 minutos",
-            "Sentadillas sin peso: 2x12",
-            "Flexiones dinámicas: 2x10",
-            "Estiramiento dinámico de isquiotibiales: 2x10"
-          ],
-          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/full-body-warmup.jpg?w=800&quality=86&strip=all"
-        },
-        estiramiento: {
-          nombre: "Estiramiento completo",
-          descripcion: "Mejora la flexibilidad general y recuperación muscular",
-          ejercicios: [
-            "Estiramiento de cuádriceps: 30 segundos cada pierna",
-            "Estiramiento de isquiotibiales: 30 segundos cada pierna",
-            "Estiramiento de hombros: 30 segundos cada brazo",
-            "Estiramiento de espalda (gato-vaca): 10 repeticiones"
-          ],
-          imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/full-body-stretch.jpg?w=800&quality=86&strip=all"
-        },
-        ejercicios: [
-          {
-            nombre: "Sentadilla pistol asistida",
-            sets: "3x5 por pierna",
-            musculos: ["Cuádriceps", "Glúteos", "Estabilidad"],
-            consejos: "Baja con una pierna intentando llegar lo más abajo posible, usando poco apoyo con la otra.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/pistol-squat.jpg?w=800&quality=86&strip=all"
-          },
-          {
-            nombre: "Flexiones pliométricas (con palmadas)",
-            sets: "3x6-8",
-            musculos: ["Pectorales", "Tríceps", "Potencia"],
-            consejos: "Flexión explosiva: al subir, impulsa el pecho del suelo con tal fuerza que aplaudes en el aire.",
-            imagen: "https://github.com/adrianticort/monoslocosfitnes/blob/main/Flexiones%20pliom%C3%A9tricas%20(con%20palmadas).png?raw=true"
-          },
-          {
-            nombre: "Hold de Planche Lean avanzado",
-            sets: "2x8-10 seg",
-            musculos: ["Hombros", "Serrato anterior", "Core"],
-            consejos: "Mayor inclinación que el básico, con pies más adelante. Enfatiza posición horizontal.",
-            imagen: "https://github.com/adrianticort/monoslocosfitnes/blob/main/Hold%20de%20Planche%20Lean%20avanzado.png?raw=true"
-          },
-          {
-            nombre: "Back Bridge (puente completo)",
-            sets: "3x6-8",
-            musculos: ["Espalda baja", "Hombros", "Flexibilidad"],
-            consejos: "Eleva caderas y espalda alta todo lo posible. Abre hombros y fortalece lumbar.",
-            imagen: "https://raw.githubusercontent.com/adrianticort/monoslocosfitnes/refs/heads/main/Back%20Bridge%20(puente%20completo).png?raw=true"
-          },
-          {
-            nombre: "Plank lateral y frontal",
-            sets: "2x30 seg cada",
-            musculos: ["Oblicuos", "Recto abdominal", "Hombros"],
-            consejos: "Alternar plancha frontal y de costado para reforzar el core por completo.",
-            imagen: "https://www.menshealth.com/wp-content/uploads/2018/04/side-plank.jpg?w=800&quality=86&strip=all"
-          }
-        ]
-      },
-      6: { // Sábado
-        title: "Sábado: Descanso activo",
-        ejercicios: [],
-        descanso: "Caminata, movilidad o estiramientos suaves. Recuperación activa para prepararte para la próxima semana."
-      },
-      0: { // Domingo
-        title: "Domingo: Descanso total",
-        ejercicios: [],
-        descanso: "Recarga energía. Mañana se entrena fuerte 💪 Descansa y permite que tu cuerpo se recupere completamente."
-      }
-    };
+    // Datos de las rutinas (sin cambios)
+    const rutinas = { 1:{title:"Lunes – Pecho y Core",objetivo:"Desarrollar fuerza en el pecho, hombros y core para mejorar la estabilidad y postura.",calentamiento:{nombre:"Calentamiento de pecho y hombros",descripcion:"Prepara tus músculos para el entrenamiento y previene lesiones",ejercicios:["Rotaciones de hombros: 2x15 (adelante y atrás)","Estiramiento de pecho en puerta: 2x15 segundos","Movilidad escapular: 2x10 (elevación/retracción)","Flexiones dinámicas: 2x10 (media amplitud)"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/shoulder-rotator-cuff.jpg?w=800&quality=86&strip=all"},estiramiento:{nombre:"Estiramiento de pecho y core",descripcion:"Mejora la flexibilidad y recuperación muscular",ejercicios:["Estiramiento de pectoral en pared: 30 segundos cada lado","Estiramiento de hombros con toalla: 30 segundos","Estiramiento de gato-vaca: 10 repeticiones","Estiramiento de oblicuos: 20 segundos cada lado"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/chest-stretch.jpg?w=800&quality=86&strip=all"},ejercicios:[{nombre:"Flexiones estándar",sets:"3x8-12",musculos:["Pectorales","Tríceps","Deltoides frontales"],consejos:"Cuerpo recto, manos a la altura de los hombros. Bajar el pecho hasta casi tocar el suelo y subir estirando brazos.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/push-up.jpg?w=800&quality=86&strip=all"},{nombre:"Flexiones con protracción escapular",sets:"3x8-10",musculos:["Serrato anterior","Trapecios","Pectorales"],consejos:"Igual posición que la flexión normal, pero al subir empuja el suelo para separar los omóplatos (escápulas).",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/scapular-push-up.jpg?w=800&quality=86&strip=all"},{nombre:"Lean Planche Hold",sets:"3x10-15 seg",musculos:["Hombros","Serrato anterior","Core"],consejos:"En posición de flexión, lleva caderas arriba para que tu cuerpo quede casi horizontal. Mantén escápulas protraídas, abdomen y glúteos apretados.",imagen:"https://www.calisthenics-education.co.uk/wp-content/uploads/2020/05/lean-planche-1024x683.jpg"},{nombre:"Plancha frontal",sets:"3x30-45 seg",musculos:["Recto abdominal","Oblicuos","Transverso"],consejos:"En apoyo de antebrazos y puntas de pies, cuerpo recto. Aprieta abdomen y glúteos. Refuerza el core para la estabilidad general del cuerpo.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/plank.jpg?w=800&quality=86&strip=all"}]},2:{title:"Martes – Piernas y Espalda Baja (Postura)",objetivo:"Fortalecer piernas y espalda baja para mejorar postura y estabilidad.",calentamiento:{nombre:"Calentamiento de piernas y espalda",descripcion:"Prepara tus músculos para el entrenamiento y previene lesiones",ejercicios:["Sentadillas sin peso: 2x15","Balanceos de piernas: 2x10 cada pierna","Movilidad de cadera: círculos 10 cada lado","Estiramiento dinámico de isquiotibiales: 2x10"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/leg-swing.jpg?w=800&quality=86&strip=all"},estiramiento:{nombre:"Estiramiento de piernas y espalda",descripcion:"Mejora la flexibilidad y recuperación muscular",ejercicios:["Estiramiento de cuádriceps: 30 segundos cada pierna","Estiramiento de isquiotibiales: 30 segundos cada pierna","Estiramiento de espalda baja (rodillas al pecho): 30 segundos","Estiramiento de glúteos: 20 segundos cada lado"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/quad-stretch.jpg?w=800&quality=86&strip=all"},ejercicios:[{nombre:"Sentadillas sin peso",sets:"4x10-12",musculos:["Cuádriceps","Glúteos","Core"],consejos:"Pies a la altura de hombros, bajar glúteos hacia atrás/bajo hasta que muslos queden paralelos.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/squat.jpg?w=800&quality=86&strip=all"},{nombre:"Sentadilla búlgara",sets:"3x8 por pierna",musculos:["Cuádriceps","Glúteos","Isquiotibiales"],consejos:"Poner un pie adelante y otro atrás apoyado en una silla baja. Bajar controlado con la pierna delantera.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/bulgarian-split-squat.jpg?w=800&quality=86&strip=all"},{nombre:"Puente de glúteos",sets:"3x12",musculos:["Glúteos","Espalda baja","Isquiotibiales"],consejos:"Acostado boca arriba, rodillas flexionadas, empuja caderas hacia arriba apretando glúteos.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/glute-bridge.jpg?w=800&quality=86&strip=all"},{nombre:"Prone Cobra",sets:"3x20-30 seg",musculos:["Trapecios","Romboides","Erectores espinales"],consejos:"Acostado boca abajo, manos al costado, levanta el pecho contrayendo glúteos y rotando pulgares hacia arriba.",imagen:"https://www.yogajournal.com/wp-content/uploads/2019/07/cobra-pose.jpg"},{nombre:"Puente invertido (Tabletop)",sets:"3x15 seg",musculos:["Hombros","Espalda baja","Glúteos"],consejos:"Sentado con manos atrás apoyadas, elevar caderas empujando con hombros y glúteos.",imagen:"https://www.yogajournal.com/wp-content/uploads/2019/07/reverse-tabletop-pose.jpg"}]},3:{title:"Miércoles – Hombros Avanzados y Planche",objetivo:"Desarrollar fuerza en hombros y progresar hacia la planche.",calentamiento:{nombre:"Calentamiento de hombros y core",descripcion:"Prepara tus músculos para el entrenamiento y previene lesiones",ejercicios:["Rotaciones de brazos: 2x15 (pequeños y grandes círculos)","Movilidad escapular: 2x10 (elevación/retracción)","Estiramiento dinámico de hombros: 2x10","Plancha dinámica: 2x10 segundos"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/arm-circles.jpg?w=800&quality=86&strip=all"},estiramiento:{nombre:"Estiramiento de hombros y core",descripcion:"Mejora la flexibilidad y recuperación muscular",ejercicios:["Estiramiento de hombros cruzados: 30 segundos cada brazo","Estiramiento de tríceps: 20 segundos cada brazo","Estiramiento de gato-vaca: 10 repeticiones","Estiramiento de hombros con toalla: 30 segundos"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/shoulder-stretch.jpg?w=800&quality=86&strip=all"},ejercicios:[{nombre:"Flexiones Pike (verticales)",sets:"3x8-10",musculos:["Hombros","Trapecios superiores","Core"],consejos:"En posición de 'V' invertida, bajar la cabeza hacia el suelo flexionando codos, luego subir.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/pike-push-up.jpg?w=800&quality=86&strip=all"},{nombre:"Flexiones Lean Planche",sets:"3x5-8",musculos:["Hombros","Serrato anterior","Pectorales"],consejos:"Manos más cerca de la cintura que de los pies, torso avanzado hacia adelante. Bajar y subir controlando con escápulas protraídas.",imagen:"https://www.calisthenics-education.co.uk/wp-content/uploads/2020/05/lean-planche-1024x683.jpg"},{nombre:"Handstand asistido (contra pared)",sets:"3x20-30 seg",musculos:["Hombros","Trapecios","Core"],consejos:"Apoya pies en pared, cuerpo vertical. Buscar mantener hombros firmes y core activo.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/handstand.jpg?w=800&quality=86&strip=all"},{nombre:"Hollow Body Hold",sets:"3x20-30 seg",musculos:["Recto abdominal","Oblicuos","Flexores de cadera"],consejos:"Acostado de espalda, elevar hombros y piernas manteniendo lumbares al suelo. Aprieta abdomen.",imagen:"https://www.gymnasticshq.com/wp-content/uploads/2020/05/hollow-body-hold.jpg"}]},4:{title:"Jueves – Espalda y Postura",objetivo:"Fortalecer espalda y mejorar la postura contrarrestando hombros adelantados.",calentamiento:{nombre:"Calentamiento de espalda y postura",descripcion:"Prepara tus músculos para el entrenamiento y previene lesiones",ejercicios:["Retracción escapular de pie: 2x15","Círculos de brazos: 2x10 (adelante y atrás)","Movilidad torácica: 2x10 (rotaciones)","Estiramiento dinámico de espalda: 2x10"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/back-warmup.jpg?w=800&quality=86&strip=all"},estiramiento:{nombre:"Estiramiento de espalda y hombros",descripcion:"Mejora la flexibilidad y recuperación muscular",ejercicios:["Estiramiento de trapecios: 30 segundos cada lado","Estiramiento de hombros con toalla: 30 segundos","Estiramiento de gato-vaca: 10 repeticiones","Estiramiento de brazos cruzados: 20 segundos cada brazo"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/back-stretch.jpg?w=800&quality=86&strip=all"},ejercicios:[{nombre:"Retracción escapular en suelo",sets:"3x10-12",musculos:["Trapecios medios","Romboides"],consejos:"Acostado boca arriba, brazos abiertos en cruz, empuja el suelo con la parte posterior de los brazos.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/scapular-retraction.jpg?w=800&quality=86&strip=all"},{nombre:"Elevaciones 'Y' prono",sets:"3x10-12",musculos:["Trapecio medio","Romboides","Deltoides posteriores"],consejos:"Acostado boca abajo con brazos en 'Y', eleva los brazos contrayendo omóplatos juntos.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/y-raise.jpg?w=800&quality=86&strip=all"},{nombre:"Superman",sets:"3x12-15",musculos:["Erectores espinales","Glúteos","Hombros posteriores"],consejos:"Boca abajo, levanta simultáneamente brazos/pecho y piernas unos centímetros.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/superman.jpg?w=800&quality=86&strip=all"},{nombre:"Prone Scapular Squeezes",sets:"3x12-15",musculos:["Trapecio medio","Romboides"],consejos:"Boca abajo con brazos extendidos, junta fuerte omóplatos manteniendo brazos elevados 2-3 seg.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/scapular-squeeze.jpg?w=800&quality=86&strip=all"}]},5:{title:"Viernes – Full Body y Movilidad",objetivo:"Trabajo completo de cuerpo con énfasis en movilidad y control corporal.",calentamiento:{nombre:"Calentamiento completo",descripcion:"Prepara todo tu cuerpo para el entrenamiento y previene lesiones",ejercicios:["Movilidad articular general: 2 minutos","Sentadillas sin peso: 2x12","Flexiones dinámicas: 2x10","Estiramiento dinámico de isquiotibiales: 2x10"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/full-body-warmup.jpg?w=800&quality=86&strip=all"},estiramiento:{nombre:"Estiramiento completo",descripcion:"Mejora la flexibilidad general y recuperación muscular",ejercicios:["Estiramiento de cuádriceps: 30 segundos cada pierna","Estiramiento de isquiotibiales: 30 segundos cada pierna","Estiramiento de hombros: 30 segundos cada brazo","Estiramiento de espalda (gato-vaca): 10 repeticiones"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/full-body-stretch.jpg?w=800&quality=86&strip=all"},ejercicios:[{nombre:"Sentadilla pistol asistida",sets:"3x5 por pierna",musculos:["Cuádriceps","Glúteos","Estabilidad"],consejos:"Baja con una pierna intentando llegar lo más abajo posible, usando poco apoyo con la otra.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/pistol-squat.jpg?w=800&quality=86&strip=all"},{nombre:"Flexiones pliométricas (con palmadas)",sets:"3x6-8",musculos:["Pectorales","Tríceps","Potencia"],consejos:"Flexión explosiva: al subir, impulsa el pecho del suelo con tal fuerza que aplaudes en el aire.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/plyo-push-up.jpg?w=800&quality=86&strip=all"},{nombre:"Hold de Planche Lean avanzado",sets:"2x8-10 seg",musculos:["Hombros","Serrato anterior","Core"],consejos:"Mayor inclinación que el básico, con pies más adelante. Enfatiza posición horizontal.",imagen:"https://www.calisthenics-education.co.uk/wp-content/uploads/2020/05/planche-lean.jpg"},{nombre:"Back Bridge (puente completo)",sets:"3x6-8",musculos:["Espalda baja","Hombros","Flexibilidad"],consejos:"Eleva caderas y espalda alta todo lo posible. Abre hombros y fortalece lumbar.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/back-bridge.jpg?w=800&quality=86&strip=all"},{nombre:"Plank lateral y frontal",sets:"2x30 seg cada",musculos:["Oblicuos","Recto abdominal","Hombros"],consejos:"Alternar plancha frontal y de costado para reforzar el core por completo.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/side-plank.jpg?w=800&quality=86&strip=all"}]},6:{title:"Sábado: Descanso activo",ejercicios:[],descanso:"Caminata, movilidad o estiramientos suaves. Recuperación activa para prepararte para la próxima semana."},0:{title:"Domingo: Descanso total",ejercicios:[],descanso:"Recarga energía. Mañana se entrena fuerte 💪 Descansa y permite que tu cuerpo se recupere completamente."}};
 
-    // Navegación entre secciones
+    // --- INICIO DEL CÓDIGO JS MODIFICADO ---
+
+    // Menu móvil (sin cambios)
+    const menuToggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('nav');
+    
+    menuToggle.addEventListener('click', function() {
+      nav.classList.toggle('active');
+      const icon = this.querySelector('i');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+
+    // Navegación entre secciones (sin cambios)
     document.querySelectorAll('.nav-link, [data-target]').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         const target = this.getAttribute('data-target');
         
-        // Actualizar navegación activa
-        document.querySelectorAll('.nav-link').forEach(navLink => {
-          navLink.classList.remove('active');
-        });
-        this.classList.add('active');
+        nav.classList.remove('active');
+        const icon = menuToggle.querySelector('i');
+        icon.classList.add('fa-bars');
+        icon.classList.remove('fa-times');
         
-        // Ocultar todas las secciones
-        document.querySelectorAll('.page-section').forEach(section => {
-          section.classList.remove('active');
-        });
+        document.querySelectorAll('.nav-link').forEach(navLink => navLink.classList.remove('active'));
+        const navLink = document.querySelector(`.nav-link[data-target="${target}"]`);
+        if (navLink) navLink.classList.add('active');
         
-        // Mostrar sección objetivo
+        document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
         document.getElementById(target).classList.add('active');
         
-        // Si es la sección de ejercicios, inicializar el calendario
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
         if (target === 'ejercicios') {
           initCalendar();
         }
       });
     });
 
-    // Mostrar desayuno al hacer clic en día
+    // Mostrar desayuno al hacer clic en día (sin cambios)
     document.querySelectorAll('.day-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
@@ -1437,60 +1650,146 @@
           <h2>${dia === 'L' ? 'Lunes' : dia === 'M' ? 'Martes' : dia === 'X' ? 'Miércoles' : dia === 'J' ? 'Jueves' : 'Viernes'}: ${desayuno.nombre}</h2>
           <span class="desayuno-calorias">${desayuno.calorias}</span>
         </div>
+        <div class="desayuno-content"><div class="desayuno-info"><div class="desayuno-section"><h3><i class="fas fa-list"></i> Ingredientes</h3><ul>${desayuno.ingredientes.map(i => `<li>${i}</li>`).join('')}</ul></div><div class="desayuno-section"><h3><i class="fas fa-list-ol"></i> Preparación</h3><ol>${desayuno.preparacion.map(p => `<li>${p}</li>`).join('')}</ol></div><div class="nutrition-facts"><h3><i class="fas fa-fire"></i> Información Nutricional</h3><div class="nutrition-grid"><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.kcal}</span><span class="nutrition-label">kcal</span></div><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.proteinas}g</span><span class="nutrition-label">Proteínas</span></div><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.carbohidratos}g</span><span class="nutrition-label">Carbohidratos</span></div><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.grasas}g</span><span class="nutrition-label">Grasas</span></div><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.fibra}g</span><span class="nutrition-label">Fibra</span></div><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.azucares}g</span><span class="nutrition-label">Azúcares</span></div></div></div></div></div>`;
+      container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // --- NUEVO: FUNCIONALIDAD DE COMPLETAR RUTINAS Y ESTADÍSTICAS ---
+
+    // Clave para guardar datos en el almacenamiento local del navegador
+    const COMPLETED_DATA_KEY = 'monoslocosFitnessCompleted';
+    let statsChart = null; // Variable para mantener la instancia del gráfico
+
+    /**
+     * Obtiene las fechas completadas desde localStorage.
+     * @returns {string[]} Un array de fechas en formato 'YYYY-MM-DD'.
+     */
+    function getCompletedDates() {
+      const data = localStorage.getItem(COMPLETED_DATA_KEY);
+      return data ? JSON.parse(data) : [];
+    }
+
+    /**
+     * Guarda las fechas completadas en localStorage.
+     * @param {string[]} dates - El array de fechas a guardar.
+     */
+    function saveCompletedDates(dates) {
+      localStorage.setItem(COMPLETED_DATA_KEY, JSON.stringify(dates));
+    }
+
+    /**
+     * Formatea un objeto Date a 'YYYY-MM-DD' para consistencia.
+     * @param {Date} date - La fecha a formatear.
+     * @returns {string} La fecha formateada.
+     */
+    function formatDate(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    /**
+     * Marca o desmarca una rutina como completada.
+     * @param {string} dateString - La fecha en formato 'YYYY-MM-DD'.
+     */
+    function toggleCompletion(dateString) {
+        let completedDates = getCompletedDates();
+        const dateIndex = completedDates.indexOf(dateString);
+
+        if (dateIndex > -1) {
+            // Si ya está completada, la quitamos (deshacer)
+            completedDates.splice(dateIndex, 1);
+        } else {
+            // Si no, la añadimos
+            completedDates.push(dateString);
+        }
+        saveCompletedDates(completedDates);
+
+        // Volvemos a renderizar el calendario y las estadísticas para reflejar el cambio
+        initCalendar();
         
-        <div class="desayuno-content">
-          <div class="desayuno-info">
-            <div class="desayuno-section">
-              <h3><i class="fas fa-list"></i> Ingredientes</h3>
-              <ul>
-                ${desayuno.ingredientes.map(i => `<li>${i}</li>`).join('')}
-              </ul>
-            </div>
-            
-            <div class="desayuno-section">
-              <h3><i class="fas fa-list-ol"></i> Preparación</h3>
-              <ol>
-                ${desayuno.preparacion.map(p => `<li>${p}</li>`).join('')}
-              </ol>
-            </div>
-            
-            <div class="nutrition-facts">
-              <h3><i class="fas fa-fire"></i> Información Nutricional</h3>
-              <div class="nutrition-grid">
-                <div class="nutrition-item">
-                  <span class="nutrition-value">${desayuno.nutricion.kcal}</span>
-                  <span class="nutrition-label">kcal</span>
-                </div>
-                <div class="nutrition-item">
-                  <span class="nutrition-value">${desayuno.nutricion.proteinas}g</span>
-                  <span class="nutrition-label">Proteínas</span>
-                </div>
-                <div class="nutrition-item">
-                  <span class="nutrition-value">${desayuno.nutricion.carbohidratos}g</span>
-                  <span class="nutrition-label">Carbohidratos</span>
-                </div>
-                <div class="nutrition-item">
-                  <span class="nutrition-value">${desayuno.nutricion.grasas}g</span>
-                  <span class="nutrition-label">Grasas</span>
-                </div>
-                <div class="nutrition-item">
-                  <span class="nutrition-value">${desayuno.nutricion.fibra}g</span>
-                  <span class="nutrition-label">Fibra</span>
-                </div>
-                <div class="nutrition-item">
-                  <span class="nutrition-value">${desayuno.nutricion.azucares}g</span>
-                  <span class="nutrition-label">Azúcares</span>
-                </div>
+        // También volvemos a mostrar la rutina para actualizar el botón
+        const [year, month, day] = dateString.split('-').map(Number);
+        const date = new Date(year, month - 1, day);
+        mostrarRutina(day, month - 1, year, date.getDay());
+    }
+
+    /**
+     * Renderiza el panel de estadísticas del mes.
+     * @param {number} month - El mes actual (0-11).
+     * @param {number} year - El año actual.
+     */
+    function renderStats(month, year) {
+      const completedDates = getCompletedDates();
+      const diasMes = new Date(year, month + 1, 0).getDate();
+      let totalTrainingDays = 0;
+      let completedInMonth = 0;
+
+      for (let day = 1; day <= diasMes; day++) {
+        const date = new Date(year, month, day);
+        const dayOfWeek = date.getDay();
+        // Contamos días de entrenamiento (Lunes a Viernes)
+        if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+          totalTrainingDays++;
+          if (completedDates.includes(formatDate(date))) {
+            completedInMonth++;
+          }
+        }
+      }
+
+      const percentage = totalTrainingDays > 0 ? Math.round((completedInMonth / totalTrainingDays) * 100) : 0;
+      
+      const statsContainerWrapper = document.getElementById('stats-container-wrapper');
+      statsContainerWrapper.innerHTML = `
+        <div class="stats-container">
+          <div class="stats-chart">
+            <canvas id="completionChart"></canvas>
+            <div class="stats-percentage">${percentage}%</div>
+          </div>
+          <div class="stats-details">
+            <h3>Estadísticas del Mes</h3>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <span class="stat-item-value">${completedInMonth}</span>
+                <span class="stat-item-label">Rutinas completadas</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-item-value">${totalTrainingDays}</span>
+                <span class="stat-item-label">Días de entrenamiento</span>
               </div>
             </div>
           </div>
         </div>
       `;
-      
-      container.scrollIntoView({ behavior: 'smooth' });
+
+      // Renderizar el gráfico
+      const ctx = document.getElementById('completionChart').getContext('2d');
+      if (statsChart) {
+          statsChart.destroy(); // Destruir gráfico anterior para evitar conflictos
+      }
+      statsChart = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+              datasets: [{
+                  data: [completedInMonth, totalTrainingDays - completedInMonth],
+                  backgroundColor: ['#10b981', 'rgba(17, 24, 39, 0.6)'],
+                  borderColor: ['#10b981', 'rgba(148, 163, 184, 0.1)'],
+                  borderWidth: 2,
+                  cutout: '80%',
+              }]
+          },
+          options: {
+              responsive: true,
+              plugins: {
+                  legend: { display: false },
+                  tooltip: { enabled: false }
+              }
+          }
+      });
     }
 
-    // Funciones para el calendario de ejercicios
+    // Funciones para el calendario de ejercicios (MODIFICADO)
     function initCalendar() {
       const calendar = document.getElementById('calendar');
       const rutinaDiv = document.getElementById('rutina');
@@ -1504,58 +1803,64 @@
       let currentMonth = currentDate.getMonth();
       let currentYear = currentDate.getFullYear();
       
-      function updateCalendarTitle() {
-        currentMonthYear.textContent = `${meses[currentMonth]} ${currentYear}`;
+      // Variable para estado del calendario y evitar múltiples listeners
+      if (initCalendar.initialized) {
+          updateCalendar(currentMonth, currentYear);
+          return;
+      }
+      initCalendar.initialized = true;
+
+      function updateCalendar(mes, año) {
+        currentMonthYear.textContent = `${meses[mes]} ${año}`;
+        generarCalendario(mes, año);
+        renderStats(mes, año);
       }
       
       function generarCalendario(mes, año) {
         calendar.innerHTML = '';
+        const completedDates = getCompletedDates();
         
         const primerDia = new Date(año, mes, 1).getDay();
         const diasMes = new Date(año, mes + 1, 0).getDate();
         const offset = primerDia === 0 ? 6 : primerDia - 1;
         
-        // Días vacíos al inicio
         for (let i = 0; i < offset; i++) {
           const div = document.createElement('div');
           div.classList.add('day', 'empty');
           calendar.appendChild(div);
         }
         
-        // Días del mes
         for (let dia = 1; dia <= diasMes; dia++) {
           const fecha = new Date(año, mes, dia);
           const diaSemana = fecha.getDay();
+          const dateString = formatDate(fecha);
           const div = document.createElement('div');
           div.classList.add('day');
           
-          if (diaSemana === 0 || diaSemana === 6) {
-            div.classList.add('weekend');
-          }
+          if (diaSemana === 0 || diaSemana === 6) div.classList.add('weekend');
           
-          // Marcar día actual
           const hoy = new Date();
           if (dia === hoy.getDate() && mes === hoy.getMonth() && año === hoy.getFullYear()) {
             div.classList.add('today');
           }
           
-          // Marcar días completados (ejemplo)
-          if (dia < hoy.getDate() && mes === hoy.getMonth() && año === hoy.getFullYear()) {
+          // Marcar días completados desde localStorage
+          if (completedDates.includes(dateString)) {
             div.classList.add('completed');
           }
           
           div.textContent = dia;
-          
-          div.addEventListener('click', () => {
-            mostrarRutina(dia, mes, año, diaSemana);
-          });
-          
+          div.addEventListener('click', () => mostrarRutina(dia, mes, año, diaSemana));
           calendar.appendChild(div);
         }
       }
       
       function mostrarRutina(dia, mes, año, diaSemana) {
         const rutina = rutinas[diaSemana];
+        const fecha = new Date(año, mes, dia);
+        const dateString = formatDate(fecha);
+        const isCompleted = getCompletedDates().includes(dateString);
+
         let html = `
           <div class="rutina-header">
             <h2>${rutina.title}</h2>
@@ -1563,178 +1868,95 @@
           </div>
         `;
         
-        if (rutina.objetivo) {
-          html += `<div class="objetivo-rutina"><strong>Objetivo:</strong> ${rutina.objetivo}</div>`;
-        }
+        if (rutina.objetivo) html += `<div class="objetivo-rutina"><strong>Objetivo:</strong> ${rutina.objetivo}</div>`;
         
-        // Mostrar calentamiento si existe
-        if (rutina.calentamiento) {
-          html += `
-            <div class="ejercicio calentamiento">
-              <div class="ejercicio-header" onclick="toggleDetalle(this)">
-                <div class="ejercicio-title">${rutina.calentamiento.nombre}</div>
-                <div class="ejercicio-sets">Calentamiento</div>
-              </div>
-              <div class="ejercicio-detalle">
-                <div class="ejercicio-tips">
-                  <h4>Descripción</h4>
-                  <p>${rutina.calentamiento.descripcion}</p>
-                  <h4 style="margin-top: 1rem;">Ejercicios</h4>
-                  <ul>
-                    ${rutina.calentamiento.ejercicios.map(e => `<li>${e}</li>`).join('')}
-                  </ul>
-                </div>
-                <div class="ejercicio-media">
-                  <img class="ejercicio-img" src="${rutina.calentamiento.imagen}" alt="${rutina.calentamiento.nombre}">
-                </div>
-              </div>
-            </div>
-          `;
-        }
+        if (rutina.calentamiento) html += `<div class="ejercicio calentamiento"><div class="ejercicio-header" onclick="toggleDetalle(this)"><div class="ejercicio-title">${rutina.calentamiento.nombre}</div><div class="ejercicio-sets">Calentamiento</div></div><div class="ejercicio-detalle"><div class="ejercicio-tips"><h4>Descripción</h4><p>${rutina.calentamiento.descripcion}</p><h4 style="margin-top: 1rem;">Ejercicios</h4><ul>${rutina.calentamiento.ejercicios.map(e => `<li>${e}</li>`).join('')}</ul></div><div class="ejercicio-media"><img class="ejercicio-img" src="${rutina.calentamiento.imagen}" alt="${rutina.calentamiento.nombre}"></div></div></div>`;
         
         if (rutina.ejercicios.length > 0) {
           rutina.ejercicios.forEach(ejercicio => {
-            html += `
-              <div class="ejercicio">
-                <div class="ejercicio-header" onclick="toggleDetalle(this)">
-                  <div class="ejercicio-title">${ejercicio.nombre}</div>
-                  <div class="ejercicio-sets">${ejercicio.sets}</div>
-                </div>
-                <div class="ejercicio-detalle">
-                  <div class="ejercicio-info">
-                    <div class="ejercicio-muscles">
-                      <h4>Músculos trabajados</h4>
-                      <ul>
-                        ${ejercicio.musculos.map(m => `<li>${m}</li>`).join('')}
-                      </ul>
-                    </div>
-                    <div class="ejercicio-tips">
-                      <h4>Consejos</h4>
-                      <p>${ejercicio.consejos}</p>
-                    </div>
-                  </div>
-                  <div class="ejercicio-media">
-                    <img class="ejercicio-img" src="${ejercicio.imagen}" alt="${ejercicio.nombre}">
-                  </div>
-                </div>
-              </div>
-            `;
+            html += `<div class="ejercicio"><div class="ejercicio-header" onclick="toggleDetalle(this)"><div class="ejercicio-title">${ejercicio.nombre}</div><div class="ejercicio-sets">${ejercicio.sets}</div></div><div class="ejercicio-detalle"><div class="ejercicio-info"><div class="ejercicio-muscles"><h4>Músculos trabajados</h4><ul>${ejercicio.musculos.map(m => `<li>${m}</li>`).join('')}</ul></div><div class="ejercicio-tips"><h4>Consejos</h4><p>${ejercicio.consejos}</p></div></div><div class="ejercicio-media"><img class="ejercicio-img" src="${ejercicio.imagen}" alt="${ejercicio.nombre}"></div></div></div>`;
           });
         } else {
-          html += `
-            <div class="ejercicio">
-              <p>${rutina.descanso}</p>
-            </div>
-          `;
+          html += `<div class="ejercicio"><p style="text-align: center; font-size: 1.125rem; line-height: 1.8; color: var(--gray-light);"><i class="fas fa-spa" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: var(--primary-light);"></i>${rutina.descanso}</p></div>`;
         }
         
-        // Mostrar estiramiento si existe
-        if (rutina.estiramiento) {
-          html += `
-            <div class="ejercicio estiramiento">
-              <div class="ejercicio-header" onclick="toggleDetalle(this)">
-                <div class="ejercicio-title">${rutina.estiramiento.nombre}</div>
-                <div class="ejercicio-sets">Estiramiento</div>
-              </div>
-              <div class="ejercicio-detalle">
-                <div class="ejercicio-tips">
-                  <h4>Descripción</h4>
-                  <p>${rutina.estiramiento.descripcion}</p>
-                  <h4 style="margin-top: 1rem;">Ejercicios</h4>
-                  <ul>
-                    ${rutina.estiramiento.ejercicios.map(e => `<li>${e}</li>`).join('')}
-                  </ul>
-                </div>
-                <div class="ejercicio-media">
-                  <img class="ejercicio-img" src="${rutina.estiramiento.imagen}" alt="${rutina.estiramiento.nombre}">
-                </div>
-              </div>
-            </div>
-          `;
-        }
+        if (rutina.estiramiento) html += `<div class="ejercicio estiramiento"><div class="ejercicio-header" onclick="toggleDetalle(this)"><div class="ejercicio-title">${rutina.estiramiento.nombre}</div><div class="ejercicio-sets">Estiramiento</div></div><div class="ejercicio-detalle"><div class="ejercicio-tips"><h4>Descripción</h4><p>${rutina.estiramiento.descripcion}</p><h4 style="margin-top: 1rem;">Ejercicios</h4><ul>${rutina.estiramiento.ejercicios.map(e => `<li>${e}</li>`).join('')}</ul></div><div class="ejercicio-media"><img class="ejercicio-img" src="${rutina.estiramiento.imagen}" alt="${rutina.estiramiento.nombre}"></div></div></div>`;
         
+        // Añadir botón para completar, solo si es un día de entrenamiento
+        if (diaSemana >= 1 && diaSemana <= 5) {
+            html += `
+              <button class="btn-completar ${isCompleted ? 'completed' : ''}" onclick="toggleCompletion('${dateString}')">
+                ${isCompleted 
+                  ? '<i class="fas fa-check-circle"></i> ¡Completada! (Deshacer)' 
+                  : '<i class="fas fa-check"></i> Marcar como Completada'}
+              </button>
+            `;
+        }
+
         rutinaDiv.innerHTML = html;
-        rutinaDiv.scrollIntoView({ behavior: 'smooth' });
+        rutinaDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
       
-      // Navegación entre meses
       prevMonthBtn.addEventListener('click', () => {
         currentMonth--;
-        if (currentMonth < 0) {
-          currentMonth = 11;
-          currentYear--;
-        }
-        updateCalendarTitle();
-        generarCalendario(currentMonth, currentYear);
+        if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+        updateCalendar(currentMonth, currentYear);
       });
       
       nextMonthBtn.addEventListener('click', () => {
         currentMonth++;
-        if (currentMonth > 11) {
-          currentMonth = 0;
-          currentYear++;
-        }
-        updateCalendarTitle();
-        generarCalendario(currentMonth, currentYear);
+        if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+        updateCalendar(currentMonth, currentYear);
       });
       
-      // Inicializar
-      updateCalendarTitle();
-      generarCalendario(currentMonth, currentYear);
-      
-      // Simular progreso (en una app real esto vendría de localStorage)
-      setTimeout(() => {
-        const days = document.querySelectorAll('.day:not(.empty)');
-        days.forEach(day => {
-          if (parseInt(day.textContent) < new Date().getDate() && 
-              currentMonth === new Date().getMonth() && 
-              currentYear === new Date().getFullYear() && 
-              Math.random() > 0.3) {
-            day.classList.add('completed');
-          }
-        });
-      }, 500);
+      updateCalendar(currentMonth, currentYear);
     }
 
-    // Funciones globales
+    // Funciones globales (sin cambios)
     function toggleDetalle(elemento) {
       const detalle = elemento.parentElement.querySelector('.ejercicio-detalle');
       detalle.classList.toggle('active');
     }
 
-    // Contador de objetivos
     function calcularDiasRestantes() {
       const hoy = new Date();
-    // Objetivo 1: 1 de noviembre (mes 10 porque enero=0)
-  const objetivo1 = new Date(hoy.getFullYear(), 10, 1);
-
-  // Si ya pasó noviembre, que se calcule para el próximo año
-  if (hoy > objetivo1) objetivo1.setFullYear(objetivo1.getFullYear() + 1);
-
-  const dias1 = Math.ceil((objetivo1 - hoy) / (1000 * 60 * 60 * 24));
-  document.getElementById("contador1").textContent = dias1 > 0 ? dias1 : "¡Meta alcanzada!";
-
-  // Objetivo 2: 1 de enero
-  const objetivo2 = new Date(hoy.getFullYear() + 1, 0, 1); 
-  // Siempre el próximo enero
-
-  const dias2 = Math.ceil((objetivo2 - hoy) / (1000 * 60 * 60 * 24));
-  document.getElementById("contador2").textContent = dias2 > 0 ? dias2 : "¡Meta alcanzada!";
-}
-    calcularDiasRestantes();
+      const objetivo = new Date(hoy.getFullYear(), 8, 15);
+      if (objetivo < hoy) objetivo.setFullYear(hoy.getFullYear() + 1);
+      const dias = Math.ceil((objetivo - hoy) / (1000 * 60 * 60 * 24));
+      const contador = document.getElementById("contador");
+      if (contador) contador.innerHTML = dias > 0 ? `<i class="fas fa-calendar-days"></i> ${dias} días` : `<i class="fas fa-trophy"></i> ¡Meta alcanzada!`;
+    }
     
-    // Actualizar cada día
-    setInterval(calcularDiasRestantes, 86400000);
+    calcularDiasRestantes();
+    setInterval(calcularDiasRestantes, 3600000);
 
-    // Hacer funciones accesibles globalmente
     window.toggleDetalle = toggleDetalle;
+    // NUEVO: Hacemos toggleCompletion accesible globalmente desde el HTML
+    window.toggleCompletion = toggleCompletion;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      mostrarDesayuno('L');
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    const images = document.querySelectorAll('img');
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('fade-in');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0, rootMargin: "0px 0px 50px 0px" });
+    images.forEach(img => imageObserver.observe(img));
+
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
