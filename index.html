@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -1461,8 +1462,8 @@
         <h1>¡Hola, Adrián! 👋</h1>
         <p class="objetivo">
           <i class="fas fa-bullseye"></i>
-          Primer objetivo: <strong>1 de enero</strong>
-          <span id="contador">calculando...</span>
+          Objetivo: <strong>Llegar a 70kg</strong>
+          <span id="contador">💪🔥</span>
         </p>
       </div>
 
@@ -1472,8 +1473,8 @@
             <i class="fas fa-running"></i>
           </div>
           <h2>Rutinas de Ejercicio</h2>
-          <p>Plan semanal estructurado para mejorar tu fuerza, movilidad y habilidades calisténicas.</p>
-          <span class="card-badge">5 días/semana</span>
+          <p>Plan semanal estructurado para ganar masa muscular, mejorar tu postura y dominar la calistenia.</p>
+          <span class="card-badge">6 días/semana</span>
         </a>
         <a class="card desayunos" href="#" data-target="nutricion">
           <div class="card-icon">
@@ -1572,6 +1573,11 @@
           <h3>Viernes</h3>
           <p>Yogur</p>
         </div>
+         <div class="day-btn" data-dia="S">
+            <i class="fas fa-utensils-alt"></i>
+            <h3>Sábado</h3>
+            <p>Repite Favorito</p>
+        </div>
       </div>
 
       <div class="desayuno-container" id="desayuno">
@@ -1586,13 +1592,295 @@
   </div>
 
   <script>
-    // Datos de los desayunos (sin cambios)
-    const desayunos = { L:{nombre:"Pancakes estilo stracciatella",calorias:"600-700 kcal",ingredientes:["1 huevo","25g de azúcar (1/8 de taza)","1 pizca de sal","1/2 cdta de esencia de vainilla","35 ml de leche (1/8 de taza aprox)","1/2 yogur griego (62.5g)","100g de harina de trigo (1/2 taza + 1/3)","1/2 cda de levadura química (4g)","un poco de aceite","complementar al gusto"],preparacion:["Mezcla el huevo con el azúcar, sal y esencia de vainilla hasta integrar.","Añade la leche y el yogur griego, mezcla bien.","Incorpora la harina y la levadura, mezcla hasta obtener una masa homogénea.","Deja reposar la masa 5 minutos.","Cocina en sartén antiadherente con un poco de aceite, vuelta y vuelta.","Sirve con tus toppings favoritos."],nutricion:{kcal:650,proteinas:25,carbohidratos:85,grasas:20,fibra:8,azucares:30}},M:{nombre:"Batido energético estilo stracciatella",calorias:"900-1000 kcal",ingredientes:["500 ml de leche entera","1 plátano","100 g de avena","30 g de nueces","2 cucharadas de crema de cacahuete","1 cucharada de ColaCao","1 yogur griego de stracciatella"],preparacion:["Coloca todos los ingredientes en la licuadora.","Licúa hasta obtener una mezcla suave y homogénea.","Sirve frío. Puedes acompañarlo con una tostada para sumar aún más calorías."],nutricion:{kcal:950,proteinas:35,carbohidratos:120,grasas:35,fibra:12,azucares:45}},X:{nombre:"Tostadas con aguacate, huevo y tomate",calorias:"600-700 kcal",ingredientes:["2 rebanadas de pan integral o de centeno","1 aguacate maduro","2 huevos","1 tomate mediano","Aceite de oliva virgen extra","Sal y pimienta"],preparacion:["Tuesta el pan.","Fríe o cuece los huevos a tu gusto.","Tritura el aguacate y úntalo sobre el pan.","Añade rodajas de tomate y coloca los huevos encima.","Rocía con aceite de oliva, sal y pimienta."],nutricion:{kcal:650,proteinas:22,carbohidratos:45,grasas:40,fibra:10,azucares:5}},J:{nombre:"Tortilla francesa con atún y pan con aceite",calorias:"600-650 kcal",ingredientes:["2-3 huevos","1 lata de atún en aceite de oliva escurrida","2 rebanadas de pan integral","Aceite de oliva virgen extra","Sal al gusto"],preparacion:["Bate los huevos y añade el atún escurrido.","Cocina en sartén caliente hasta que cuaje.","Sirve con pan tostado y un chorro de aceite por encima."],nutricion:{kcal:625,proteinas:45,carbohidratos:35,grasas:35,fibra:5,azucares:2}},V:{nombre:"Yogur natural con granola casera y fruta",calorias:"650-750 kcal",ingredientes:["1 taza de yogur natural entero o griego","½ taza de granola casera o sin azúcares añadidos","1 plátano o un puñado de frutos rojos","1 cucharada de miel o sirope de agave","1 cucharada de nueces o almendras picadas"],preparacion:["Vierte el yogur en un bol.","Añade la fruta cortada y la granola.","Espolvorea los frutos secos.","Agrega miel al gusto y mezcla bien."],nutricion:{kcal:700,proteinas:25,carbohidratos:90,grasas:25,fibra:8,azucares:40}}};
+    // Datos de los desayunos
+    const desayunos = { L:{nombre:"Pancakes estilo stracciatella",calorias:"600-700 kcal",ingredientes:["1 huevo","25g de azúcar (1/8 de taza)","1 pizca de sal","1/2 cdta de esencia de vainilla","35 ml de leche (1/8 de taza aprox)","1/2 yogur griego (62.5g)","100g de harina de trigo (1/2 taza + 1/3)","1/2 cda de levadura química (4g)","un poco de aceite","complementar al gusto"],preparacion:["Mezcla el huevo con el azúcar, sal y esencia de vainilla hasta integrar.","Añade la leche y el yogur griego, mezcla bien.","Incorpora la harina y la levadura, mezcla hasta obtener una masa homogénea.","Deja reposar la masa 5 minutos.","Cocina en sartén antiadherente con un poco de aceite, vuelta y vuelta.","Sirve con tus toppings favoritos."],nutricion:{kcal:650,proteinas:25,carbohidratos:85,grasas:20,fibra:8,azucares:30}},M:{nombre:"Batido energético estilo stracciatella",calorias:"900-1000 kcal",ingredientes:["500 ml de leche entera","1 plátano","100 g de avena","30 g de nueces","2 cucharadas de crema de cacahuete","1 cucharada de ColaCao","1 yogur griego de stracciatella"],preparacion:["Coloca todos los ingredientes en la licuadora.","Licúa hasta obtener una mezcla suave y homogénea.","Sirve frío. Puedes acompañarlo con una tostada para sumar aún más calorías."],nutricion:{kcal:950,proteinas:35,carbohidratos:120,grasas:35,fibra:12,azucares:45}},X:{nombre:"Tostadas con aguacate, huevo y tomate",calorias:"600-700 kcal",ingredientes:["2 rebanadas de pan integral o de centeno","1 aguacate maduro","2 huevos","1 tomate mediano","Aceite de oliva virgen extra","Sal y pimienta"],preparacion:["Tuesta el pan.","Fríe o cuece los huevos a tu gusto.","Tritura el aguacate y úntalo sobre el pan.","Añade rodajas de tomate y coloca los huevos encima.","Rocía con aceite de oliva, sal y pimienta."],nutricion:{kcal:650,proteinas:22,carbohidratos:45,grasas:40,fibra:10,azucares:5}},J:{nombre:"Tortilla francesa con atún y pan con aceite",calorias:"600-650 kcal",ingredientes:["2-3 huevos","1 lata de atún en aceite de oliva escurrida","2 rebanadas de pan integral","Aceite de oliva virgen extra","Sal al gusto"],preparacion:["Bate los huevos y añade el atún escurrido.","Cocina en sartén caliente hasta que cuaje.","Sirve con pan tostado y un chorro de aceite por encima."],nutricion:{kcal:625,proteinas:45,carbohidratos:35,grasas:35,fibra:5,azucares:2}},V:{nombre:"Yogur natural con granola casera y fruta",calorias:"650-750 kcal",ingredientes:["1 taza de yogur natural entero o griego","½ taza de granola casera o sin azúcares añadidos","1 plátano o un puñado de frutos rojos","1 cucharada de miel o sirope de agave","1 cucharada de nueces o almendras picadas"],preparacion:["Vierte el yogur en un bol.","Añade la fruta cortada y la granola.","Espolvorea los frutos secos.","Agrega miel al gusto y mezcla bien."],nutricion:{kcal:700,proteinas:25,carbohidratos:90,grasas:25,fibra:8,azucares:40}},S:{nombre:"Repite tu favorito de la semana",calorias:"Variable",ingredientes:["¡Elige el desayuno que más te haya gustado esta semana!","Asegúrate de que te aporte la energía necesaria para el entrenamiento intenso de Sábado."],preparacion:["Sigue la receta del día que elijas.","¡Disfruta de tu desayuno preferido para empezar el fin de semana con fuerza!"],nutricion:{kcal:"?",proteinas:"?",carbohidratos:"?",grasas:"?",fibra:"?",azucares:"?"}}};
 
-    // Datos de las rutinas (sin cambios)
-    const rutinas = { 1:{title:"Lunes – Pecho y Core",objetivo:"Desarrollar fuerza en el pecho, hombros y core para mejorar la estabilidad y postura.",calentamiento:{nombre:"Calentamiento de pecho y hombros",descripcion:"Prepara tus músculos para el entrenamiento y previene lesiones",ejercicios:["Rotaciones de hombros: 2x15 (adelante y atrás)","Estiramiento de pecho en puerta: 2x15 segundos","Movilidad escapular: 2x10 (elevación/retracción)","Flexiones dinámicas: 2x10 (media amplitud)"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/shoulder-rotator-cuff.jpg?w=800&quality=86&strip=all"},estiramiento:{nombre:"Estiramiento de pecho y core",descripcion:"Mejora la flexibilidad y recuperación muscular",ejercicios:["Estiramiento de pectoral en pared: 30 segundos cada lado","Estiramiento de hombros con toalla: 30 segundos","Estiramiento de gato-vaca: 10 repeticiones","Estiramiento de oblicuos: 20 segundos cada lado"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/chest-stretch.jpg?w=800&quality=86&strip=all"},ejercicios:[{nombre:"Flexiones estándar",sets:"3x8-12",musculos:["Pectorales","Tríceps","Deltoides frontales"],consejos:"Cuerpo recto, manos a la altura de los hombros. Bajar el pecho hasta casi tocar el suelo y subir estirando brazos.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/push-up.jpg?w=800&quality=86&strip=all"},{nombre:"Flexiones con protracción escapular",sets:"3x8-10",musculos:["Serrato anterior","Trapecios","Pectorales"],consejos:"Igual posición que la flexión normal, pero al subir empuja el suelo para separar los omóplatos (escápulas).",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/scapular-push-up.jpg?w=800&quality=86&strip=all"},{nombre:"Lean Planche Hold",sets:"3x10-15 seg",musculos:["Hombros","Serrato anterior","Core"],consejos:"En posición de flexión, lleva caderas arriba para que tu cuerpo quede casi horizontal. Mantén escápulas protraídas, abdomen y glúteos apretados.",imagen:"https://www.calisthenics-education.co.uk/wp-content/uploads/2020/05/lean-planche-1024x683.jpg"},{nombre:"Plancha frontal",sets:"3x30-45 seg",musculos:["Recto abdominal","Oblicuos","Transverso"],consejos:"En apoyo de antebrazos y puntas de pies, cuerpo recto. Aprieta abdomen y glúteos. Refuerza el core para la estabilidad general del cuerpo.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/plank.jpg?w=800&quality=86&strip=all"}]},2:{title:"Martes – Piernas y Espalda Baja (Postura)",objetivo:"Fortalecer piernas y espalda baja para mejorar postura y estabilidad.",calentamiento:{nombre:"Calentamiento de piernas y espalda",descripcion:"Prepara tus músculos para el entrenamiento y previene lesiones",ejercicios:["Sentadillas sin peso: 2x15","Balanceos de piernas: 2x10 cada pierna","Movilidad de cadera: círculos 10 cada lado","Estiramiento dinámico de isquiotibiales: 2x10"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/leg-swing.jpg?w=800&quality=86&strip=all"},estiramiento:{nombre:"Estiramiento de piernas y espalda",descripcion:"Mejora la flexibilidad y recuperación muscular",ejercicios:["Estiramiento de cuádriceps: 30 segundos cada pierna","Estiramiento de isquiotibiales: 30 segundos cada pierna","Estiramiento de espalda baja (rodillas al pecho): 30 segundos","Estiramiento de glúteos: 20 segundos cada lado"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/quad-stretch.jpg?w=800&quality=86&strip=all"},ejercicios:[{nombre:"Sentadillas sin peso",sets:"4x10-12",musculos:["Cuádriceps","Glúteos","Core"],consejos:"Pies a la altura de hombros, bajar glúteos hacia atrás/bajo hasta que muslos queden paralelos.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/squat.jpg?w=800&quality=86&strip=all"},{nombre:"Sentadilla búlgara",sets:"3x8 por pierna",musculos:["Cuádriceps","Glúteos","Isquiotibiales"],consejos:"Poner un pie adelante y otro atrás apoyado en una silla baja. Bajar controlado con la pierna delantera.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/bulgarian-split-squat.jpg?w=800&quality=86&strip=all"},{nombre:"Puente de glúteos",sets:"3x12",musculos:["Glúteos","Espalda baja","Isquiotibiales"],consejos:"Acostado boca arriba, rodillas flexionadas, empuja caderas hacia arriba apretando glúteos.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/glute-bridge.jpg?w=800&quality=86&strip=all"},{nombre:"Prone Cobra",sets:"3x20-30 seg",musculos:["Trapecios","Romboides","Erectores espinales"],consejos:"Acostado boca abajo, manos al costado, levanta el pecho contrayendo glúteos y rotando pulgares hacia arriba.",imagen:"https://www.yogajournal.com/wp-content/uploads/2019/07/cobra-pose.jpg"},{nombre:"Puente invertido (Tabletop)",sets:"3x15 seg",musculos:["Hombros","Espalda baja","Glúteos"],consejos:"Sentado con manos atrás apoyadas, elevar caderas empujando con hombros y glúteos.",imagen:"https://www.yogajournal.com/wp-content/uploads/2019/07/reverse-tabletop-pose.jpg"}]},3:{title:"Miércoles – Hombros Avanzados y Planche",objetivo:"Desarrollar fuerza en hombros y progresar hacia la planche.",calentamiento:{nombre:"Calentamiento de hombros y core",descripcion:"Prepara tus músculos para el entrenamiento y previene lesiones",ejercicios:["Rotaciones de brazos: 2x15 (pequeños y grandes círculos)","Movilidad escapular: 2x10 (elevación/retracción)","Estiramiento dinámico de hombros: 2x10","Plancha dinámica: 2x10 segundos"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/arm-circles.jpg?w=800&quality=86&strip=all"},estiramiento:{nombre:"Estiramiento de hombros y core",descripcion:"Mejora la flexibilidad y recuperación muscular",ejercicios:["Estiramiento de hombros cruzados: 30 segundos cada brazo","Estiramiento de tríceps: 20 segundos cada brazo","Estiramiento de gato-vaca: 10 repeticiones","Estiramiento de hombros con toalla: 30 segundos"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/shoulder-stretch.jpg?w=800&quality=86&strip=all"},ejercicios:[{nombre:"Flexiones Pike (verticales)",sets:"3x8-10",musculos:["Hombros","Trapecios superiores","Core"],consejos:"En posición de 'V' invertida, bajar la cabeza hacia el suelo flexionando codos, luego subir.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/pike-push-up.jpg?w=800&quality=86&strip=all"},{nombre:"Flexiones Lean Planche",sets:"3x5-8",musculos:["Hombros","Serrato anterior","Pectorales"],consejos:"Manos más cerca de la cintura que de los pies, torso avanzado hacia adelante. Bajar y subir controlando con escápulas protraídas.",imagen:"https://www.calisthenics-education.co.uk/wp-content/uploads/2020/05/lean-planche-1024x683.jpg"},{nombre:"Handstand asistido (contra pared)",sets:"3x20-30 seg",musculos:["Hombros","Trapecios","Core"],consejos:"Apoya pies en pared, cuerpo vertical. Buscar mantener hombros firmes y core activo.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/handstand.jpg?w=800&quality=86&strip=all"},{nombre:"Hollow Body Hold",sets:"3x20-30 seg",musculos:["Recto abdominal","Oblicuos","Flexores de cadera"],consejos:"Acostado de espalda, elevar hombros y piernas manteniendo lumbares al suelo. Aprieta abdomen.",imagen:"https://www.gymnasticshq.com/wp-content/uploads/2020/05/hollow-body-hold.jpg"}]},4:{title:"Jueves – Espalda y Postura",objetivo:"Fortalecer espalda y mejorar la postura contrarrestando hombros adelantados.",calentamiento:{nombre:"Calentamiento de espalda y postura",descripcion:"Prepara tus músculos para el entrenamiento y previene lesiones",ejercicios:["Retracción escapular de pie: 2x15","Círculos de brazos: 2x10 (adelante y atrás)","Movilidad torácica: 2x10 (rotaciones)","Estiramiento dinámico de espalda: 2x10"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/back-warmup.jpg?w=800&quality=86&strip=all"},estiramiento:{nombre:"Estiramiento de espalda y hombros",descripcion:"Mejora la flexibilidad y recuperación muscular",ejercicios:["Estiramiento de trapecios: 30 segundos cada lado","Estiramiento de hombros con toalla: 30 segundos","Estiramiento de gato-vaca: 10 repeticiones","Estiramiento de brazos cruzados: 20 segundos cada brazo"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/back-stretch.jpg?w=800&quality=86&strip=all"},ejercicios:[{nombre:"Retracción escapular en suelo",sets:"3x10-12",musculos:["Trapecios medios","Romboides"],consejos:"Acostado boca arriba, brazos abiertos en cruz, empuja el suelo con la parte posterior de los brazos.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/scapular-retraction.jpg?w=800&quality=86&strip=all"},{nombre:"Elevaciones 'Y' prono",sets:"3x10-12",musculos:["Trapecio medio","Romboides","Deltoides posteriores"],consejos:"Acostado boca abajo con brazos en 'Y', eleva los brazos contrayendo omóplatos juntos.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/y-raise.jpg?w=800&quality=86&strip=all"},{nombre:"Superman",sets:"3x12-15",musculos:["Erectores espinales","Glúteos","Hombros posteriores"],consejos:"Boca abajo, levanta simultáneamente brazos/pecho y piernas unos centímetros.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/superman.jpg?w=800&quality=86&strip=all"},{nombre:"Prone Scapular Squeezes",sets:"3x12-15",musculos:["Trapecio medio","Romboides"],consejos:"Boca abajo con brazos extendidos, junta fuerte omóplatos manteniendo brazos elevados 2-3 seg.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/scapular-squeeze.jpg?w=800&quality=86&strip=all"}]},5:{title:"Viernes – Full Body y Movilidad",objetivo:"Trabajo completo de cuerpo con énfasis en movilidad y control corporal.",calentamiento:{nombre:"Calentamiento completo",descripcion:"Prepara todo tu cuerpo para el entrenamiento y previene lesiones",ejercicios:["Movilidad articular general: 2 minutos","Sentadillas sin peso: 2x12","Flexiones dinámicas: 2x10","Estiramiento dinámico de isquiotibiales: 2x10"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/full-body-warmup.jpg?w=800&quality=86&strip=all"},estiramiento:{nombre:"Estiramiento completo",descripcion:"Mejora la flexibilidad general y recuperación muscular",ejercicios:["Estiramiento de cuádriceps: 30 segundos cada pierna","Estiramiento de isquiotibiales: 30 segundos cada pierna","Estiramiento de hombros: 30 segundos cada brazo","Estiramiento de espalda (gato-vaca): 10 repeticiones"],imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/full-body-stretch.jpg?w=800&quality=86&strip=all"},ejercicios:[{nombre:"Sentadilla pistol asistida",sets:"3x5 por pierna",musculos:["Cuádriceps","Glúteos","Estabilidad"],consejos:"Baja con una pierna intentando llegar lo más abajo posible, usando poco apoyo con la otra.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/pistol-squat.jpg?w=800&quality=86&strip=all"},{nombre:"Flexiones pliométricas (con palmadas)",sets:"3x6-8",musculos:["Pectorales","Tríceps","Potencia"],consejos:"Flexión explosiva: al subir, impulsa el pecho del suelo con tal fuerza que aplaudes en el aire.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/plyo-push-up.jpg?w=800&quality=86&strip=all"},{nombre:"Hold de Planche Lean avanzado",sets:"2x8-10 seg",musculos:["Hombros","Serrato anterior","Core"],consejos:"Mayor inclinación que el básico, con pies más adelante. Enfatiza posición horizontal.",imagen:"https://www.calisthenics-education.co.uk/wp-content/uploads/2020/05/planche-lean.jpg"},{nombre:"Back Bridge (puente completo)",sets:"3x6-8",musculos:["Espalda baja","Hombros","Flexibilidad"],consejos:"Eleva caderas y espalda alta todo lo posible. Abre hombros y fortalece lumbar.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/back-bridge.jpg?w=800&quality=86&strip=all"},{nombre:"Plank lateral y frontal",sets:"2x30 seg cada",musculos:["Oblicuos","Recto abdominal","Hombros"],consejos:"Alternar plancha frontal y de costado para reforzar el core por completo.",imagen:"https://www.menshealth.com/wp-content/uploads/2018/04/side-plank.jpg?w=800&quality=86&strip=all"}]},6:{title:"Sábado: Descanso activo",ejercicios:[],descanso:"Caminata, movilidad o estiramientos suaves. Recuperación activa para prepararte para la próxima semana."},0:{title:"Domingo: Descanso total",ejercicios:[],descanso:"Recarga energía. Mañana se entrena fuerte 💪 Descansa y permite que tu cuerpo se recupere completamente."}};
-
-    // --- INICIO DEL CÓDIGO JS MODIFICADO ---
+    // --- NUEVO OBJETO DE RUTINAS PERSONALIZADO ---
+    const rutinas = {
+      1: {
+        title: "Lunes – PUSH + Progresión Planche",
+        objetivo: "Desarrollar fuerza de empuje, hombros y core, con un enfoque específico en la progresión hacia el Lean Planche.",
+        calentamiento: {
+          nombre: "Calentamiento de Empuje",
+          descripcion: "Activa muñecas, hombros y escápulas para un rendimiento seguro y eficaz.",
+          ejercicios: ["Círculos de muñecas: 2x15 por lado", "Rotaciones de hombros: 2x10 adelante y atrás", "Protracción/Retracción escapular: 2x10", "Flexiones con rodillas: 1x10"],
+          imagen: "https://i.ytimg.com/vi/PVL4gq_sB4s/maxresdefault.jpg"
+        },
+        estiramiento: {
+          nombre: "Estiramiento Post-Empuje",
+          descripcion: "Relaja y aumenta la flexibilidad en pecho, hombros y tríceps.",
+          ejercicios: ["Estiramiento de pectoral en marco de puerta: 2x30s por lado", "Estiramiento de tríceps tras nuca: 2x20s por lado", "Estiramiento de flexores de muñeca: 2x20s"],
+          imagen: "https://www.verywellfit.com/thmb/T6esI8g_Lw5gY8g3-u-5-aE_wKo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Verywell-22-3498282-ChestStretch-597f1da2af5d3a001193305c.jpg"
+        },
+        ejercicios: [{
+          nombre: "Lean Planche (Aguante)",
+          sets: "5 x máx. tiempo",
+          musculos: ["Hombros", "Serrato Anterior", "Core"],
+          consejos: "En posición de plancha alta, inclina hombros hacia adelante tanto como puedas manteniendo brazos rectos y escápulas protraídas (empujando el suelo).",
+          imagen: "https://i.ytimg.com/vi/GgQ32eR8tIA/maxresdefault.jpg"
+        }, {
+          nombre: "Flexiones Pseudo-Planche",
+          sets: "4 x 6-10 reps",
+          musculos: ["Hombros", "Pectoral", "Tríceps"],
+          consejos: "Manos a la altura de la cadera, dedos hacia atrás o a los lados. Mantén la inclinación hacia adelante durante todo el movimiento.",
+          imagen: "https://www.gymnasticsmethod.com/wp-content/uploads/2021/08/pseudo-planche-push-ups.jpg"
+        }, {
+          nombre: "Flexiones Diamante",
+          sets: "4 x 10-15 reps",
+          musculos: ["Tríceps", "Pectoral Interno", "Hombros"],
+          consejos: "Junta pulgares e índices formando un diamante. Mantén los codos pegados al cuerpo al bajar.",
+          imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/diamondpushup-1457444100.gif?resize=1200:*"
+        }, {
+          nombre: "Pike Push-ups",
+          sets: "3 x 12-15 reps",
+          musculos: ["Hombros", "Trapecios", "Tríceps"],
+          consejos: "Forma una 'V' invertida con tu cuerpo. Baja la cabeza en vertical hacia el suelo, no hacia adelante.",
+          imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/pikepushup-1457444101.gif?resize=1200:*"
+        }, {
+          nombre: "Flexiones Arqueras",
+          sets: "3 x 6-8 reps/lado",
+          musculos: ["Pectoral", "Hombros", "Tríceps"],
+          consejos: "Brazos muy abiertos. Desplaza el peso a un lado flexionando ese codo, mientras el otro brazo se mantiene estirado. Alterna.",
+          imagen: "https://i.ytimg.com/vi/p3f3r3jPcA0/maxresdefault.jpg"
+        }]
+      },
+      2: {
+        title: "Martes – PULL + Corrección Postural",
+        objetivo: "Fortalecer toda la cadena posterior (espalda y hombro posterior) para mejorar la postura y construir una espalda estética.",
+        calentamiento: {
+          nombre: "Activación de Espalda",
+          descripcion: "Despierta los músculos de la espalda y prepara los omóplatos para el trabajo de tracción.",
+          ejercicios: ["Círculos de brazos grandes: 2x10 adelante y atrás", "Retracción escapular de pie: 2x15", "Rotaciones torácicas: 2x10 por lado"],
+          imagen: "https://i.ytimg.com/vi/383aGvky5tA/maxresdefault.jpg"
+        },
+        estiramiento: {
+          nombre: "Estiramiento de Espalda",
+          descripcion: "Libera la tensión de la espalda alta y los dorsales.",
+          ejercicios: ["Postura del niño (Child's Pose): 2x30s", "Estiramiento de gato-vaca: 1x15", "Estiramiento de dorsal en pared: 2x20s por lado"],
+          imagen: "https://www.yogajournal.com/wp-content/uploads/2021/11/Childs-Pose_Andrew-Clark_1.jpg"
+        },
+        ejercicios: [{
+          nombre: "Dominadas Australianas (Remo Invertido)",
+          sets: "4 x 12-15 reps",
+          musculos: ["Dorsales", "Romboides", "Bíceps"],
+          consejos: "Usa una mesa robusta. Mantén el cuerpo recto como una tabla, desde los talones a la cabeza. Lleva el pecho hacia el borde de la mesa.",
+          imagen: "https://www.burnthefatinnercircle.com/members/images/1932.jpg"
+        }, {
+          nombre: "Superman con Retracción",
+          sets: "4 x 15-20 reps",
+          musculos: ["Espalda Baja", "Trapecios", "Glúteos"],
+          consejos: "Boca abajo, levanta pecho y piernas. En la parte alta, lleva los codos hacia atrás como si quisieras juntar los omóplatos. Aguanta 2 segundos.",
+          imagen: "https://i.ytimg.com/vi/z64DgN4LhDA/maxresdefault.jpg"
+        }, {
+          nombre: "YTW",
+          sets: "3 x 10 reps/letra",
+          musculos: ["Hombro Posterior", "Trapecios", "Romboides"],
+          consejos: "Boca abajo, forma las letras Y, T y W con tus brazos, levantándolos del suelo y apretando la espalda alta en cada repetición. Pulgares apuntando al techo.",
+          imagen: "https://i.ytimg.com/vi/6P3b9rfds0k/maxresdefault.jpg"
+        }, {
+          nombre: "Face Pulls con Toalla",
+          sets: "3 x 15 reps",
+          musculos: ["Hombro Posterior", "Rotadores", "Trapecios"],
+          consejos: "Pasa una toalla por el pomo de una puerta cerrada. Tira de los extremos hacia tu cara, manteniendo los codos altos y hacia afuera. Aprieta los omóplatos.",
+          imagen: "https://i.ytimg.com/vi/wg6aT_Pfn-0/maxresdefault.jpg"
+        }, {
+          nombre: "Dead Bug",
+          sets: "3 x 12 reps/lado",
+          musculos: ["Core", "Transverso", "Estabilidad"],
+          consejos: "Boca arriba, mantén la espalda baja pegada al suelo en todo momento. Baja brazo y pierna contrarios de forma lenta y controlada.",
+          imagen: "https://i.ytimg.com/vi/4XLEnwUr1d8/maxresdefault.jpg"
+        }]
+      },
+      3: {
+        title: "Miércoles – Piernas + Glúteos",
+        objetivo: "Construir fuerza y masa muscular en el tren inferior, con énfasis en glúteos y cuádriceps para una base sólida.",
+        calentamiento: {
+          nombre: "Movilidad de Tren Inferior",
+          descripcion: "Prepara caderas, rodillas y tobillos para movimientos de sentadilla y zancada.",
+          ejercicios: ["Sentadillas profundas sin peso (Cossack Squat): 2x10 por lado", "Círculos de cadera: 2x10 por lado", "Balanceos de pierna: 2x10 adelante/atrás y lado/lado"],
+          imagen: "https://i.ytimg.com/vi/crCDRUhkAgc/maxresdefault.jpg"
+        },
+        estiramiento: {
+          nombre: "Estiramiento de Piernas",
+          descripcion: "Mejora la flexibilidad de los principales grupos musculares del tren inferior.",
+          ejercicios: ["Estiramiento de cuádriceps: 2x30s por pierna", "Estiramiento de isquiotibiales: 2x30s por pierna", "Estiramiento de glúteo (Figura 4): 2x30s por pierna"],
+          imagen: "https://www.nerdfitness.com/wp-content/uploads/2019/04/quad-stretch.gif"
+        },
+        ejercicios: [{
+          nombre: "Sentadillas Búlgaras",
+          sets: "4 x 12-15 reps/pierna",
+          musculos: ["Cuádriceps", "Glúteos", "Isquiotibiales"],
+          consejos: "Apoya el empeine del pie trasero en una silla o sofá. Baja hasta que la rodilla trasera casi toque el suelo. Mantén el torso erguido.",
+          imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/bulgariansplitsquat-1457444104.gif?resize=1200:*"
+        }, {
+          nombre: "Pistol Squats Asistidas",
+          sets: "4 x 6-10 reps/pierna",
+          musculos: ["Cuádriceps", "Glúteos", "Equilibrio"],
+          consejos: "Sujétate al marco de una puerta o una silla. Baja de forma controlada con una pierna, usando la mínima ayuda posible para subir.",
+          imagen: "https://www.verywellfit.com/thmb/TzOB75E4j2J--0Ijd56V02fHeyk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Verywell-25-3498282-PistolSquat-1231575-b2875185966c406da87e0766a1e3b5e1.jpg"
+        }, {
+          nombre: "Nordic Curl Asistido",
+          sets: "3 x 5-8 reps",
+          musculos: ["Isquiotibiales", "Glúteos"],
+          consejos: "Atrapa tus tobillos bajo un sofá pesado. Baja el torso hacia adelante lo más lento que puedas. Usa tus brazos para empujar y volver a la posición inicial.",
+          imagen: "https://i.ytimg.com/vi/qP4--b__i5Y/maxresdefault.jpg"
+        }, {
+          nombre: "Puente de Glúteo a Una Pierna",
+          sets: "4 x 12-15 reps/pierna",
+          musculos: ["Glúteos", "Isquiotibiales", "Espalda Baja"],
+          consejos: "Boca arriba, una pierna flexionada y la otra extendida. Eleva la cadera apretando fuerte el glúteo de la pierna apoyada. Aguanta 2 segundos arriba.",
+          imagen: "https://i.ytimg.com/vi/w5mF5ceOJwE/maxresdefault.jpg"
+        }, {
+          nombre: "Jump Squats",
+          sets: "3 x 15 reps",
+          musculos: ["Potencia", "Cuádriceps", "Glúteos"],
+          consejos: "Realiza una sentadilla y explota hacia arriba en un salto. Aterriza suavemente, absorbiendo el impacto y encadenando con la siguiente repetición.",
+          imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/jumpsquat-1457444101.gif?resize=1200:*"
+        }]
+      },
+      4: {
+        title: "Jueves – Habilidades + Movilidad",
+        objetivo: "Día dedicado a la práctica de habilidades avanzadas (Handstand, Planche) y a mejorar la movilidad articular general.",
+        calentamiento: {
+          nombre: "Preparación para Habilidades",
+          descripcion: "Calentamiento completo con énfasis en muñecas, hombros y activación del core.",
+          ejercicios: ["Calentamiento de muñecas completo: 3 min", "Dislocaciones de hombro con toalla: 2x10", "Hollow Body Hold: 3x20s"],
+          imagen: "https://i.ytimg.com/vi/mSZ1_T_E014/maxresdefault.jpg"
+        },
+        estiramiento: {
+          nombre: "Movilidad Profunda",
+          descripcion: "Sesión de estiramientos para mejorar el rango de movimiento en hombros y caderas.",
+          ejercicios: ["Sentadilla profunda (Squat Hold): 3x30s", "Estiramiento 90/90 de cadera: 2x30s por lado", "Aperturas de pecho en el suelo: 2x30s por lado"],
+          imagen: "https://i.ytimg.com/vi/a_eA158fP-w/maxresdefault.jpg"
+        },
+        ejercicios: [{
+          nombre: "Handstand contra Pared",
+          sets: "6 x 30-45 seg",
+          musculos: ["Hombros", "Trapecios", "Core"],
+          consejos: "Intenta hacerlo de cara a la pared para una mejor alineación. Empuja el suelo activamente, mantén el cuerpo recto y el abdomen apretado.",
+          imagen: "https://www.nerdfitness.com/wp-content/uploads/2021/08/nerd-fitness-handstand-718x480.gif"
+        }, {
+          nombre: "Tuck Planche Hold",
+          sets: "5 x 10-20 seg",
+          musculos: ["Hombros", "Serrato Anterior", "Brazos"],
+          consejos: "Apoya las manos, inclínate hacia adelante y levanta los pies del suelo, llevando las rodillas al pecho. Mantén los brazos completamente rectos.",
+          imagen: "https://www.gymnasticsmethod.com/wp-content/uploads/2021/08/tuck-planche-2-min.jpg"
+        }, {
+          nombre: "Flexiones en Pino Asistidas",
+          sets: "3 x 5-8 reps",
+          musculos: ["Hombros", "Tríceps", "Trapecios"],
+          consejos: "En posición de pino contra la pared, baja la cabeza hacia el suelo de forma controlada y empuja con fuerza para volver a subir.",
+          imagen: "https://calisthenicsfamily.com/wp-content/uploads/2022/07/How-to-do-a-Handstand-Push-up-Progression-Exercises-scaled.jpg"
+        }, {
+          nombre: "L-Sit Hold",
+          sets: "4 x máx. tiempo",
+          musculos: ["Core", "Flexores de Cadera", "Tríceps"],
+          consejos: "Sentado en el suelo, manos a los lados. Empuja para levantar el cuerpo. Si es muy difícil, empieza doblando las rodillas (Tuck L-Sit).",
+          imagen: "https://www.nerdfitness.com/wp-content/uploads/2013/05/L-sit.gif"
+        }]
+      },
+      5: {
+        title: "Viernes – Full Tren Superior",
+        objetivo: "Entrenamiento completo del tren superior para maximizar el estímulo de hipertrofia y la resistencia muscular.",
+        calentamiento: {
+          nombre: "Calentamiento General Superior",
+          descripcion: "Activa todos los músculos del tren superior para un entrenamiento completo y seguro.",
+          ejercicios: ["Jumping Jacks: 1 min", "Círculos de brazos: 2x10", "Remo con banda elástica imaginaria: 2x15", "Flexiones inclinadas: 1x10"],
+          imagen: "https://i.ytimg.com/vi/H0bzt6yUj_s/maxresdefault.jpg"
+        },
+        estiramiento: {
+          nombre: "Estiramiento Completo Superior",
+          descripcion: "Relaja todos los músculos trabajados para una mejor recuperación.",
+          ejercicios: ["Estiramiento de pecho: 2x20s", "Estiramiento de dorsal: 2x20s", "Estiramiento de bíceps y tríceps: 2x15s cada uno"],
+          imagen: "https://hips.hearstapps.com/hmg-prod/images/stretching-exercises-for-lower-back-pain-1582226871.jpg"
+        },
+        ejercicios: [{
+          nombre: "Flexiones Explosivas",
+          sets: "4 x 8-12 reps",
+          musculos: ["Pectoral", "Tríceps", "Potencia"],
+          consejos: "Baja controlado y empuja el suelo con la máxima fuerza posible, intentando que las manos se despeguen del suelo. Si puedes, da una palmada.",
+          imagen: "https://i.ytimg.com/vi/v9n6n-o238E/maxresdefault.jpg"
+        }, {
+          nombre: "Dominadas Australianas Arqueras",
+          sets: "4 x 6-8 reps/lado",
+          musculos: ["Dorsales", "Bíceps", "Espalda Alta"],
+          consejos: "Al hacer el remo invertido, tira hacia una mano mientras la otra se mantiene estirada, como un arquero. Alterna en cada repetición.",
+          imagen: "https://i.ytimg.com/vi/s0h0t2IunoY/maxresdefault.jpg"
+        }, {
+          nombre: "Flexiones Declinadas",
+          sets: "4 x 12-15 reps",
+          musculos: ["Pectoral Superior", "Hombros"],
+          consejos: "Coloca los pies en una silla o sofá para aumentar la intensidad y enfocar el trabajo en la parte superior del pecho.",
+          imagen: "https://hips.hearstapps.com/ame-prod-menshealth-assets.s3.amazonaws.com/main/thumbs/35031/declinepushup.jpg?resize=1200:*"
+        }, {
+          nombre: "Flexiones Hindú",
+          sets: "3 x 10-12 reps",
+          musculos: ["Hombros", "Pecho", "Movilidad"],
+          consejos: "Inicia en V invertida, baja la cabeza y el pecho en un movimiento fluido y arqueado hacia adelante, terminando en la postura de la cobra. Revierte el movimiento.",
+          imagen: "https://i.ytimg.com/vi/L0gWl3e2z28/maxresdefault.jpg"
+        }, {
+          nombre: "Plancha con Toque de Hombro",
+          sets: "3 x 20 toques",
+          musculos: ["Core", "Estabilidad", "Oblicuos"],
+          consejos: "En posición de plancha alta, levanta una mano para tocar el hombro opuesto. Mantén la cadera estable y evita balancearte.",
+          imagen: "https://i.ytimg.com/vi/xbUEZN3T7pE/maxresdefault.jpg"
+        }]
+      },
+      6: {
+        title: "Sábado – Piernas Intensas + Core",
+        objetivo: "Segundo día de piernas con enfoque en la intensidad y ejercicios avanzados de core para una sección media de acero.",
+        calentamiento: {
+          nombre: "Activación Piernas y Core",
+          descripcion: "Prepara el tren inferior y la zona media para un trabajo de alta intensidad.",
+          ejercicios: ["Puente de glúteos: 2x15", "Bird-dog: 2x10 por lado", "Sentadillas con salto (baja intensidad): 1x10"],
+          imagen: "https://i.ytimg.com/vi/zEk6o8x-x-I/maxresdefault.jpg"
+        },
+        estiramiento: {
+          nombre: "Estiramiento Profundo Piernas y Core",
+          descripcion: "Enfócate en relajar los flexores de cadera, isquiotibiales y la espalda baja.",
+          ejercicios: ["Estiramiento del psoas: 2x30s por lado", "Estiramiento de isquios tumbado: 2x30s por lado", "Torsión de columna lumbar: 2x30s por lado"],
+          imagen: "https://i.ytimg.com/vi/Sae0o_a-b2E/maxresdefault.jpg"
+        },
+        ejercicios: [{
+          nombre: "Sentadillas Sissy",
+          sets: "3 x 10-12 reps",
+          musculos: ["Cuádriceps"],
+          consejos: "Mantén el equilibrio sujetándote a algo. Inclina el torso hacia atrás mientras flexionas las rodillas hacia adelante. Un gran aislador de cuádriceps.",
+          imagen: "https://i.ytimg.com/vi/Wffb92j4P5w/maxresdefault.jpg"
+        }, {
+          nombre: "Single Leg Romanian Deadlift",
+          sets: "4 x 12 reps/pierna",
+          musculos: ["Isquiotibiales", "Glúteos", "Equilibrio"],
+          consejos: "De pie sobre una pierna, inclínate hacia adelante manteniendo la espalda recta y extendiendo la otra pierna hacia atrás. Siente el estiramiento en el isquio.",
+          imagen: "https://i.ytimg.com/vi/i24b0-Y-c5M/maxresdefault.jpg"
+        }, {
+          nombre: "Puente de Glúteo Elevado",
+          sets: "3 x 15-20 reps",
+          musculos: ["Glúteos", "Isquiotibiales"],
+          consejos: "Apoya los talones en una silla o sofá para aumentar el rango de movimiento. Sube la cadera y aprieta los glúteos con fuerza en la parte superior.",
+          imagen: "https://i.ytimg.com/vi/w4p8s9a7yqs/maxresdefault.jpg"
+        }, {
+          nombre: "Dragon Flag Progresión",
+          sets: "4 x 5-8 reps",
+          musculos: ["Core", "Recto Abdominal", "Oblicuos"],
+          consejos: "Tumbado, agárrate a algo firme detrás de tu cabeza. Levanta todo tu cuerpo recto y bájalo lo más lentamente posible. Si es muy difícil, dobla las rodillas.",
+          imagen: "https://www.fitstream.com/images/bodyweight-training/bodyweight-exercises/dragon-flag.png"
+        }, {
+          nombre: "V-Ups",
+          sets: "3 x 12-15 reps",
+          musculos: ["Recto Abdominal", "Flexores Cadera"],
+          consejos: "Tumbado, levanta simultáneamente el torso y las piernas rectas, intentando tocar las puntas de los pies en el centro. Controla la bajada.",
+          imagen: "https://i.ytimg.com/vi/iP2fjvG_xU8/maxresdefault.jpg"
+        }]
+      },
+      0: {
+        title: "Domingo: Descanso Total",
+        ejercicios: [],
+        descanso: "¡DÍA LIBRE TOTAL! Tu cuerpo se repara y crece. Enfócate en dormir, comer bien e hidratarte. Es tan importante como los días de entrenamiento."
+      }
+    };
+    
+    // --- FIN DEL CÓDIGO JS MODIFICADO ---
 
     // Menu móvil (sin cambios)
     const menuToggle = document.getElementById('menu-toggle');
@@ -1642,19 +1930,51 @@
     });
 
     function mostrarDesayuno(dia) {
-      const desayuno = desayunos[dia];
-      const container = document.getElementById('desayuno');
-      
-      container.innerHTML = `
-        <div class="desayuno-header">
-          <h2>${dia === 'L' ? 'Lunes' : dia === 'M' ? 'Martes' : dia === 'X' ? 'Miércoles' : dia === 'J' ? 'Jueves' : 'Viernes'}: ${desayuno.nombre}</h2>
-          <span class="desayuno-calorias">${desayuno.calorias}</span>
-        </div>
-        <div class="desayuno-content"><div class="desayuno-info"><div class="desayuno-section"><h3><i class="fas fa-list"></i> Ingredientes</h3><ul>${desayuno.ingredientes.map(i => `<li>${i}</li>`).join('')}</ul></div><div class="desayuno-section"><h3><i class="fas fa-list-ol"></i> Preparación</h3><ol>${desayuno.preparacion.map(p => `<li>${p}</li>`).join('')}</ol></div><div class="nutrition-facts"><h3><i class="fas fa-fire"></i> Información Nutricional</h3><div class="nutrition-grid"><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.kcal}</span><span class="nutrition-label">kcal</span></div><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.proteinas}g</span><span class="nutrition-label">Proteínas</span></div><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.carbohidratos}g</span><span class="nutrition-label">Carbohidratos</span></div><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.grasas}g</span><span class="nutrition-label">Grasas</span></div><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.fibra}g</span><span class="nutrition-label">Fibra</span></div><div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.azucares}g</span><span class="nutrition-label">Azúcares</span></div></div></div></div></div>`;
-      container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const desayuno = desayunos[dia];
+        const container = document.getElementById('desayuno');
+        
+        let diaCompleto = '';
+        switch(dia) {
+            case 'L': diaCompleto = 'Lunes'; break;
+            case 'M': diaCompleto = 'Martes'; break;
+            case 'X': diaCompleto = 'Miércoles'; break;
+            case 'J': diaCompleto = 'Jueves'; break;
+            case 'V': diaCompleto = 'Viernes'; break;
+            case 'S': diaCompleto = 'Sábado'; break;
+        }
+
+        container.innerHTML = `
+            <div class="desayuno-header">
+            <h2>${diaCompleto}: ${desayuno.nombre}</h2>
+            <span class="desayuno-calorias">${desayuno.calorias}</span>
+            </div>
+            <div class="desayuno-content">
+                <div class="desayuno-info">
+                    <div class="desayuno-section">
+                        <h3><i class="fas fa-list"></i> Ingredientes</h3>
+                        <ul>${desayuno.ingredientes.map(i => `<li>${i}</li>`).join('')}</ul>
+                    </div>
+                    <div class="desayuno-section">
+                        <h3><i class="fas fa-list-ol"></i> Preparación</h3>
+                        <ol>${desayuno.preparacion.map(p => `<li>${p}</li>`).join('')}</ol>
+                    </div>
+                    <div class="nutrition-facts">
+                        <h3><i class="fas fa-fire"></i> Información Nutricional</h3>
+                        <div class="nutrition-grid">
+                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.kcal}</span><span class="nutrition-label">kcal</span></div>
+                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.proteinas}g</span><span class="nutrition-label">Proteínas</span></div>
+                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.carbohidratos}g</span><span class="nutrition-label">Carbohidratos</span></div>
+                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.grasas}g</span><span class="nutrition-label">Grasas</span></div>
+                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.fibra}g</span><span class="nutrition-label">Fibra</span></div>
+                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.azucares}g</span><span class="nutrition-label">Azúcares</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        container.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    // --- NUEVO: FUNCIONALIDAD DE COMPLETAR RUTINAS Y ESTADÍSTICAS ---
+    // --- FUNCIONALIDAD DE COMPLETAR RUTINAS Y ESTADÍSTICAS ---
 
     // Clave para guardar datos en el almacenamiento local del navegador
     const COMPLETED_DATA_KEY = 'monoslocosFitnessCompleted';
@@ -1729,8 +2049,8 @@
       for (let day = 1; day <= diasMes; day++) {
         const date = new Date(year, month, day);
         const dayOfWeek = date.getDay();
-        // Contamos días de entrenamiento (Lunes a Viernes)
-        if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+        // Contamos días de entrenamiento (Lunes a Sábado)
+        if (dayOfWeek >= 1 && dayOfWeek <= 6) {
           totalTrainingDays++;
           if (completedDates.includes(formatDate(date))) {
             completedInMonth++;
@@ -1837,7 +2157,7 @@
           const div = document.createElement('div');
           div.classList.add('day');
           
-          if (diaSemana === 0 || diaSemana === 6) div.classList.add('weekend');
+          if (diaSemana === 0) div.classList.add('weekend');
           
           const hoy = new Date();
           if (dia === hoy.getDate() && mes === hoy.getMonth() && año === hoy.getFullYear()) {
@@ -1877,13 +2197,13 @@
             html += `<div class="ejercicio"><div class="ejercicio-header" onclick="toggleDetalle(this)"><div class="ejercicio-title">${ejercicio.nombre}</div><div class="ejercicio-sets">${ejercicio.sets}</div></div><div class="ejercicio-detalle"><div class="ejercicio-info"><div class="ejercicio-muscles"><h4>Músculos trabajados</h4><ul>${ejercicio.musculos.map(m => `<li>${m}</li>`).join('')}</ul></div><div class="ejercicio-tips"><h4>Consejos</h4><p>${ejercicio.consejos}</p></div></div><div class="ejercicio-media"><img class="ejercicio-img" src="${ejercicio.imagen}" alt="${ejercicio.nombre}"></div></div></div>`;
           });
         } else {
-          html += `<div class="ejercicio"><p style="text-align: center; font-size: 1.125rem; line-height: 1.8; color: var(--gray-light);"><i class="fas fa-spa" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: var(--primary-light);"></i>${rutina.descanso}</p></div>`;
+          html += `<div class="ejercicio"><p style="text-align: center; font-size: 1.125rem; line-height: 1.8; color: var(--gray-light);"><i class="fas fa-bed" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: var(--accent);"></i>${rutina.descanso}</p></div>`;
         }
         
         if (rutina.estiramiento) html += `<div class="ejercicio estiramiento"><div class="ejercicio-header" onclick="toggleDetalle(this)"><div class="ejercicio-title">${rutina.estiramiento.nombre}</div><div class="ejercicio-sets">Estiramiento</div></div><div class="ejercicio-detalle"><div class="ejercicio-tips"><h4>Descripción</h4><p>${rutina.estiramiento.descripcion}</p><h4 style="margin-top: 1rem;">Ejercicios</h4><ul>${rutina.estiramiento.ejercicios.map(e => `<li>${e}</li>`).join('')}</ul></div><div class="ejercicio-media"><img class="ejercicio-img" src="${rutina.estiramiento.imagen}" alt="${rutina.estiramiento.nombre}"></div></div></div>`;
         
         // Añadir botón para completar, solo si es un día de entrenamiento
-        if (diaSemana >= 1 && diaSemana <= 5) {
+        if (diaSemana >= 1 && diaSemana <= 6) {
             html += `
               <button class="btn-completar ${isCompleted ? 'completed' : ''}" onclick="toggleCompletion('${dateString}')">
                 ${isCompleted 
@@ -1918,18 +2238,6 @@
       detalle.classList.toggle('active');
     }
 
-    function calcularDiasRestantes() {
-      const hoy = new Date();
-      const objetivo = new Date(hoy.getFullYear(), 0, 1);
-      if (objetivo < hoy) objetivo.setFullYear(hoy.getFullYear() + 1);
-      const dias = Math.ceil((objetivo - hoy) / (1000 * 60 * 60 * 24));
-      const contador = document.getElementById("contador");
-      if (contador) contador.innerHTML = dias > 0 ? `<i class="fas fa-calendar-days"></i> ${dias} días` : `<i class="fas fa-trophy"></i> ¡Meta alcanzada!`;
-    }
-    
-    calcularDiasRestantes();
-    setInterval(calcularDiasRestantes, 3600000);
-
     window.toggleDetalle = toggleDetalle;
     // NUEVO: Hacemos toggleCompletion accesible globalmente desde el HTML
     window.toggleCompletion = toggleCompletion;
@@ -1960,6 +2268,4 @@
   </script>
 </body>
 </html>
-
-
-
+```
