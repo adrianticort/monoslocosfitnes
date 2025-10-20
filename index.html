@@ -1597,288 +1597,374 @@
 
     // --- NUEVO OBJETO DE RUTINAS PERSONALIZADO ---
     const rutinas = {
-      1: {
-        title: "Lunes – PUSH + Progresión Planche",
-        objetivo: "Desarrollar fuerza de empuje, hombros y core, con un enfoque específico en la progresión hacia el Lean Planche.",
-        calentamiento: {
-          nombre: "Calentamiento de Empuje",
-          descripcion: "Activa muñecas, hombros y escápulas para un rendimiento seguro y eficaz.",
-          ejercicios: ["Círculos de muñecas: 2x15 por lado", "Rotaciones de hombros: 2x10 adelante y atrás", "Protracción/Retracción escapular: 2x10", "Flexiones con rodillas: 1x10"],
-          imagen: "https://i.ytimg.com/vi/PVL4gq_sB4s/maxresdefault.jpg"
-        },
-        estiramiento: {
-          nombre: "Estiramiento Post-Empuje",
-          descripcion: "Relaja y aumenta la flexibilidad en pecho, hombros y tríceps.",
-          ejercicios: ["Estiramiento de pectoral en marco de puerta: 2x30s por lado", "Estiramiento de tríceps tras nuca: 2x20s por lado", "Estiramiento de flexores de muñeca: 2x20s"],
-          imagen: "https://www.verywellfit.com/thmb/T6esI8g_Lw5gY8g3-u-5-aE_wKo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Verywell-22-3498282-ChestStretch-597f1da2af5d3a001193305c.jpg"
-        },
-        ejercicios: [{
-          nombre: "Lean Planche (Aguante)",
-          sets: "5 x máx. tiempo",
-          musculos: ["Hombros", "Serrato Anterior", "Core"],
-          consejos: "En posición de plancha alta, inclina hombros hacia adelante tanto como puedas manteniendo brazos rectos y escápulas protraídas (empujando el suelo).",
-          imagen: "https://i.ytimg.com/vi/GgQ32eR8tIA/maxresdefault.jpg"
-        }, {
-          nombre: "Flexiones Pseudo-Planche",
-          sets: "4 x 6-10 reps",
-          musculos: ["Hombros", "Pectoral", "Tríceps"],
-          consejos: "Manos a la altura de la cadera, dedos hacia atrás o a los lados. Mantén la inclinación hacia adelante durante todo el movimiento.",
-          imagen: "https://www.gymnasticsmethod.com/wp-content/uploads/2021/08/pseudo-planche-push-ups.jpg"
-        }, {
-          nombre: "Flexiones Diamante",
-          sets: "4 x 10-15 reps",
-          musculos: ["Tríceps", "Pectoral Interno", "Hombros"],
-          consejos: "Junta pulgares e índices formando un diamante. Mantén los codos pegados al cuerpo al bajar.",
-          imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/diamondpushup-1457444100.gif?resize=1200:*"
-        }, {
-          nombre: "Pike Push-ups",
-          sets: "3 x 12-15 reps",
-          musculos: ["Hombros", "Trapecios", "Tríceps"],
-          consejos: "Forma una 'V' invertida con tu cuerpo. Baja la cabeza en vertical hacia el suelo, no hacia adelante.",
-          imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/pikepushup-1457444101.gif?resize=1200:*"
-        }, {
-          nombre: "Flexiones Arqueras",
-          sets: "3 x 6-8 reps/lado",
-          musculos: ["Pectoral", "Hombros", "Tríceps"],
-          consejos: "Brazos muy abiertos. Desplaza el peso a un lado flexionando ese codo, mientras el otro brazo se mantiene estirado. Alterna.",
-          imagen: "https://i.ytimg.com/vi/p3f3r3jPcA0/maxresdefault.jpg"
-        }]
+  1: {
+    title: "Lunes – PUSH + Progresión Planche",
+    objetivo: "Fuerza de empuje y core con foco en Lean Planche: protracción/depresión escapular, hollow y compresión. Técnica segura y progresiva.",
+    calentamiento: {
+      nombre: "Calentamiento de Empuje/Planche (5–8 min)",
+      descripcion: "Activa muñecas, serrato y core; mejora movilidad torácica.",
+      ejercicios: [
+        "Círculos de muñecas: 60–90 s variados",
+        "Cat–Cow + extensión torácica (Sphinx): 2x6",
+        "Scapular push-ups (brazos rectos): 1x10",
+        "Hollow body hold: 1x15–20 s"
+      ],
+      imagen: "https://i.ytimg.com/vi/PVL4gq_sB4s/maxresdefault.jpg"
+    },
+    estiramiento: {
+      nombre: "Estiramiento Post-Empuje (3–5 min)",
+      descripcion: "Descarga muñecas, pectoral y deltoides anteriores.",
+      ejercicios: [
+        "Estiramiento de pectoral en marco de puerta: 2x30 s por lado",
+        "Estiramiento de tríceps tras nuca: 2x20 s por lado",
+        "Estiramiento de flexores de muñeca: 2x20 s"
+      ],
+      imagen: "https://www.verywellfit.com/thmb/T6esI8g_Lw5gY8g3-u-5-aE_wKo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Verywell-22-3498282-ChestStretch-597f1da2af5d3a001193305c.jpg"
+    },
+    ejercicios: [
+      {
+        nombre: "Lean Planche (isométrico)",
+        sets: "4 x 15–25 s — ISO — 90 s — RPE 8",
+        musculos: ["Hombros", "Serrato Anterior", "Core"],
+        consejos: "Hombros por delante de muñecas, brazos rectos, escápulas protraídas y deprimidas, pelvis en retroversión (PPT), mirada neutra. Fácil: menos lean y pies separados. Difícil: más lean y pies juntos. Puedes usar la tabla de flexiones (agarre neutro) si molestan las muñecas.",
+        imagen: "https://i.ytimg.com/vi/GgQ32eR8tIA/maxresdefault.jpg"
       },
-      2: {
-        title: "Martes – PULL + Corrección Postural",
-        objetivo: "Fortalecer toda la cadena posterior (espalda y hombro posterior) para mejorar la postura y construir una espalda estética.",
-        calentamiento: {
-          nombre: "Activación de Espalda",
-          descripcion: "Despierta los músculos de la espalda y prepara los omóplatos para el trabajo de tracción.",
-          ejercicios: ["Círculos de brazos grandes: 2x10 adelante y atrás", "Retracción escapular de pie: 2x15", "Rotaciones torácicas: 2x10 por lado"],
-          imagen: "https://i.ytimg.com/vi/383aGvky5tA/maxresdefault.jpg"
-        },
-        estiramiento: {
-          nombre: "Estiramiento de Espalda",
-          descripcion: "Libera la tensión de la espalda alta y los dorsales.",
-          ejercicios: ["Postura del niño (Child's Pose): 2x30s", "Estiramiento de gato-vaca: 1x15", "Estiramiento de dorsal en pared: 2x20s por lado"],
-          imagen: "https://www.yogajournal.com/wp-content/uploads/2021/11/Childs-Pose_Andrew-Clark_1.jpg"
-        },
-        ejercicios: [{
-          nombre: "Dominadas Australianas (Remo Invertido)",
-          sets: "4 x 12-15 reps",
-          musculos: ["Dorsales", "Romboides", "Bíceps"],
-          consejos: "Usa una mesa robusta. Mantén el cuerpo recto como una tabla, desde los talones a la cabeza. Lleva el pecho hacia el borde de la mesa.",
-          imagen: "https://www.burnthefatinnercircle.com/members/images/1932.jpg"
-        }, {
-          nombre: "Superman con Retracción",
-          sets: "4 x 15-20 reps",
-          musculos: ["Espalda Baja", "Trapecios", "Glúteos"],
-          consejos: "Boca abajo, levanta pecho y piernas. En la parte alta, lleva los codos hacia atrás como si quisieras juntar los omóplatos. Aguanta 2 segundos.",
-          imagen: "https://i.ytimg.com/vi/z64DgN4LhDA/maxresdefault.jpg"
-        }, {
-          nombre: "YTW",
-          sets: "3 x 10 reps/letra",
-          musculos: ["Hombro Posterior", "Trapecios", "Romboides"],
-          consejos: "Boca abajo, forma las letras Y, T y W con tus brazos, levantándolos del suelo y apretando la espalda alta en cada repetición. Pulgares apuntando al techo.",
-          imagen: "https://i.ytimg.com/vi/6P3b9rfds0k/maxresdefault.jpg"
-        }, {
-          nombre: "Face Pulls con Toalla",
-          sets: "3 x 15 reps",
-          musculos: ["Hombro Posterior", "Rotadores", "Trapecios"],
-          consejos: "Pasa una toalla por el pomo de una puerta cerrada. Tira de los extremos hacia tu cara, manteniendo los codos altos y hacia afuera. Aprieta los omóplatos.",
-          imagen: "https://i.ytimg.com/vi/wg6aT_Pfn-0/maxresdefault.jpg"
-        }, {
-          nombre: "Dead Bug",
-          sets: "3 x 12 reps/lado",
-          musculos: ["Core", "Transverso", "Estabilidad"],
-          consejos: "Boca arriba, mantén la espalda baja pegada al suelo en todo momento. Baja brazo y pierna contrarios de forma lenta y controlada.",
-          imagen: "https://i.ytimg.com/vi/4XLEnwUr1d8/maxresdefault.jpg"
-        }]
+      {
+        nombre: "Flexiones Pseudo-Planche (PPPU)",
+        sets: "4 x 6–10 — tempo 3-1-1-0 — 90 s — RPE 8",
+        musculos: ["Hombros", "Pectoral", "Tríceps"],
+        consejos: "Manos más cerca de caderas, codos pegados, cuerpo en bloque. Mantén el lean durante todo el rango. Fácil: menos lean o rodillas al suelo. Difícil: pies elevados 10–20 cm. Tabla de flexiones recomendable si hay molestias en muñeca.",
+        imagen: "https://www.gymnasticsmethod.com/wp-content/uploads/2021/08/pseudo-planche-push-ups.jpg"
       },
-      3: {
-        title: "Miércoles – Piernas + Glúteos",
-        objetivo: "Construir fuerza y masa muscular en el tren inferior, con énfasis en glúteos y cuádriceps para una base sólida.",
-        calentamiento: {
-          nombre: "Movilidad de Tren Inferior",
-          descripcion: "Prepara caderas, rodillas y tobillos para movimientos de sentadilla y zancada.",
-          ejercicios: ["Sentadillas profundas sin peso (Cossack Squat): 2x10 por lado", "Círculos de cadera: 2x10 por lado", "Balanceos de pierna: 2x10 adelante/atrás y lado/lado"],
-          imagen: "https://i.ytimg.com/vi/crCDRUhkAgc/maxresdefault.jpg"
-        },
-        estiramiento: {
-          nombre: "Estiramiento de Piernas",
-          descripcion: "Mejora la flexibilidad de los principales grupos musculares del tren inferior.",
-          ejercicios: ["Estiramiento de cuádriceps: 2x30s por pierna", "Estiramiento de isquiotibiales: 2x30s por pierna", "Estiramiento de glúteo (Figura 4): 2x30s por pierna"],
-          imagen: "https://www.nerdfitness.com/wp-content/uploads/2019/04/quad-stretch.gif"
-        },
-        ejercicios: [{
-          nombre: "Sentadillas Búlgaras",
-          sets: "4 x 12-15 reps/pierna",
-          musculos: ["Cuádriceps", "Glúteos", "Isquiotibiales"],
-          consejos: "Apoya el empeine del pie trasero en una silla o sofá. Baja hasta que la rodilla trasera casi toque el suelo. Mantén el torso erguido.",
-          imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/bulgariansplitsquat-1457444104.gif?resize=1200:*"
-        }, {
-          nombre: "Pistol Squats Asistidas",
-          sets: "4 x 6-10 reps/pierna",
-          musculos: ["Cuádriceps", "Glúteos", "Equilibrio"],
-          consejos: "Sujétate al marco de una puerta o una silla. Baja de forma controlada con una pierna, usando la mínima ayuda posible para subir.",
-          imagen: "https://www.verywellfit.com/thmb/TzOB75E4j2J--0Ijd56V02fHeyk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Verywell-25-3498282-PistolSquat-1231575-b2875185966c406da87e0766a1e3b5e1.jpg"
-        }, {
-          nombre: "Nordic Curl Asistido",
-          sets: "3 x 5-8 reps",
-          musculos: ["Isquiotibiales", "Glúteos"],
-          consejos: "Atrapa tus tobillos bajo un sofá pesado. Baja el torso hacia adelante lo más lento que puedas. Usa tus brazos para empujar y volver a la posición inicial.",
-          imagen: "https://i.ytimg.com/vi/qP4--b__i5Y/maxresdefault.jpg"
-        }, {
-          nombre: "Puente de Glúteo a Una Pierna",
-          sets: "4 x 12-15 reps/pierna",
-          musculos: ["Glúteos", "Isquiotibiales", "Espalda Baja"],
-          consejos: "Boca arriba, una pierna flexionada y la otra extendida. Eleva la cadera apretando fuerte el glúteo de la pierna apoyada. Aguanta 2 segundos arriba.",
-          imagen: "https://i.ytimg.com/vi/w5mF5ceOJwE/maxresdefault.jpg"
-        }, {
-          nombre: "Jump Squats",
-          sets: "3 x 15 reps",
-          musculos: ["Potencia", "Cuádriceps", "Glúteos"],
-          consejos: "Realiza una sentadilla y explota hacia arriba en un salto. Aterriza suavemente, absorbiendo el impacto y encadenando con la siguiente repetición.",
-          imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/jumpsquat-1457444101.gif?resize=1200:*"
-        }]
+      {
+        nombre: "Scapular push-ups (brazos rectos)",
+        sets: "3 x 10–15 — tempo 2-1-2-1 — 60 s — RPE 7",
+        musculos: ["Serrato Anterior", "Trapecio", "Core"],
+        consejos: "Solo muevas escápulas: protrae (empuja el suelo) y retrae sin doblar codos. Mantén cuello largo.",
+        imagen: "https://i.ytimg.com/vi/Vdy9kqN6p6Y/maxresdefault.jpg"
       },
-      4: {
-        title: "Jueves – Habilidades + Movilidad",
-        objetivo: "Día dedicado a la práctica de habilidades avanzadas (Handstand, Planche) y a mejorar la movilidad articular general.",
-        calentamiento: {
-          nombre: "Preparación para Habilidades",
-          descripcion: "Calentamiento completo con énfasis en muñecas, hombros y activación del core.",
-          ejercicios: ["Calentamiento de muñecas completo: 3 min", "Dislocaciones de hombro con toalla: 2x10", "Hollow Body Hold: 3x20s"],
-          imagen: "https://i.ytimg.com/vi/mSZ1_T_E014/maxresdefault.jpg"
-        },
-        estiramiento: {
-          nombre: "Movilidad Profunda",
-          descripcion: "Sesión de estiramientos para mejorar el rango de movimiento en hombros y caderas.",
-          ejercicios: ["Sentadilla profunda (Squat Hold): 3x30s", "Estiramiento 90/90 de cadera: 2x30s por lado", "Aperturas de pecho en el suelo: 2x30s por lado"],
-          imagen: "https://i.ytimg.com/vi/a_eA158fP-w/maxresdefault.jpg"
-        },
-        ejercicios: [{
-          nombre: "Handstand contra Pared",
-          sets: "6 x 30-45 seg",
-          musculos: ["Hombros", "Trapecios", "Core"],
-          consejos: "Intenta hacerlo de cara a la pared para una mejor alineación. Empuja el suelo activamente, mantén el cuerpo recto y el abdomen apretado.",
-          imagen: "https://www.nerdfitness.com/wp-content/uploads/2021/08/nerd-fitness-handstand-718x480.gif"
-        }, {
-          nombre: "Tuck Planche Hold",
-          sets: "5 x 10-20 seg",
-          musculos: ["Hombros", "Serrato Anterior", "Brazos"],
-          consejos: "Apoya las manos, inclínate hacia adelante y levanta los pies del suelo, llevando las rodillas al pecho. Mantén los brazos completamente rectos.",
-          imagen: "https://www.gymnasticsmethod.com/wp-content/uploads/2021/08/tuck-planche-2-min.jpg"
-        }, {
-          nombre: "Flexiones en Pino Asistidas",
-          sets: "3 x 5-8 reps",
-          musculos: ["Hombros", "Tríceps", "Trapecios"],
-          consejos: "En posición de pino contra la pared, baja la cabeza hacia el suelo de forma controlada y empuja con fuerza para volver a subir.",
-          imagen: "https://calisthenicsfamily.com/wp-content/uploads/2022/07/How-to-do-a-Handstand-Push-up-Progression-Exercises-scaled.jpg"
-        }, {
-          nombre: "L-Sit Hold",
-          sets: "4 x máx. tiempo",
-          musculos: ["Core", "Flexores de Cadera", "Tríceps"],
-          consejos: "Sentado en el suelo, manos a los lados. Empuja para levantar el cuerpo. Si es muy difícil, empieza doblando las rodillas (Tuck L-Sit).",
-          imagen: "https://www.nerdfitness.com/wp-content/uploads/2013/05/L-sit.gif"
-        }]
+      {
+        nombre: "Hollow Body Hold",
+        sets: "3 x 20–30 s — ISO — 45–60 s — RPE 7",
+        musculos: ["Core", "Transverso", "Flexores de cadera"],
+        consejos: "Zona lumbar pegada, costillas abajo, PPT. Fácil: una pierna flexionada. Difícil: hollow rocks.",
+        imagen: "https://i.ytimg.com/vi/bE0Y_7yN3O8/maxresdefault.jpg"
       },
-      5: {
-        title: "Viernes – Full Tren Superior",
-        objetivo: "Entrenamiento completo del tren superior para maximizar el estímulo de hipertrofia y la resistencia muscular.",
-        calentamiento: {
-          nombre: "Calentamiento General Superior",
-          descripcion: "Activa todos los músculos del tren superior para un entrenamiento completo y seguro.",
-          ejercicios: ["Jumping Jacks: 1 min", "Círculos de brazos: 2x10", "Remo con banda elástica imaginaria: 2x15", "Flexiones inclinadas: 1x10"],
-          imagen: "https://i.ytimg.com/vi/H0bzt6yUj_s/maxresdefault.jpg"
-        },
-        estiramiento: {
-          nombre: "Estiramiento Completo Superior",
-          descripcion: "Relaja todos los músculos trabajados para una mejor recuperación.",
-          ejercicios: ["Estiramiento de pecho: 2x20s", "Estiramiento de dorsal: 2x20s", "Estiramiento de bíceps y tríceps: 2x15s cada uno"],
-          imagen: "https://hips.hearstapps.com/hmg-prod/images/stretching-exercises-for-lower-back-pain-1582226871.jpg"
-        },
-        ejercicios: [{
-          nombre: "Flexiones Explosivas",
-          sets: "4 x 8-12 reps",
-          musculos: ["Pectoral", "Tríceps", "Potencia"],
-          consejos: "Baja controlado y empuja el suelo con la máxima fuerza posible, intentando que las manos se despeguen del suelo. Si puedes, da una palmada.",
-          imagen: "https://i.ytimg.com/vi/v9n6n-o238E/maxresdefault.jpg"
-        }, {
-          nombre: "Dominadas Australianas Arqueras",
-          sets: "4 x 6-8 reps/lado",
-          musculos: ["Dorsales", "Bíceps", "Espalda Alta"],
-          consejos: "Al hacer el remo invertido, tira hacia una mano mientras la otra se mantiene estirada, como un arquero. Alterna en cada repetición.",
-          imagen: "https://i.ytimg.com/vi/s0h0t2IunoY/maxresdefault.jpg"
-        }, {
-          nombre: "Flexiones Declinadas",
-          sets: "4 x 12-15 reps",
-          musculos: ["Pectoral Superior", "Hombros"],
-          consejos: "Coloca los pies en una silla o sofá para aumentar la intensidad y enfocar el trabajo en la parte superior del pecho.",
-          imagen: "https://hips.hearstapps.com/ame-prod-menshealth-assets.s3.amazonaws.com/main/thumbs/35031/declinepushup.jpg?resize=1200:*"
-        }, {
-          nombre: "Flexiones Hindú",
-          sets: "3 x 10-12 reps",
-          musculos: ["Hombros", "Pecho", "Movilidad"],
-          consejos: "Inicia en V invertida, baja la cabeza y el pecho en un movimiento fluido y arqueado hacia adelante, terminando en la postura de la cobra. Revierte el movimiento.",
-          imagen: "https://i.ytimg.com/vi/L0gWl3e2z28/maxresdefault.jpg"
-        }, {
-          nombre: "Plancha con Toque de Hombro",
-          sets: "3 x 20 toques",
-          musculos: ["Core", "Estabilidad", "Oblicuos"],
-          consejos: "En posición de plancha alta, levanta una mano para tocar el hombro opuesto. Mantén la cadera estable y evita balancearte.",
-          imagen: "https://i.ytimg.com/vi/xbUEZN3T7pE/maxresdefault.jpg"
-        }]
-      },
-      6: {
-        title: "Sábado – Piernas Intensas + Core",
-        objetivo: "Segundo día de piernas con enfoque en la intensidad y ejercicios avanzados de core para una sección media de acero.",
-        calentamiento: {
-          nombre: "Activación Piernas y Core",
-          descripcion: "Prepara el tren inferior y la zona media para un trabajo de alta intensidad.",
-          ejercicios: ["Puente de glúteos: 2x15", "Bird-dog: 2x10 por lado", "Sentadillas con salto (baja intensidad): 1x10"],
-          imagen: "https://i.ytimg.com/vi/zEk6o8x-x-I/maxresdefault.jpg"
-        },
-        estiramiento: {
-          nombre: "Estiramiento Profundo Piernas y Core",
-          descripcion: "Enfócate en relajar los flexores de cadera, isquiotibiales y la espalda baja.",
-          ejercicios: ["Estiramiento del psoas: 2x30s por lado", "Estiramiento de isquios tumbado: 2x30s por lado", "Torsión de columna lumbar: 2x30s por lado"],
-          imagen: "https://i.ytimg.com/vi/Sae0o_a-b2E/maxresdefault.jpg"
-        },
-        ejercicios: [{
-          nombre: "Sentadillas Sissy",
-          sets: "3 x 10-12 reps",
-          musculos: ["Cuádriceps"],
-          consejos: "Mantén el equilibrio sujetándote a algo. Inclina el torso hacia atrás mientras flexionas las rodillas hacia adelante. Un gran aislador de cuádriceps.",
-          imagen: "https://i.ytimg.com/vi/Wffb92j4P5w/maxresdefault.jpg"
-        }, {
-          nombre: "Single Leg Romanian Deadlift",
-          sets: "4 x 12 reps/pierna",
-          musculos: ["Isquiotibiales", "Glúteos", "Equilibrio"],
-          consejos: "De pie sobre una pierna, inclínate hacia adelante manteniendo la espalda recta y extendiendo la otra pierna hacia atrás. Siente el estiramiento en el isquio.",
-          imagen: "https://i.ytimg.com/vi/i24b0-Y-c5M/maxresdefault.jpg"
-        }, {
-          nombre: "Puente de Glúteo Elevado",
-          sets: "3 x 15-20 reps",
-          musculos: ["Glúteos", "Isquiotibiales"],
-          consejos: "Apoya los talones en una silla o sofá para aumentar el rango de movimiento. Sube la cadera y aprieta los glúteos con fuerza en la parte superior.",
-          imagen: "https://i.ytimg.com/vi/w4p8s9a7yqs/maxresdefault.jpg"
-        }, {
-          nombre: "Dragon Flag Progresión",
-          sets: "4 x 5-8 reps",
-          musculos: ["Core", "Recto Abdominal", "Oblicuos"],
-          consejos: "Tumbado, agárrate a algo firme detrás de tu cabeza. Levanta todo tu cuerpo recto y bájalo lo más lentamente posible. Si es muy difícil, dobla las rodillas.",
-          imagen: "https://www.fitstream.com/images/bodyweight-training/bodyweight-exercises/dragon-flag.png"
-        }, {
-          nombre: "V-Ups",
-          sets: "3 x 12-15 reps",
-          musculos: ["Recto Abdominal", "Flexores Cadera"],
-          consejos: "Tumbado, levanta simultáneamente el torso y las piernas rectas, intentando tocar las puntas de los pies en el centro. Controla la bajada.",
-          imagen: "https://i.ytimg.com/vi/iP2fjvG_xU8/maxresdefault.jpg"
-        }]
-      },
-      0: {
-        title: "Domingo: Descanso Total",
-        ejercicios: [],
-        descanso: "¡DÍA LIBRE TOTAL! Tu cuerpo se repara y crece. Enfócate en dormir, comer bien e hidratarte. Es tan importante como los días de entrenamiento."
+      {
+        nombre: "Pike Compression (sentado)",
+        sets: "3 x 10–15 — tempo 1-1-2-1 — 60 s — RPE 8",
+        musculos: ["Flexores de cadera", "Abdominales", "Cuádriceps"],
+        consejos: "Sentado con piernas estiradas, manos al lado de rodillas. Eleva talones del suelo sin inclinarte atrás. Fácil: rodillas algo flexionadas. Difícil: manos más adelantadas.",
+        imagen: "https://i.ytimg.com/vi/ALpLkCbj7sM/maxresdefault.jpg"
       }
-    };
+    ]
+  },
+
+  2: {
+    title: "Martes – PULL + Corrección Postural",
+    objetivo: "Fortalecer espalda alta y deltoide posterior para mejorar postura (retracción/depresión escapular) sin anclajes fijos.",
+    calentamiento: {
+      nombre: "Activación de Espalda (5–8 min)",
+      descripcion: "Prepara escápulas y columna torácica.",
+      ejercicios: [
+        "Círculos de hombros: 2x10 adelante/atrás",
+        "Rotaciones torácicas (Open Book): 2x8 por lado",
+        "Pull-aparts muy ligeros: 1x15",
+        "Remo con banda ligera (bajo pies): 1x15"
+      ],
+      imagen: "https://i.ytimg.com/vi/383aGvky5tA/maxresdefault.jpg"
+    },
+    estiramiento: {
+      nombre: "Estiramiento de Espalda (3–5 min)",
+      descripcion: "Libera dorsal y mejora extensión torácica.",
+      ejercicios: [
+        "Child’s Pose: 2x30 s",
+        "Gato–Vaca: 1x12",
+        "Estiramiento de dorsal en pared: 2x20 s por lado"
+      ],
+      imagen: "https://www.yogajournal.com/wp-content/uploads/2021/11/Childs-Pose_Andrew-Clark_1.jpg"
+    },
+    ejercicios: [
+      {
+        nombre: "Remo con banda (bajo pies)",
+        sets: "4 x 12–15 — tempo 2-1-2-1 — 60–90 s — RPE 8",
+        musculos: ["Dorsales", "Romboides", "Trapecio medio"],
+        consejos: "Pisa la banda, bisagra de cadera, columna neutra. Tira hacia ombligo/pecho bajo con pausa 1 s en retracción. Ajusta tensión acortando agarre.",
+        imagen: "https://i.ytimg.com/vi/2JdK31C-gCM/maxresdefault.jpg"
+      },
+      {
+        nombre: "Pull-aparts con banda",
+        sets: "3 x 15–20 — tempo 2-1-2-1 — 45–60 s — RPE 7",
+        musculos: ["Deltoide posterior", "Romboides", "Trapecio"],
+        consejos: "Brazos a la altura del pecho, hombros abajo. Sin banda: T-raises 3 x 12–15.",
+        imagen: "https://i.ytimg.com/vi/DxVZ4iS8_7o/maxresdefault.jpg"
+      },
+      {
+        nombre: "Y-T-W en suelo",
+        sets: "2–3 x 8–12 por letra — tempo 2-1-2-1 — 45–60 s — RPE 7",
+        musculos: ["Trapecio medio/inferior", "Romboides", "Deltoide posterior"],
+        consejos: "Frente cerca del suelo, pulgares al techo, pausa 1 s arriba. Opcional: mancuernas de 1 kg.",
+        imagen: "https://i.ytimg.com/vi/6P3b9rfds0k/maxresdefault.jpg"
+      },
+      {
+        nombre: "Wall Slides",
+        sets: "2 x 8–12 — tempo 3-1-2-1 — 45 s — RPE 6–7",
+        musculos: ["Serrato", "Rotadores externos", "Trapecio"],
+        consejos: "Codos y muñecas en la pared, sin arquear zona lumbar; costillas abajo.",
+        imagen: "https://i.ytimg.com/vi/ykbof4L1ZsA/maxresdefault.jpg"
+      },
+      {
+        nombre: "Dead Bug",
+        sets: "3 x 8–12 por lado — tempo 3-1-1-1 — 45–60 s — RPE 7",
+        musculos: ["Core", "Transverso", "Estabilidad"],
+        consejos: "Zona lumbar pegada, exhala al extender brazo/pierna contrarios. Control total.",
+        imagen: "https://i.ytimg.com/vi/4XLEnwUr1d8/maxresdefault.jpg"
+      }
+    ]
+  },
+
+  3: {
+    title: "Miércoles – Piernas + Glúteos",
+    objetivo: "Construir base sólida en tren inferior con énfasis en cuádriceps y glúteos usando tempos/pausas.",
+    calentamiento: {
+      nombre: "Movilidad de Tren Inferior (5–8 min)",
+      descripcion: "Prepara caderas, rodillas y tobillos.",
+      ejercicios: [
+        "Círculos de cadera (CARs): 2x8 por lado",
+        "Dorsiflexión de tobillo en pared: 2x10 por lado",
+        "Buenos días sin carga: 1x12",
+        "Sentadillas con pausa 2 s: 1x10"
+      ],
+      imagen: "https://i.ytimg.com/vi/crCDRUhkAgc/maxresdefault.jpg"
+    },
+    estiramiento: {
+      nombre: "Estiramiento de Piernas (3–5 min)",
+      descripcion: "Flexibilidad de cuádriceps, isquios y glúteos.",
+      ejercicios: [
+        "Estiramiento de cuádriceps: 2x30 s por pierna",
+        "Isquiotibiales (tumbado con toalla): 2x30 s por pierna",
+        "Glúteo (Figura 4): 2x30 s por pierna"
+      ],
+      imagen: "https://www.nerdfitness.com/wp-content/uploads/2019/04/quad-stretch.gif"
+    },
+    ejercicios: [
+      {
+        nombre: "Split Squat (zancada estacionaria)",
+        sets: "4 x 10–12 por pierna — tempo 3-1-1-0 — 60–90 s — RPE 8",
+        musculos: ["Cuádriceps", "Glúteos"],
+        consejos: "Rodilla delantera sobre medio pie, torso erguido. Difícil: pausa 2 s abajo o elevar talón 2–3 cm; Fácil: apoyo ligero en pared.",
+        imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/splitsquat-1456956771.gif"
+      },
+      {
+        nombre: "Sentadilla con pausa",
+        sets: "3–4 x 8–12 — tempo 3-2-1-0 — 60–90 s — RPE 8",
+        musculos: ["Cuádriceps", "Glúteos"],
+        consejos: "Pausa 2 s en el fondo, rodillas alineadas con 2º–3º dedo del pie, columna neutra.",
+        imagen: "https://i.ytimg.com/vi/qrHu7D9hx6s/maxresdefault.jpg"
+      },
+      {
+        nombre: "Hip Thrust a una pierna (suelo)",
+        sets: "3–4 x 10–15 por pierna — tempo 2-1-2-1 — 60–90 s — RPE 8",
+        musculos: ["Glúteos", "Isquiotibiales"],
+        consejos: "Empuja con talón, cadera llega a extensión, pausa 1–2 s arriba. Fácil: bilateral; Difícil: isométrico final 20 s.",
+        imagen: "https://i.ytimg.com/vi/w5mF5ceOJwE/maxresdefault.jpg"
+      },
+      {
+        nombre: "Peso muerto a una pierna con banda (bajo pie)",
+        sets: "3 x 10–12 por pierna — tempo 3-1-1-1 — 60–75 s — RPE 8",
+        musculos: ["Isquiotibiales", "Glúteos", "Erectores"],
+        consejos: "Bisagra de cadera, cadera atrás, hombros abajo y atrás. Controla el equilibrio.",
+        imagen: "https://i.ytimg.com/vi/i24b0-Y-c5M/maxresdefault.jpg"
+      },
+      {
+        nombre: "Gemelos en suelo o escalón",
+        sets: "3 x 15–25 — tempo 2-2-2-1 — 45–60 s — RPE 8",
+        musculos: ["Sóleo", "Gastrocnemio"],
+        consejos: "Rango completo, pausa arriba. Difícil: a una pierna; Sin escalón: en suelo.",
+        imagen: "https://i.ytimg.com/vi/K6p-1q2SVOQ/maxresdefault.jpg"
+      }
+    ]
+  },
+
+  4: {
+    title: "Jueves – Recuperación Activa + Movilidad",
+    objetivo: "Descargar articulaciones, mejorar movilidad torácica/escapular y respiración para acelerar la recuperación.",
+    calentamiento: {
+      nombre: "Preparación Suave (3–5 min)",
+      descripcion: "Entradas de movilidad y activación ligera.",
+      ejercicios: [
+        "Círculos de muñecas y dedos: 60–90 s",
+        "Marcha respirando por la nariz: 2 min",
+        "Scapular CARs: 2x5 por sentido"
+      ],
+      imagen: "https://i.ytimg.com/vi/mSZ1_T_E014/maxresdefault.jpg"
+    },
+    estiramiento: {
+      nombre: "Movilidad y Respiración (8–12 min)",
+      descripcion: "Relaja y mejora control postural.",
+      ejercicios: [
+        "Open Book (torácica): 2x6–8 por lado",
+        "Wall Slides suaves: 2x10",
+        "Respiración 90/90: 3–5 min (exhala largo, costillas bajan, zona lumbar al suelo)"
+      ],
+      imagen: "https://i.ytimg.com/vi/a_eA158fP-w/maxresdefault.jpg"
+    },
+    ejercicios: [
+      {
+        nombre: "Lean planche suave (técnica)",
+        sets: "2–3 x 10–15 s — ISO — 60–90 s — RPE 6",
+        musculos: ["Hombros", "Serrato", "Core"],
+        consejos: "Solo técnica: protrae y deprime escápulas, codos bloqueados, lean moderado.",
+        imagen: "https://i.ytimg.com/vi/GgQ32eR8tIA/maxresdefault.jpg"
+      },
+      {
+        nombre: "Handstand en pared (cara a pared)",
+        sets: "2–3 x 20–30 s — ISO — 60–90 s — RPE 6–7",
+        musculos: ["Hombros", "Serrato", "Core"],
+        consejos: "Línea: costillas abajo, glúteo activo, empuja el suelo. Solo calidad.",
+        imagen: "https://www.nerdfitness.com/wp-content/uploads/2021/08/nerd-fitness-handstand-718x480.gif"
+      },
+      {
+        nombre: "Face pull suave (banda bajo pies, high row a la cara)",
+        sets: "2 x 15 — tempo 2-1-2-1 — 45–60 s — RPE 6–7",
+        musculos: ["Deltoide posterior", "Rotadores", "Trapecio"],
+        consejos: "Pisa la banda y lleva codos altos hacia la cara, rotación externa suave.",
+        imagen: "https://i.ytimg.com/vi/QG9w0WSpCzM/maxresdefault.jpg"
+      }
+    ]
+  },
+
+  5: {
+    title: "Viernes – Full Tren Superior (Empuje + Tirón + Core)",
+    objetivo: "Sesión equilibrada: progresión de planche + tirón de espalda alta para estética y postura.",
+    calentamiento: {
+      nombre: "Calentamiento Superior (5–8 min)",
+      descripcion: "Activa escápulas y core.",
+      ejercicios: [
+        "Círculos de muñecas: 60 s",
+        "Scapular push-ups: 1x10",
+        "Pull-aparts ligeros: 1x15",
+        "Hollow body hold: 1x15 s"
+      ],
+      imagen: "https://i.ytimg.com/vi/H0bzt6yUj_s/maxresdefault.jpg"
+    },
+    estiramiento: {
+      nombre: "Estiramiento Completo Superior (3–5 min)",
+      descripcion: "Descarga pectoral, dorsal y hombros.",
+      ejercicios: [
+        "Estiramiento de pecho: 2x20 s",
+        "Estiramiento de dorsal: 2x20 s",
+        "Rotadores externos (cruce de brazo): 2x20 s por lado"
+      ],
+      imagen: "https://hips.hearstapps.com/hmg-prod/images/stretching-exercises-for-lower-back-pain-1582226871.jpg"
+    },
+    ejercicios: [
+      {
+        nombre: "Lean Planche (más palanca)",
+        sets: "4 x 15–30 s — ISO — 90 s — RPE 8–9",
+        musculos: ["Hombros", "Serrato", "Core"],
+        consejos: "Igual que lunes pero con un poco más de lean/pies juntos si la técnica es sólida.",
+        imagen: "https://i.ytimg.com/vi/GgQ32eR8tIA/maxresdefault.jpg"
+      },
+      {
+        nombre: "PPPU estricto",
+        sets: "3–4 x 6–10 — tempo 3-1-1-0 — 90 s — RPE 8",
+        musculos: ["Hombros", "Pectoral", "Tríceps"],
+        consejos: "Pausa 1 s abajo. Fácil: menos lean. Difícil: pies elevados 10–20 cm. Tabla de flexiones si molestan muñecas.",
+        imagen: "https://www.gymnasticsmethod.com/wp-content/uploads/2021/08/pseudo-planche-push-ups.jpg"
+      },
+      {
+        nombre: "Remo con banda (bajo pies, agarre corto)",
+        sets: "4 x 10–12 — tempo 2-1-2-1 — 60–90 s — RPE 8–9",
+        musculos: ["Dorsales", "Romboides", "Trapecio medio"],
+        consejos: "Pausa 1–2 s en retracción, cuello largo, hombros lejos de orejas.",
+        imagen: "https://i.ytimg.com/vi/2JdK31C-gCM/maxresdefault.jpg"
+      },
+      {
+        nombre: "Face pulls (bajo pies, high row a la cara)",
+        sets: "3 x 12–15 — tempo 2-1-2-1 — 60 s — RPE 7–8",
+        musculos: ["Deltoide posterior", "Rotadores", "Trapecio"],
+        consejos: "Codos altos, pulgares hacia ti, aprieta escápulas sin subir hombros.",
+        imagen: "https://i.ytimg.com/vi/QG9w0WSpCzM/maxresdefault.jpg"
+      },
+      {
+        nombre: "Plancha alta con toques de hombro",
+        sets: "3 x 10–16 toques — tempo 2-0-1-0 — 45–60 s — RPE 7–8",
+        musculos: ["Core", "Estabilidad", "Oblicuos"],
+        consejos: "Rodillas bloqueadas, caderas estables, evita rotar el tronco.",
+        imagen: "https://i.ytimg.com/vi/xbUEZN3T7pE/maxresdefault.jpg"
+      }
+    ]
+  },
+
+  6: {
+    title: "Sábado – Piernas Intensas + Core",
+    objetivo: "Segundo estímulo de piernas (énfasis bisagra/glúteos) y core anti-extensión/anti-inclinación.",
+    calentamiento: {
+      nombre: "Activación Piernas y Core (5–8 min)",
+      descripcion: "Activa glúteos/isquios y estabiliza core.",
+      ejercicios: [
+        "Puente de glúteos: 2x15",
+        "Bird-Dog: 2x8 por lado",
+        "Sentadillas con pausa suave: 1x8"
+      ],
+      imagen: "https://i.ytimg.com/vi/zEk6o8x-x-I/maxresdefault.jpg"
+    },
+    estiramiento: {
+      nombre: "Estiramiento Profundo Piernas y Core (3–5 min)",
+      descripcion: "Enfócate en psoas, isquios y lumbar.",
+      ejercicios: [
+        "Estiramiento del psoas: 2x30 s por lado",
+        "Isquios tumbado: 2x30 s por lado",
+        "Torsión lumbar suave: 2x30 s por lado"
+      ],
+      imagen: "https://i.ytimg.com/vi/Sae0o_a-b2E/maxresdefault.jpg"
+    },
+    ejercicios: [
+      {
+        nombre: "Peso muerto a una pierna con banda (bajo pie)",
+        sets: "4 x 8–12 por pierna — tempo 3-1-1-1 — 60–90 s — RPE 8",
+        musculos: ["Isquiotibiales", "Glúteos", "Erectores"],
+        consejos: "Bisagra controlada, hombros abajo y atrás, mirada al suelo 1–2 m adelante.",
+        imagen: "https://i.ytimg.com/vi/i24b0-Y-c5M/maxresdefault.jpg"
+      },
+      {
+        nombre: "Hip Thrust a una pierna (pausa)",
+        sets: "3–4 x 10–15 por pierna — tempo 2-2-2-1 — 60–90 s — RPE 8",
+        musculos: ["Glúteos", "Isquiotibiales"],
+        consejos: "Pausa 2 s arriba, costillas abajo, evita hiperextender zona lumbar.",
+        imagen: "https://i.ytimg.com/vi/w5mF5ceOJwE/maxresdefault.jpg"
+      },
+      {
+        nombre: "Hamstring Walkouts",
+        sets: "3 x 8–12 — tempo 2-1-2-1 — 60 s — RPE 8",
+        musculos: ["Isquiotibiales", "Glúteos", "Core"],
+        consejos: "Desde puente, camina con talones alejando/volviendo lentamente, cadera alta.",
+        imagen: "https://i.ytimg.com/vi/HQ6G6B_hWvY/maxresdefault.jpg"
+      },
+      {
+        nombre: "Gemelos a una pierna",
+        sets: "3 x 12–18 por pierna — tempo 2-2-2-1 — 45–60 s — RPE 8",
+        musculos: ["Sóleo", "Gastrocnemio"],
+        consejos: "Rango completo, control, sin rebote. En suelo o escalón si es seguro.",
+        imagen: "https://i.ytimg.com/vi/K6p-1q2SVOQ/maxresdefault.jpg"
+      },
+      {
+        nombre: "Hollow Rocks + Side Plank (superserie)",
+        sets: "3 rondas: 10–15 hollow rocks + 20–30 s side plank por lado — 60 s — RPE 7–8",
+        musculos: ["Core (anti-extensión)", "Oblicuos (anti-inclinación)"],
+        consejos: "Mantén PPT en hollow; en side plank, hombro lejos de oreja y cadera alta.",
+        imagen: "https://i.ytimg.com/vi/bE0Y_7yN3O8/maxresdefault.jpg"
+      }
+    ]
+  },
+
+  0: {
+    title: "Domingo: Descanso Total",
+    ejercicios: [],
+    descanso: "¡DÍA LIBRE TOTAL! Tu cuerpo se repara y crece. Duerme, come suficiente e hidrátate (2,5–3,5 L). Paseo suave opcional 15–20 min."
+  }
+};
     
     // --- FIN DEL CÓDIGO JS MODIFICADO ---
 
@@ -2269,3 +2355,4 @@
 </body>
 </html>
 ```
+
