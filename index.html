@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +6,6 @@
   <title>Monoslocos Fitness - Entrenamiento y Nutrición</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- NUEVO: Añadimos la librería Chart.js para las estadísticas -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     :root {
@@ -46,15 +44,8 @@
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    html {
-      scroll-behavior: smooth;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -67,1371 +58,148 @@
     }
     
     body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: 
         radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 40% 20%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
-      pointer-events: none;
-      z-index: 1;
+      pointer-events: none; z-index: 1;
     }
     
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 2rem;
-      position: relative;
-      z-index: 2;
-    }
+    .container { max-width: 1280px; margin: 0 auto; padding: 2rem; position: relative; z-index: 2; }
     
-    /* Header mejorado */
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 2rem; background: rgba(10, 14, 39, 0.7); backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--border); box-shadow: var(--shadow-lg);
+    }
+    
+    .logo { font-size: 1.75rem; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent; display: flex; align-items: center; gap: 0.75rem; transition: var(--transition); }
+    .logo i { color: var(--primary-light); }
+    
+    nav ul { display: flex; list-style: none; gap: 3rem; }
+    nav a { color: var(--gray-light); text-decoration: none; font-weight: 500; font-size: 1rem; position: relative; transition: var(--transition); padding: 0.5rem 0; }
+    nav a::after { content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; background: var(--gradient-primary); transition: var(--transition); transform: translateX(-50%); }
+    nav a:hover { color: var(--light); }
+    nav a:hover::after, nav a.active::after { width: 100%; }
+    nav a.active { color: var(--primary-light); }
+    
+    .menu-toggle { display: none; background: none; border: none; color: var(--light); font-size: 1.5rem; cursor: pointer; }
+    
+    .hero { text-align: center; padding: 5rem 0; }
+    .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--primary-light), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    
+    .objetivo { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--gradient-card); padding: 1rem 2rem; border-radius: var(--radius-xl); font-size: 1.125rem; margin: 1.5rem 0; border: 1px solid var(--border); backdrop-filter: blur(10px); box-shadow: var(--shadow-md); }
+    
+    /* AJUSTADO: Se mantiene la estructura de grid pero se ajusta el minmax para que las tarjetas no sean demasiado anchas en ciertas vistas */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin: 4rem 0; }
+    .card { background: var(--gradient-card); border-radius: var(--radius-lg); text-decoration: none; color: var(--light); transition: var(--transition); border: 1px solid var(--border); backdrop-filter: blur(20px); position: relative; overflow: hidden; }
+    .card:hover { transform: translateY(-8px); box-shadow: var(--shadow-xl); }
+    .card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; transition: var(--transition); }
+    .card.ejercicios::before { background: var(--gradient-primary); }
+    .card.nutricion::before { background: var(--gradient-secondary); }
+    .card.progreso::before { background: var(--gradient-success); }
+    
+    /* AJUSTADO: Tarjetas de rutina y nutrición en formato horizontal */
+    .card.ejercicios, .card.nutricion { padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1.5rem; }
+    .card.ejercicios .card-icon, .card.nutricion .card-icon { margin-bottom: 0; flex-shrink: 0; }
+    .card.ejercicios .card-content, .card.nutricion .card-content { display: flex; flex-direction: column; }
+    
+    .card-icon { width: 50px; height: 50px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    .card.ejercicios .card-icon { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1)); color: var(--primary-light); }
+    .card.nutricion .card-icon { background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.1)); color: var(--secondary-light); }
+    .card.progreso .card-icon { background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1)); color: var(--success); }
+    
+    .card h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .card p { color: var(--gray-light); line-height: 1.5; font-size: 0.9rem; }
+
+    /* AJUSTADO: Tarjeta de progreso ancha y más delgada */
+    .card.progreso {
+      grid-column: 1 / -1; /* Ocupa todo el ancho de la parrilla */
       padding: 1.5rem 2rem;
-      background: rgba(10, 14, 39, 0.7);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      border-bottom: 1px solid var(--border);
-      box-shadow: var(--shadow-lg);
-    }
-    
-    header::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: var(--gradient-primary);
-      opacity: 0.5;
-    }
-    
-    .logo {
-      font-size: 1.75rem;
-      font-weight: 800;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      transition: var(--transition);
-    }
-    
-    .logo:hover {
-      transform: scale(1.05);
-    }
-    
-    .logo i {
-      color: var(--primary-light);
-      filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.5));
-    }
-    
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 3rem;
-    }
-    
-    nav a {
-      color: var(--gray-light);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 1rem;
-      position: relative;
-      transition: var(--transition);
-      padding: 0.5rem 0;
-    }
-    
-    nav a::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background: var(--gradient-primary);
-      transition: var(--transition);
-      transform: translateX(-50%);
-    }
-    
-    nav a:hover {
-      color: var(--light);
-      transform: translateY(-2px);
-    }
-    
-    nav a:hover::after,
-    nav a.active::after {
-      width: 100%;
-    }
-    
-    nav a.active {
-      color: var(--primary-light);
-    }
-    
-    /* Menu hamburguesa para móvil */
-    .menu-toggle {
-      display: none;
-      background: none;
-      border: none;
-      color: var(--light);
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
-      border-radius: var(--radius-sm);
-      transition: var(--transition);
-    }
-    
-    .menu-toggle:hover {
-      background: rgba(99, 102, 241, 0.2);
-    }
-    
-    /* Hero section mejorada */
-    .hero {
-      text-align: center;
-      padding: 5rem 0;
-      position: relative;
-    }
-    
-    .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 900;
-      margin-bottom: 1.5rem;
-      background: linear-gradient(135deg, var(--primary-light), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: fadeInUp 0.8s ease-out;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-    }
-    
-    .objetivo {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: var(--gradient-card);
-      padding: 1rem 2rem;
-      border-radius: var(--radius-xl);
-      font-size: 1.125rem;
-      margin: 1.5rem 0;
-      border: 1px solid var(--border);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: var(--shadow-md);
-      animation: fadeInUp 0.8s ease-out 0.2s both;
-      transition: var(--transition);
-    }
-    
-    .objetivo:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-xl);
-      border-color: rgba(99, 102, 241, 0.3);
-    }
-    
-    .objetivo strong {
-      font-weight: 700;
-      color: var(--primary-light);
-    }
-    
-    .objetivo span {
-      background: var(--gradient-accent);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      font-weight: 800;
-      font-size: 1.25rem;
-    }
-    
-    /* Cards mejoradas */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2.5rem;
-      margin: 4rem 0;
-    }
-    
-    .card {
-      background: var(--gradient-card);
-      border-radius: var(--radius-lg);
-      padding: 2.5rem;
-      text-decoration: none;
-      color: var(--light);
-      transition: var(--transition);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      overflow: hidden;
-      position: relative;
-      box-shadow: var(--shadow-md);
-      animation: fadeInUp 0.8s ease-out;
-    }
-    
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      transition: var(--transition);
-    }
-    
-    .card::after {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
-      transform: rotate(45deg);
-      transition: var(--transition);
-      opacity: 0;
-    }
-    
-    .card:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: var(--shadow-xl);
-      border-color: rgba(99, 102, 241, 0.3);
-    }
-    
-    .card:hover::after {
-      opacity: 1;
-    }
-    
-    .card.ejercicios::before {
-      background: var(--gradient-primary);
-    }
-    
-    .card.desayunos::before {
-      background: var(--gradient-secondary);
-    }
-    
-    .card-icon {
-      width: 72px;
-      height: 72px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 2rem;
-      font-size: 2rem;
-      position: relative;
-      transition: var(--transition);
-    }
-    
-    .card:hover .card-icon {
-      transform: scale(1.1) rotate(5deg);
-    }
-    
-    .card.ejercicios .card-icon {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
-      color: var(--primary-light);
-      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
-    }
-    
-    .card.desayunos .card-icon {
-      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.1));
-      color: var(--secondary-light);
-      box-shadow: 0 8px 20px rgba(34, 211, 238, 0.3);
-    }
-    
-    .card h2 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin-bottom: 1.25rem;
-      letter-spacing: -0.02em;
-    }
-    
-    .card p {
-      color: var(--gray-light);
-      margin-bottom: 2rem;
-      line-height: 1.8;
-      font-size: 1.05rem;
-    }
-    
-    .card-badge {
-      display: inline-block;
-      padding: 0.5rem 1.25rem;
-      border-radius: var(--radius-xl);
-      font-size: 0.875rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      transition: var(--transition);
-    }
-    
-    .card:hover .card-badge {
-      transform: scale(1.05);
-    }
-    
-    .card.ejercicios .card-badge {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
-      color: var(--primary-light);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-    }
-    
-    .card.desayunos .card-badge {
-      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.1));
-      color: var(--secondary-light);
-      border: 1px solid rgba(34, 211, 238, 0.3);
-    }
-    
-    /* Sección de motivación mejorada */
-    .motivacion {
-      background: var(--gradient-card);
-      border-radius: var(--radius-xl);
-      padding: 3rem;
-      margin-top: 4rem;
-      border: 1px solid var(--border);
-      text-align: center;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      position: relative;
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-      animation: fadeInUp 0.8s ease-out 0.4s both;
-    }
-    
-    .motivacion::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
-      animation: rotate 20s linear infinite;
-    }
-    
-    .motivacion h2 {
-      font-size: 2rem;
-      font-weight: 800;
-      margin-bottom: 1.5rem;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .motivacion p {
-      font-size: 1.25rem;
-      margin-bottom: 1.5rem;
-      color: var(--light);
-      position: relative;
-      z-index: 1;
-      line-height: 1.8;
-    }
-    
-    .motivacion small {
-      display: block;
-      color: var(--gray-light);
-      font-style: italic;
-      font-size: 1rem;
-      position: relative;
-      z-index: 1;
-      opacity: 0.9;
-    }
-    
-    /* Page header mejorado */
-    .page-header {
-      text-align: center;
-      margin-bottom: 3rem;
-      padding: 2rem;
-      background: var(--gradient-card);
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: var(--shadow-md);
-      animation: fadeInUp 0.6s ease-out;
-    }
-    
-    .page-header h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      background: linear-gradient(135deg, var(--primary-light), var(--secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -0.02em;
-    }
-    
-    .page-header p {
-      color: var(--gray-light);
-      font-size: 1.125rem;
-    }
-    
-    /* Calendario mejorado */
-    .calendar-container {
-      background: var(--gradient-card);
-      border-radius: var(--radius-xl);
-      padding: 2.5rem;
-      margin-bottom: 3rem;
-      border: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: var(--shadow-lg);
-      animation: fadeInUp 0.6s ease-out 0.2s both;
-    }
-    
-    .calendar-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      padding: 1rem;
-      background: rgba(10, 14, 39, 0.3);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-    }
-    
-    .calendar-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    
-    .calendar-nav-btn {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
-      color: var(--primary-light);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      width: 48px;
-      height: 48px;
-      border-radius: var(--radius-md);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: var(--transition);
-      font-size: 1.25rem;
-    }
-    
-    .calendar-nav-btn:hover {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(99, 102, 241, 0.2));
-      transform: scale(1.1);
-      box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
-    }
-    
-    .calendar-header {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0.75rem;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      font-weight: 700;
-      color: var(--gray-light);
-      font-size: 0.875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 0.75rem;
-    }
-    
-    .day {
-      aspect-ratio: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(17, 24, 39, 0.4);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: var(--transition);
-      position: relative;
-      border: 1px solid var(--border);
-      font-weight: 500;
-      font-size: 1rem;
-    }
-    
-    .day:hover {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
-      border-color: rgba(99, 102, 241, 0.4);
-    }
-    
-    .day.empty {
-      background: transparent;
-      border: none;
-      cursor: default;
-    }
-    
-    .day.empty:hover {
-      transform: none;
-      box-shadow: none;
-    }
-    
-    .day.weekend {
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05));
-      color: var(--accent);
-      border-color: rgba(251, 191, 36, 0.2);
-    }
-    
-    .day.today {
-      background: var(--gradient-primary);
-      color: white;
-      font-weight: 700;
-      box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
-      border: none;
-      animation: pulse 2s infinite;
-    }
-    
-    .day.completed::after {
-      content: '✓';
-      position: absolute;
-      bottom: 4px;
-      right: 4px;
-      width: 20px;
-      height: 20px;
-      background: var(--gradient-success);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.75rem;
-      color: white;
-      font-weight: 700;
-      box-shadow: var(--shadow-sm);
-    }
-    
-    /* NUEVO: Contenedor de estadísticas */
-    .stats-container {
-      background: var(--gradient-card);
-      border-radius: var(--radius-xl);
-      padding: 2.5rem;
-      margin-bottom: 3rem;
-      border: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: var(--shadow-lg);
-      animation: fadeInUp 0.6s ease-out 0.4s both;
-      display: flex;
-      gap: 2.5rem;
-      align-items: center;
-    }
-
-    .stats-chart {
-      flex-shrink: 0;
-      position: relative;
-      width: 160px;
-      height: 160px;
-    }
-
-    .stats-percentage {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2rem;
-      font-weight: 800;
-      background: var(--gradient-success);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    
-    .stats-details {
-      flex-grow: 1;
-    }
-
-    .stats-details h3 {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      color: var(--light);
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
     }
+    .card.progreso .card-icon { margin-bottom: 0; }
+    
+    .motivacion { background: var(--gradient-card); border-radius: var(--radius-xl); padding: 3rem; margin-top: 4rem; border: 1px solid var(--border); text-align: center; }
+    .motivacion h2 { font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    
+    .page-header { text-align: center; margin-bottom: 3rem; }
+    .page-header h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary-light), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .page-header p { color: var(--gray-light); font-size: 1.125rem; }
+    
+    .calendar-container { background: var(--gradient-card); border-radius: var(--radius-xl); padding: 2.5rem; margin-bottom: 3rem; border: 1px solid var(--border); backdrop-filter: blur(20px); }
+    .calendar-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 1rem; background: rgba(10, 14, 39, 0.3); border-radius: var(--radius-md); }
+    .calendar-title { font-size: 1.5rem; font-weight: 700; color: var(--primary-light); }
+    .calendar-nav-btn { background: rgba(99, 102, 241, 0.1); color: var(--primary-light); border: 1px solid rgba(99, 102, 241, 0.2); width: 44px; height: 44px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); }
+    .calendar-nav-btn:hover { background: rgba(99, 102, 241, 0.2); transform: scale(1.1); }
+    .calendar-header { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; text-align: center; font-weight: 700; color: var(--gray); text-transform: uppercase; font-size: 0.875rem; }
+    .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.75rem; }
+    
+    .day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: rgba(17, 24, 39, 0.4); border-radius: var(--radius-md); cursor: pointer; transition: var(--transition); position: relative; border: 2px solid transparent; font-weight: 500; }
+    .day:hover { background: rgba(99, 102, 241, 0.1); transform: translateY(-4px); }
+    .day.selected { border-color: var(--primary-light); background: rgba(99, 102, 241, 0.2); transform: scale(1.05); }
+    .day.empty { background: transparent; cursor: default; border-color: transparent; }
+    .day.empty:hover { transform: none; }
+    .day.today { background: var(--primary); color: white; font-weight: 700; animation: pulse 2s infinite; }
+    .day.weekend { color: var(--accent); }
+    .day.completed::after { content: '✓'; position: absolute; bottom: 4px; right: 4px; width: 18px; height: 18px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: white; }
+    
+    .rutina-container, .progreso-container, .desayuno-container { background: var(--gradient-card); border-radius: var(--radius-xl); padding: 2.5rem; border: 1px solid var(--border); backdrop-filter: blur(20px); }
+    .rutina-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    .rutina-header h2 { font-size: 1.875rem; color: var(--primary-light); }
+    .rutina-date { font-size: 1rem; color: var(--gray); }
+    .ejercicio { background: rgba(17, 24, 39, 0.6); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 1.5rem; border-left: 4px solid var(--primary); }
+    .ejercicio-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .ejercicio-title { font-size: 1.25rem; font-weight: 600; }
+    .ejercicio-sets { color: var(--gray-light); }
+    .ejercicio-detalle { display: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .ejercicio-detalle.active { display: block; }
+    .ejercicio-img { width: 100%; border-radius: var(--radius-md); margin-top: 1rem; }
+    .objetivo-rutina { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem; border-left: 4px solid var(--success); }
+    
+    .btn-completar { width: 100%; padding: 1.25rem; margin-top: 2rem; font-size: 1.125rem; font-weight: 700; border-radius: var(--radius-lg); border: none; cursor: pointer; transition: var(--transition); color: white; }
+    .btn-completar:not(.completed) { background: var(--primary); }
+    .btn-completar:not(.completed):hover { background: var(--primary-dark); }
+    .btn-completar.completed { background: var(--success); }
+    
+    .days-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .day-btn { background: var(--gradient-card); border-radius: var(--radius-lg); padding: 2rem 1.5rem; text-align: center; cursor: pointer; transition: var(--transition); border: 1px solid var(--border); }
+    .day-btn:hover, .day-btn.active { transform: translateY(-5px); border-color: var(--secondary); }
+    .day-btn i { font-size: 2rem; margin-bottom: 1rem; color: var(--secondary-light); }
+    .day-btn h3 { font-size: 1.125rem; }
+    
+    .btn-volver { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--primary); color: white; border: none; padding: 1rem 2rem; border-radius: var(--radius-md); font-weight: 600; text-decoration: none; margin-top: 3rem; transition: var(--transition); }
+    .btn-volver:hover { background: var(--primary-dark); }
+    
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .stat-card { background: rgba(17, 24, 39, 0.6); padding: 2rem; border-radius: var(--radius-lg); text-align: center; border-bottom: 4px solid var(--accent); }
+    .stat-card .value { font-size: 3rem; font-weight: 800; color: var(--accent); line-height: 1.2; }
+    .stat-card .label { font-size: 1rem; color: var(--gray-light); }
+    .chart-container { background: rgba(17, 24, 39, 0.6); padding: 2rem; border-radius: var(--radius-lg); }
 
-    .stat-item {
-      background: rgba(10, 14, 39, 0.5);
-      padding: 1rem;
-      border-radius: var(--radius-md);
-      border-left: 3px solid var(--primary);
-    }
+    .page-section { display: none; animation: fadeIn 0.5s ease-out; }
+    .page-section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-    .stat-item-value {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--light);
-      display: block;
-    }
-
-    .stat-item-label {
-      font-size: 0.875rem;
-      color: var(--gray-light);
-    }
-
-
-    /* Rutina container mejorado */
-    .rutina-container {
-      background: var(--gradient-card);
-      border-radius: var(--radius-xl);
-      padding: 2.5rem;
-      border: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: var(--shadow-lg);
-      animation: fadeIn 0.5s ease-out;
-    }
-    
-    .rutina-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 2px solid var(--border);
-    }
-    
-    .rutina-header h2 {
-      font-size: 1.875rem;
-      font-weight: 700;
-      background: var(--gradient-primary);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    
-    .rutina-date {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
-      color: var(--primary-light);
-      padding: 0.5rem 1.25rem;
-      border-radius: var(--radius-xl);
-      font-size: 0.875rem;
-      font-weight: 700;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-    }
-
-    /* NUEVO: Botón para completar rutina */
-    .btn-completar {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      padding: 1.25rem;
-      margin-top: 2rem;
-      font-size: 1.125rem;
-      font-weight: 700;
-      border-radius: var(--radius-lg);
-      border: none;
-      cursor: pointer;
-      transition: var(--transition);
-      box-shadow: var(--shadow-md);
-      color: white;
-    }
-
-    .btn-completar:not(.completed) {
-      background: var(--gradient-primary);
-    }
-
-    .btn-completar:not(.completed):hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-xl);
-    }
-
-    .btn-completar.completed {
-      background: var(--gradient-success);
-    }
-
-    .btn-completar.completed:hover {
-      background: linear-gradient(135deg, #10b981, #047857);
-      opacity: 0.9;
-    }
-    
-    /* Ejercicios mejorados */
-    .ejercicio {
-      background: rgba(17, 24, 39, 0.4);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      margin-bottom: 1.5rem;
-      transition: var(--transition);
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .ejercicio::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 3px;
-      height: 100%;
-      background: var(--gradient-primary);
-      transition: var(--transition);
-      opacity: 0;
-    }
-    
-    .ejercicio:hover {
-      background: rgba(17, 24, 39, 0.6);
-      transform: translateX(5px);
-      box-shadow: var(--shadow-md);
-    }
-    
-    .ejercicio:hover::before {
-      opacity: 1;
-    }
-    
-    .ejercicio-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      user-select: none;
-    }
-    
-    .ejercicio-title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: var(--light);
-    }
-    
-    .ejercicio-sets {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
-      color: var(--primary-light);
-      padding: 0.5rem 1rem;
-      border-radius: var(--radius-xl);
-      font-size: 0.875rem;
-      font-weight: 700;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-    }
-    
-    .ejercicio-detalle {
-      display: none;
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border);
-      animation: fadeIn 0.3s ease-out;
-    }
-    
-    .ejercicio-detalle.active {
-      display: block;
-    }
-    
-    .ejercicio-info {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-    
-    .ejercicio-muscles,
-    .ejercicio-tips {
-      background: rgba(10, 14, 39, 0.5);
-      padding: 1.5rem;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-    }
-    
-    .ejercicio-muscles h4,
-    .ejercicio-tips h4 {
-      font-size: 0.875rem;
-      margin-bottom: 1rem;
-      color: var(--primary-light);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 700;
-    }
-    
-    .ejercicio-muscles ul {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-    
-    .ejercicio-muscles li {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
-      color: var(--primary-light);
-      padding: 0.375rem 1rem;
-      border-radius: var(--radius-xl);
-      font-size: 0.875rem;
-      font-weight: 600;
-      border: 1px solid rgba(99, 102, 241, 0.3);
-    }
-    
-    .ejercicio-img {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
-      border-radius: var(--radius-md);
-      margin-top: 1.5rem;
-      box-shadow: var(--shadow-lg);
-      transition: var(--transition);
-    }
-    
-    .ejercicio-img:hover {
-      transform: scale(1.02);
-      box-shadow: var(--shadow-xl);
-    }
-    
-    /* Objetivo rutina */
-    .objetivo-rutina {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
-      color: var(--success);
-      padding: 1.5rem;
-      border-radius: var(--radius-md);
-      margin-bottom: 2rem;
-      border-left: 4px solid var(--success);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-    }
-    
-    .calentamiento {
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(251, 191, 36, 0.05));
-      border-left: 4px solid var(--accent);
-      border-color: rgba(251, 191, 36, 0.2);
-    }
-    
-    .calentamiento .ejercicio-sets {
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1));
-      color: var(--accent);
-      border-color: rgba(251, 191, 36, 0.3);
-    }
-    
-    .estiramiento {
-      background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(34, 211, 238, 0.05));
-      border-left: 4px solid var(--secondary);
-      border-color: rgba(34, 211, 238, 0.2);
-    }
-    
-    .estiramiento .ejercicio-sets {
-      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.1));
-      color: var(--secondary);
-      border-color: rgba(34, 211, 238, 0.3);
-    }
-    
-    /* Botón volver mejorado */
-    .btn-volver {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: var(--gradient-primary);
-      color: white;
-      border: none;
-      padding: 1rem 2rem;
-      border-radius: var(--radius-md);
-      font-weight: 600;
-      text-decoration: none;
-      margin-top: 3rem;
-      transition: var(--transition);
-      box-shadow: var(--shadow-md);
-      font-size: 1rem;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .btn-volver::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-    
-    .btn-volver:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-xl);
-    }
-    
-    .btn-volver:hover::before {
-      left: 100%;
-    }
-    
-    /* Days container mejorado */
-    .days-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-    
-    .day-btn {
-      background: var(--gradient-card);
-      border-radius: var(--radius-lg);
-      padding: 2rem 1.5rem;
-      text-align: center;
-      cursor: pointer;
-      transition: var(--transition);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .day-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: var(--gradient-secondary);
-      transform: scaleX(0);
-      transition: var(--transition);
-    }
-    
-    .day-btn:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(34, 211, 238, 0.3);
-    }
-    
-    .day-btn:hover::before {
-      transform: scaleX(1);
-    }
-    
-    .day-btn.active {
-      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(17, 24, 39, 0.9));
-      border-color: var(--secondary);
-      box-shadow: 0 8px 20px rgba(34, 211, 238, 0.3);
-    }
-    
-    .day-btn.active::before {
-      transform: scaleX(1);
-    }
-    
-    .day-btn i {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      background: var(--gradient-secondary);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    
-    .day-btn h3 {
-      font-size: 1.125rem;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-      color: var(--light);
-    }
-    
-    .day-btn p {
-      font-size: 0.875rem;
-      color: var(--gray-light);
-      font-weight: 500;
-    }
-    
-    /* Desayuno container mejorado */
-    .desayuno-container {
-      background: var(--gradient-card);
-      border-radius: var(--radius-xl);
-      padding: 3rem;
-      border: 1px solid var(--border);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      box-shadow: var(--shadow-lg);
-      animation: fadeIn 0.5s ease-out;
-    }
-    
-    .desayuno-header {
-      margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 2px solid var(--border);
-    }
-    
-    .desayuno-header h2 {
-      font-size: 1.875rem;
-      margin-bottom: 1rem;
-      background: var(--gradient-secondary);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      font-weight: 700;
-    }
-    
-    .desayuno-calorias {
-      display: inline-block;
-      background: linear-gradient(135deg, rgba(34, 211, 238, 0.2), rgba(34, 211, 238, 0.1));
-      color: var(--secondary-light);
-      padding: 0.5rem 1.25rem;
-      border-radius: var(--radius-xl);
-      font-size: 0.875rem;
-      font-weight: 700;
-      border: 1px solid rgba(34, 211, 238, 0.3);
-    }
-    
-    .desayuno-section {
-      background: rgba(10, 14, 39, 0.5);
-      padding: 2rem;
-      border-radius: var(--radius-lg);
-      margin-bottom: 1.5rem;
-      border: 1px solid var(--border);
-    }
-    
-    .desayuno-section h3 {
-      font-size: 1.25rem;
-      margin-bottom: 1.5rem;
-      color: var(--secondary-light);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-weight: 700;
-    }
-    
-    .desayuno-section ul,
-    .desayuno-section ol {
-      padding-left: 1.5rem;
-    }
-    
-    .desayuno-section li {
-      margin-bottom: 0.75rem;
-      line-height: 1.8;
-      color: var(--gray-light);
-    }
-    
-    /* Nutrition facts mejorado */
-    .nutrition-facts {
-      background: rgba(10, 14, 39, 0.5);
-      padding: 2rem;
-      border-radius: var(--radius-lg);
-      border: 1px solid var(--border);
-    }
-    
-    .nutrition-facts h3 {
-      font-size: 1.25rem;
-      margin-bottom: 2rem;
-      color: var(--secondary-light);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-weight: 700;
-    }
-    
-    .nutrition-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      text-align: center;
-    }
-    
-    .nutrition-item {
-      background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(34, 211, 238, 0.05));
-      padding: 1.5rem;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(34, 211, 238, 0.2);
-      transition: var(--transition);
-    }
-    
-    .nutrition-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(34, 211, 238, 0.3);
-      border-color: rgba(34, 211, 238, 0.4);
-    }
-    
-    .nutrition-value {
-      font-size: 1.75rem;
-      font-weight: 800;
-      background: var(--gradient-secondary);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      display: block;
-      margin-bottom: 0.5rem;
-    }
-    
-    .nutrition-label {
-      font-size: 0.875rem;
-      color: var(--gray-light);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    
-    /* Animaciones */
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.05);
-      }
-    }
-    
-    @keyframes rotate {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-    
-    /* Scroll bar personalizada */
-    ::-webkit-scrollbar {
-      width: 12px;
-    }
-    
-    ::-webkit-scrollbar-track {
-      background: var(--dark);
-      border-radius: 10px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, var(--primary), var(--primary-dark));
-      border-radius: 10px;
-      border: 2px solid var(--dark);
-    }
-    
-    ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(180deg, var(--primary-light), var(--primary));
-    }
-    
-    /* Página activa/inactiva */
-    .page-section {
-      display: none;
-      animation: fadeIn 0.5s ease-out;
-    }
-    
-    .page-section.active {
-      display: block;
-    }
-    
-    /* Media Queries para responsividad */
-    @media (max-width: 1024px) {
-      .container {
-        padding: 1.5rem;
-      }
-      .stats-container {
-        flex-direction: column;
-        align-items: stretch;
-        text-align: center;
-      }
-      .stats-chart {
-        margin: 0 auto;
-      }
-      .cards {
-        gap: 2rem;
-      }
-      
-      .hero h1 {
-        font-size: 3rem;
-      }
-    }
-    
     @media (max-width: 768px) {
-      header {
-        padding: 1rem;
-      }
-      
-      .logo {
-        font-size: 1.5rem;
-      }
-      
-      nav {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(10, 14, 39, 0.95);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border);
-        box-shadow: var(--shadow-lg);
-        padding: 1rem;
-      }
-      
-      nav.active {
-        display: block;
-      }
-      
-      nav ul {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      
-      nav a {
-        display: block;
-        padding: 1rem;
-        border-radius: var(--radius-sm);
-        background: rgba(17, 24, 39, 0.5);
-        text-align: center;
-      }
-      
-      .menu-toggle {
-        display: block;
-      }
-      
-      .hero {
-        padding: 3rem 0;
-      }
-      
-      .hero h1 {
-        font-size: 2.5rem;
-      }
-      
-      .objetivo {
-        font-size: 1rem;
-        padding: 0.875rem 1.5rem;
-      }
-      
-      .cards {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-      
-      .card {
-        padding: 2rem;
-      }
-      
-      .ejercicio-info {
-        grid-template-columns: 1fr;
-      }
-      
-      .calendar-container,
-      .rutina-container,
-      .desayuno-container {
-        padding: 1.5rem;
-      }
-      
-      .nutrition-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .days-container {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-      }
-      
-      .day-btn {
-        padding: 1.5rem 1rem;
-      }
-      
-      .calendar {
-        gap: 0.5rem;
-      }
-      
-      .day {
-        font-size: 0.875rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .container {
-        padding: 1rem;
-      }
-      .stats-grid {
-        grid-template-columns: 1fr;
-      }
-      .hero h1 {
-        font-size: 2rem;
-      }
-      
-      .page-header h1 {
-        font-size: 1.75rem;
-      }
-      
-      .objetivo {
-        font-size: 0.875rem;
-        padding: 0.75rem 1.25rem;
-      }
-      
-      .objetivo span {
-        font-size: 1rem;
-      }
-      
-      .card h2 {
-        font-size: 1.5rem;
-      }
-      
-      .calendar-header {
-        font-size: 0.75rem;
-      }
-      
-      .nutrition-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-      
-      .motivacion {
-        padding: 2rem 1.5rem;
-      }
-      
-      .motivacion h2 {
-        font-size: 1.5rem;
-      }
-      
-      .motivacion p {
-        font-size: 1.125rem;
-      }
-    }
-    
-    /* Print styles */
-    @media print {
-      body {
-        background: white;
-        color: black;
-      }
-      
-      header,
-      .btn-volver,
-      .menu-toggle {
-        display: none;
-      }
-      
-      .card,
-      .ejercicio,
-      .desayuno-section {
-        break-inside: avoid;
-      }
+      .container { padding: 1.5rem; }
+      nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(10, 14, 39, 0.95); backdrop-filter: blur(20px); padding: 1rem; }
+      nav.active { display: block; }
+      nav ul { flex-direction: column; }
+      nav a { display: block; padding: 1rem; background: rgba(17, 24, 39, 0.5); border-radius: var(--radius-sm); }
+      .menu-toggle { display: block; }
+      .cards { grid-template-columns: 1fr; }
+      /* AJUSTADO: Forzar el diseño vertical en móvil para las tarjetas */
+      .card.ejercicios, .card.nutricion, .card.progreso { flex-direction: column; text-align: center; }
+      .card.ejercicios .card-icon, .card.nutricion .card-icon, .card.progreso .card-icon { margin: 0 auto 1.5rem auto; }
     }
   </style>
 </head>
 <body>
+
   <header>
     <div class="logo">
       <i class="fas fa-dumbbell"></i>
@@ -1439,920 +207,506 @@
     </div>
     <nav id="nav">
       <ul>
-        <li><a href="#" class="nav-link active" data-target="inicio">
-          <i class="fas fa-home"></i> Inicio
-        </a></li>
-        <li><a href="#" class="nav-link" data-target="ejercicios">
-          <i class="fas fa-running"></i> Ejercicios
-        </a></li>
-        <li><a href="#" class="nav-link" data-target="nutricion">
-          <i class="fas fa-utensils"></i> Nutrición
-        </a></li>
+        <li><a href="#" class="nav-link active" data-target="inicio">Inicio</a></li>
+        <li><a href="#" class="nav-link" data-target="ejercicios">Ejercicios</a></li>
+        <li><a href="#" class="nav-link" data-target="nutricion">Nutrición</a></li>
+        <li><a href="#" class="nav-link" data-target="progreso">Progreso</a></li>
       </ul>
     </nav>
-    <button class="menu-toggle" id="menu-toggle">
-      <i class="fas fa-bars"></i>
-    </button>
+    <button class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
   </header>
 
   <div class="container">
-    <!-- Sección de Inicio -->
+    <!-- SECCIÓN DE INICIO -->
     <section id="inicio" class="page-section active">
       <div class="hero">
         <h1>¡Hola, Adrián! 👋</h1>
-        <p class="objetivo">
-          <i class="fas fa-bullseye"></i>
-          Objetivo: <strong>Llegar a 70kg</strong>
-          <span id="contador">💪🔥</span>
-        </p>
-      </div>
-
-      <div class="cards">
-        <a class="card ejercicios" href="#" data-target="ejercicios">
-          <div class="card-icon">
-            <i class="fas fa-running"></i>
-          </div>
-          <h2>Rutinas de Ejercicio</h2>
-          <p>Plan semanal estructurado para ganar masa muscular, mejorar tu postura y dominar la calistenia.</p>
-          <span class="card-badge">6 días/semana</span>
-        </a>
-        <a class="card desayunos" href="#" data-target="nutricion">
-          <div class="card-icon">
-            <i class="fas fa-utensils"></i>
-          </div>
-          <h2>Plan Nutricional</h2>
-          <p>Desayunos saludables, energéticos y altos en proteína para complementar tu entrenamiento.</p>
-          <span class="card-badge">600-1000 kcal</span>
-        </a>
-      </div>
-
-      <div class="motivacion">
-        <h2>¡Tú puedes lograrlo! 💪</h2>
-        <p>Cada entrenamiento te acerca más a tu meta. La consistencia es la clave del éxito.</p>
-        <small>"La disciplina es el puente entre tus metas y tus logros" — Jim Rohn</small>
-      </div>
-    </section>
-
-    <!-- Sección de Ejercicios -->
-    <section id="ejercicios" class="page-section">
-      <div class="page-header">
-        <h1>Calendario de Entrenamiento</h1>
-        <p>Sigue tu progreso y completa las rutinas diarias</p>
+        <p class="objetivo"><i class="fas fa-bullseye"></i> Objetivo: <strong>Llegar a 70kg</strong></p>
       </div>
 
       <div class="calendar-container">
         <div class="calendar-nav">
-          <button class="calendar-nav-btn" id="prev-month">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <div class="calendar-title" id="current-month-year"></div>
-          <button class="calendar-nav-btn" id="next-month">
-            <i class="fas fa-chevron-right"></i>
-          </button>
+          <button class="calendar-nav-btn" id="home-prev-month"><i class="fas fa-chevron-left"></i></button>
+          <div class="calendar-title" id="home-current-month-year"></div>
+          <button class="calendar-nav-btn" id="home-next-month"><i class="fas fa-chevron-right"></i></button>
         </div>
-        
         <div class="calendar-header">
-          <div>Lun</div>
-          <div>Mar</div>
-          <div>Mié</div>
-          <div>Jue</div>
-          <div>Vie</div>
-          <div>Sáb</div>
-          <div>Dom</div>
+          <div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div><div>Dom</div>
         </div>
+        <div class="calendar" id="home-calendar"></div>
+      </div>
+
+      <div class="cards" id="opciones-dia" style="display: none;">
+        <a class="card ejercicios" href="#" data-target="ejercicios">
+          <div class="card-icon"><i class="fas fa-running"></i></div>
+          <div class="card-content">
+            <h2>Rutina del Día</h2>
+            <p>Accede a tu plan de entrenamiento.</p>
+          </div>
+        </a>
+        <a class="card nutricion" href="#" data-target="nutricion">
+          <div class="card-icon"><i class="fas fa-utensils"></i></div>
+          <div class="card-content">
+            <h2>Plan Nutricional</h2>
+            <p>Consulta las recetas de hoy.</p>
+          </div>
+        </a>
+        <a class="card progreso" href="#" data-target="progreso">
+          <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+          <div class="card-content">
+            <h2>Tu Progreso</h2>
+            <p>Visualiza tus estadísticas y rachas de entrenamiento.</p>
+          </div>
+        </a>
+      </div>
         
-        <div class="calendar" id="calendar"></div>
+      <div class="motivacion">
+        <h2>¡Tú puedes lograrlo! 💪</h2>
+        <p>La consistencia es la clave del éxito.</p>
       </div>
-
-      <!-- NUEVO: Contenedor para las estadísticas mensuales -->
-      <div id="stats-container-wrapper"></div>
-
-      <div class="rutina-container" id="rutina">
-        <div class="rutina-header">
-          <h2>Selecciona un día para ver la rutina</h2>
-        </div>
-        <p>Haz clic en cualquier día del calendario para visualizar los ejercicios correspondientes.</p>
-      </div>
-
-      <a href="#" class="btn-volver" data-target="inicio">
-        <i class="fas fa-arrow-left"></i>
-        Volver al inicio
-      </a>
     </section>
 
-    <!-- Sección de Nutrición -->
+    <!-- SECCIÓN DE EJERCICIOS -->
+    <section id="ejercicios" class="page-section">
+      <div class="page-header"><h1>Tu Rutina Diaria</h1><p>Aquí tienes el plan de hoy. ¡A por todas!</p></div>
+      <div class="rutina-container" id="rutina"></div>
+      <a href="#" class="btn-volver" data-target="inicio"><i class="fas fa-arrow-left"></i> Volver al inicio</a>
+    </section>
+
+    <!-- SECCIÓN DE NUTRICIÓN -->
     <section id="nutricion" class="page-section">
-      <div class="page-header">
-        <h1>Plan de Desayunos</h1>
-        <p>Desayunos saludables para complementar tu entrenamiento</p>
-      </div>
-
+      <div class="page-header"><h1>Plan de Desayunos</h1><p>Desayunos saludables para complementar tu entrenamiento</p></div>
       <div class="days-container">
-        <div class="day-btn active" data-dia="L">
-          <i class="fas fa-pancakes"></i>
-          <h3>Lunes</h3>
-          <p>Pancakes</p>
-        </div>
-        <div class="day-btn" data-dia="M">
-          <i class="fas fa-blender"></i>
-          <h3>Martes</h3>
-          <p>Batido</p>
-        </div>
-        <div class="day-btn" data-dia="X">
-          <i class="fas fa-bread-slice"></i>
-          <h3>Miércoles</h3>
-          <p>Tostadas</p>
-        </div>
-        <div class="day-btn" data-dia="J">
-          <i class="fas fa-egg"></i>
-          <h3>Jueves</h3>
-          <p>Tortilla</p>
-        </div>
-        <div class="day-btn" data-dia="V">
-          <i class="fas fa-bowl-food"></i>
-          <h3>Viernes</h3>
-          <p>Yogur</p>
-        </div>
-         <div class="day-btn" data-dia="S">
-            <i class="fas fa-utensils-alt"></i>
-            <h3>Sábado</h3>
-            <p>Repite Favorito</p>
-        </div>
+        <div class="day-btn active" data-dia="L"><i class="fas fa-pancakes"></i><h3>Lunes</h3><p>Pancakes</p></div>
+        <div class="day-btn" data-dia="M"><i class="fas fa-blender"></i><h3>Martes</h3><p>Batido</p></div>
+        <div class="day-btn" data-dia="X"><i class="fas fa-bread-slice"></i><h3>Miércoles</h3><p>Tostadas</p></div>
+        <div class="day-btn" data-dia="J"><i class="fas fa-egg"></i><h3>Jueves</h3><p>Tortilla</p></div>
+        <div class="day-btn" data-dia="V"><i class="fas fa-bowl-food"></i><h3>Viernes</h3><p>Yogur</p></div>
+        <div class="day-btn" data-dia="S"><i class="fas fa-utensils"></i><h3>Sábado</h3><p>Repite Favorito</p></div>
       </div>
-
-      <div class="desayuno-container" id="desayuno">
-        <!-- Contenido dinámico -->
-      </div>
-
-      <a href="#" class="btn-volver" data-target="inicio">
-        <i class="fas fa-arrow-left"></i>
-        Volver al inicio
-      </a>
+      <div class="desayuno-container" id="desayuno"></div>
+      <a href="#" class="btn-volver" data-target="inicio"><i class="fas fa-arrow-left"></i> Volver al inicio</a>
+    </section>
+    
+    <!-- SECCIÓN DE PROGRESO -->
+    <section id="progreso" class="page-section">
+        <div class="page-header"><h1>Tu Progreso</h1><p>¡Mira todo lo que has conseguido! La consistencia es la clave.</p></div>
+        <div class="progreso-container">
+            <div class="stats-grid" id="stats-grid"></div>
+            <div class="chart-container"><canvas id="progressChart"></canvas></div>
+        </div>
+        <a href="#" class="btn-volver" data-target="inicio"><i class="fas fa-arrow-left"></i> Volver al inicio</a>
     </section>
   </div>
 
-  <script>
-    // Datos de los desayunos
-    const desayunos = { L:{nombre:"Pancakes estilo stracciatella",calorias:"600-700 kcal",ingredientes:["1 huevo","25g de azúcar (1/8 de taza)","1 pizca de sal","1/2 cdta de esencia de vainilla","35 ml de leche (1/8 de taza aprox)","1/2 yogur griego (62.5g)","100g de harina de trigo (1/2 taza + 1/3)","1/2 cda de levadura química (4g)","un poco de aceite","complementar al gusto"],preparacion:["Mezcla el huevo con el azúcar, sal y esencia de vainilla hasta integrar.","Añade la leche y el yogur griego, mezcla bien.","Incorpora la harina y la levadura, mezcla hasta obtener una masa homogénea.","Deja reposar la masa 5 minutos.","Cocina en sartén antiadherente con un poco de aceite, vuelta y vuelta.","Sirve con tus toppings favoritos."],nutricion:{kcal:650,proteinas:25,carbohidratos:85,grasas:20,fibra:8,azucares:30}},M:{nombre:"Batido energético estilo stracciatella",calorias:"900-1000 kcal",ingredientes:["500 ml de leche entera","1 plátano","100 g de avena","30 g de nueces","2 cucharadas de crema de cacahuete","1 cucharada de ColaCao","1 yogur griego de stracciatella"],preparacion:["Coloca todos los ingredientes en la licuadora.","Licúa hasta obtener una mezcla suave y homogénea.","Sirve frío. Puedes acompañarlo con una tostada para sumar aún más calorías."],nutricion:{kcal:950,proteinas:35,carbohidratos:120,grasas:35,fibra:12,azucares:45}},X:{nombre:"Tostadas con aguacate, huevo y tomate",calorias:"600-700 kcal",ingredientes:["2 rebanadas de pan integral o de centeno","1 aguacate maduro","2 huevos","1 tomate mediano","Aceite de oliva virgen extra","Sal y pimienta"],preparacion:["Tuesta el pan.","Fríe o cuece los huevos a tu gusto.","Tritura el aguacate y úntalo sobre el pan.","Añade rodajas de tomate y coloca los huevos encima.","Rocía con aceite de oliva, sal y pimienta."],nutricion:{kcal:650,proteinas:22,carbohidratos:45,grasas:40,fibra:10,azucares:5}},J:{nombre:"Tortilla francesa con atún y pan con aceite",calorias:"600-650 kcal",ingredientes:["2-3 huevos","1 lata de atún en aceite de oliva escurrida","2 rebanadas de pan integral","Aceite de oliva virgen extra","Sal al gusto"],preparacion:["Bate los huevos y añade el atún escurrido.","Cocina en sartén caliente hasta que cuaje.","Sirve con pan tostado y un chorro de aceite por encima."],nutricion:{kcal:625,proteinas:45,carbohidratos:35,grasas:35,fibra:5,azucares:2}},V:{nombre:"Yogur natural con granola casera y fruta",calorias:"650-750 kcal",ingredientes:["1 taza de yogur natural entero o griego","½ taza de granola casera o sin azúcares añadidos","1 plátano o un puñado de frutos rojos","1 cucharada de miel o sirope de agave","1 cucharada de nueces o almendras picadas"],preparacion:["Vierte el yogur en un bol.","Añade la fruta cortada y la granola.","Espolvorea los frutos secos.","Agrega miel al gusto y mezcla bien."],nutricion:{kcal:700,proteinas:25,carbohidratos:90,grasas:25,fibra:8,azucares:40}},S:{nombre:"Repite tu favorito de la semana",calorias:"Variable",ingredientes:["¡Elige el desayuno que más te haya gustado esta semana!","Asegúrate de que te aporte la energía necesaria para el entrenamiento intenso de Sábado."],preparacion:["Sigue la receta del día que elijas.","¡Disfruta de tu desayuno preferido para empezar el fin de semana con fuerza!"],nutricion:{kcal:"?",proteinas:"?",carbohidratos:"?",grasas:"?",fibra:"?",azucares:"?"}}};
-
-    // --- NUEVO OBJETO DE RUTINAS PERSONALIZADO ---
+<script>
+    const desayunos = { L:{nombre:"Pancakes estilo stracciatella",calorias:"600-700 kcal",ingredientes:["1 huevo","25g de azúcar","1 pizca de sal","1/2 cdta de vainilla","35 ml de leche","1/2 yogur griego","100g de harina","4g de levadura"],preparacion:["Mezclar todo hasta obtener una masa homogénea.","Cocinar en sartén antiadherente."]},
+                        M:{nombre:"Batido energético",calorias:"900-1000 kcal",ingredientes:["500 ml de leche","1 plátano","100g de avena","30g de nueces","2 cdas de crema de cacahuete","1 cda de ColaCao","1 yogur griego"],preparacion:["Licuar todos los ingredientes."]},
+                        X:{nombre:"Tostadas con aguacate y huevo",calorias:"600-700 kcal",ingredientes:["2 rebanadas de pan integral","1 aguacate","2 huevos","1 tomate","Aceite, sal y pimienta"],preparacion:["Tostar el pan.","Untar aguacate, añadir tomate y el huevo frito o cocido."]},
+                        J:{nombre:"Tortilla con atún",calorias:"600-650 kcal",ingredientes:["2-3 huevos","1 lata de atún","2 rebanadas de pan integral","Aceite y sal"],preparacion:["Batir huevos, añadir atún y cocinar.","Acompañar con pan y aceite."]},
+                        V:{nombre:"Yogur con granola y fruta",calorias:"650-750 kcal",ingredientes:["1 yogur griego","1/2 taza de granola","1 plátano o frutos rojos","Nueces y miel"],preparacion:["Mezclar todos los ingredientes en un bol."]},S:{nombre:"Repite tu favorito",calorias:"Variable",ingredientes:["Elige el que más te haya gustado."],preparacion:["¡A disfrutar del fin de semana!"]} };
     const rutinas = {
   1: {
-    title: "Lunes – PUSH + Progresión Planche",
-    objetivo: "Fuerza de empuje y core con foco en Lean Planche: protracción/depresión escapular, hollow y compresión. Técnica segura y progresiva.",
-    calentamiento: {
-      nombre: "Calentamiento de Empuje/Planche (5–8 min)",
-      descripcion: "Activa muñecas, serrato y core; mejora movilidad torácica.",
-      ejercicios: [
-        "Círculos de muñecas: 60–90 s variados",
-        "Cat–Cow + extensión torácica (Sphinx): 2x6",
-        "Scapular push-ups (brazos rectos): 1x10",
-        "Hollow body hold: 1x15–20 s"
-      ],
-      imagen: "https://i.ytimg.com/vi/PVL4gq_sB4s/maxresdefault.jpg"
-    },
-    estiramiento: {
-      nombre: "Estiramiento Post-Empuje (3–5 min)",
-      descripcion: "Descarga muñecas, pectoral y deltoides anteriores.",
-      ejercicios: [
-        "Estiramiento de pectoral en marco de puerta: 2x30 s por lado",
-        "Estiramiento de tríceps tras nuca: 2x20 s por lado",
-        "Estiramiento de flexores de muñeca: 2x20 s"
-      ],
-      imagen: "https://www.verywellfit.com/thmb/T6esI8g_Lw5gY8g3-u-5-aE_wKo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Verywell-22-3498282-ChestStretch-597f1da2af5d3a001193305c.jpg"
-    },
+    title: "Lunes: Empuje (Foco Planche) + Postura",
+    objetivo: "Desarrollar la fuerza base para el lean planche (hombros, core) y activar la musculatura postural.",
     ejercicios: [
       {
-        nombre: "Lean Planche (isométrico)",
-        sets: "4 x 15–25 s — ISO — 90 s — RPE 8",
-        musculos: ["Hombros", "Serrato Anterior", "Core"],
-        consejos: "Hombros por delante de muñecas, brazos rectos, escápulas protraídas y deprimidas, pelvis en retroversión (PPT), mirada neutra. Fácil: menos lean y pies separados. Difícil: más lean y pies juntos. Puedes usar la tabla de flexiones (agarre neutro) si molestan las muñecas.",
+        nombre: "Planche Leans (Isométrico)",
+        sets: "4 x 10–20s",
+        consejos: "Protracción escapular y hollow body ACTIVOS. Inclínate hasta sentir tensión en hombros. Prog: más inclinación / Reg: menos inclinación.",
         imagen: "https://i.ytimg.com/vi/GgQ32eR8tIA/maxresdefault.jpg"
       },
       {
-        nombre: "Flexiones Pseudo-Planche (PPPU)",
-        sets: "4 x 6–10 — tempo 3-1-1-0 — 90 s — RPE 8",
-        musculos: ["Hombros", "Pectoral", "Tríceps"],
-        consejos: "Manos más cerca de caderas, codos pegados, cuerpo en bloque. Mantén el lean durante todo el rango. Fácil: menos lean o rodillas al suelo. Difícil: pies elevados 10–20 cm. Tabla de flexiones recomendable si hay molestias en muñeca.",
+        nombre: "Pseudo Planche Push-ups (PPPU)",
+        sets: "3 x 5–8",
+        consejos: "Mantén la inclinación del lean durante toda la flexión. Codos pegados al cuerpo. Prog: más inclinación / Reg: de rodillas.",
         imagen: "https://www.gymnasticsmethod.com/wp-content/uploads/2021/08/pseudo-planche-push-ups.jpg"
       },
       {
-        nombre: "Scapular push-ups (brazos rectos)",
-        sets: "3 x 10–15 — tempo 2-1-2-1 — 60 s — RPE 7",
-        musculos: ["Serrato Anterior", "Trapecio", "Core"],
-        consejos: "Solo muevas escápulas: protrae (empuja el suelo) y retrae sin doblar codos. Mantén cuello largo.",
-        imagen: "https://i.ytimg.com/vi/Vdy9kqN6p6Y/maxresdefault.jpg"
+        nombre: "Flexiones (con tabla/board o suelo)",
+        sets: "3 x 8–12",
+        consejos: "Usa agarre neutro en la tabla para proteger muñecas. Cuerpo en bloque. Prog: pies elevados / Reg: de rodillas.",
+        imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/pushup-1456956711.gif"
       },
       {
-        nombre: "Hollow Body Hold",
-        sets: "3 x 20–30 s — ISO — 45–60 s — RPE 7",
-        musculos: ["Core", "Transverso", "Flexores de cadera"],
-        consejos: "Zona lumbar pegada, costillas abajo, PPT. Fácil: una pierna flexionada. Difícil: hollow rocks.",
-        imagen: "https://i.ytimg.com/vi/bE0Y_7yN3O8/maxresdefault.jpg"
-      },
-      {
-        nombre: "Pike Compression (sentado)",
-        sets: "3 x 10–15 — tempo 1-1-2-1 — 60 s — RPE 8",
-        musculos: ["Flexores de cadera", "Abdominales", "Cuádriceps"],
-        consejos: "Sentado con piernas estiradas, manos al lado de rodillas. Eleva talones del suelo sin inclinarte atrás. Fácil: rodillas algo flexionadas. Difícil: manos más adelantadas.",
-        imagen: "https://i.ytimg.com/vi/ALpLkCbj7sM/maxresdefault.jpg"
+        nombre: "Band Pull-Aparts",
+        sets: "3 x 15–20",
+        consejos: "Brazos estirados frente a ti. Separa las manos retrayendo y deprimiendo escápulas. Alt: Y-T-W en suelo.",
+        imagen: "https://i.ytimg.com/vi/DxVZ4iS8_7o/maxresdefault.jpg"
       }
     ]
   },
-
   2: {
-    title: "Martes – PULL + Corrección Postural",
-    objetivo: "Fortalecer espalda alta y deltoide posterior para mejorar postura (retracción/depresión escapular) sin anclajes fijos.",
-    calentamiento: {
-      nombre: "Activación de Espalda (5–8 min)",
-      descripcion: "Prepara escápulas y columna torácica.",
-      ejercicios: [
-        "Círculos de hombros: 2x10 adelante/atrás",
-        "Rotaciones torácicas (Open Book): 2x8 por lado",
-        "Pull-aparts muy ligeros: 1x15",
-        "Remo con banda ligera (bajo pies): 1x15"
-      ],
-      imagen: "https://i.ytimg.com/vi/383aGvky5tA/maxresdefault.jpg"
-    },
-    estiramiento: {
-      nombre: "Estiramiento de Espalda (3–5 min)",
-      descripcion: "Libera dorsal y mejora extensión torácica.",
-      ejercicios: [
-        "Child’s Pose: 2x30 s",
-        "Gato–Vaca: 1x12",
-        "Estiramiento de dorsal en pared: 2x20 s por lado"
-      ],
-      imagen: "https://www.yogajournal.com/wp-content/uploads/2021/11/Childs-Pose_Andrew-Clark_1.jpg"
-    },
+    title: "Martes: Piernas (Fuerza) + Core",
+    objetivo: "Construir fuerza en cuádriceps, glúteos e isquios, y estabilidad en el core anti-inclinación.",
     ejercicios: [
       {
-        nombre: "Remo con banda (bajo pies)",
-        sets: "4 x 12–15 — tempo 2-1-2-1 — 60–90 s — RPE 8",
-        musculos: ["Dorsales", "Romboides", "Trapecio medio"],
-        consejos: "Pisa la banda, bisagra de cadera, columna neutra. Tira hacia ombligo/pecho bajo con pausa 1 s en retracción. Ajusta tensión acortando agarre.",
+        nombre: "Sentadillas con Pausa (2 seg)",
+        sets: "4 x 8–10",
+        consejos: "Pausa de 2s abajo, manteniendo tensión. Espalda recta, rompe el paralelo. Prog: con salto / Reg: a una silla.",
+        imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/bodyweightsquat-1456956795.gif"
+      },
+      {
+        nombre: "Puente de Glúteos a una pierna",
+        sets: "3 x 10–15 por pierna",
+        consejos: "Empuja con el talón del pie apoyado. Aprieta el glúteo a tope arriba. Prog: pie en silla / Reg: ambas piernas.",
+        imagen: "https://i.ytimg.com/vi/w5mF5ceOJwE/maxresdefault.jpg"
+      },
+      {
+        nombre: "Zancadas Inversas",
+        sets: "3 x 10–12 por pierna",
+        consejos: "Paso largo hacia atrás, torso vertical. Rodilla delantera sobre el medio pie. Prog: con pausa abajo.",
+        imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/reverselunge-1456956736.gif"
+      },
+      {
+        nombre: "Plancha Lateral",
+        sets: "3 x 30–45s por lado",
+        consejos: "Cuerpo en línea recta de cabeza a pies, cadera alta. No dejes que la cadera caiga. Prog: elevar pierna / Reg: de rodillas.",
+        imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/sideplank-1456956754.gif"
+      }
+    ]
+  },
+  3: {
+    title: "Miércoles: Tirón (Postura) + Empuje (Asistencia)",
+    objetivo: "Fortalecer la espalda alta (romboides, trapecios) para la postura y añadir trabajo de tríceps/hombros.",
+    ejercicios: [
+      {
+        nombre: "Remo con Banda (anclaje en pies)",
+        sets: "4 x 10–15",
+        consejos: "Sentado, pasa la banda por los pies. Tira hacia el ombligo, aprieta escápulas 1s. Prog: +tensión de banda / Reg: -tensión.",
         imagen: "https://i.ytimg.com/vi/2JdK31C-gCM/maxresdefault.jpg"
       },
       {
-        nombre: "Pull-aparts con banda",
-        sets: "3 x 15–20 — tempo 2-1-2-1 — 45–60 s — RPE 7",
-        musculos: ["Deltoide posterior", "Romboides", "Trapecio"],
-        consejos: "Brazos a la altura del pecho, hombros abajo. Sin banda: T-raises 3 x 12–15.",
-        imagen: "https://i.ytimg.com/vi/DxVZ4iS8_7o/maxresdefault.jpg"
+        nombre: "Face Pulls con Banda (anclaje en pies)",
+        sets: "3 x 15–20",
+        consejos: "Sentado, tira de la banda hacia la cara con codos altos y rotación externa (pulgares atrás). Alt: Y-T-W en suelo.",
+        imagen: "https://i.ytimg.com/vi/a-a2BPYFjYc/maxresdefault.jpg"
       },
       {
-        nombre: "Y-T-W en suelo",
-        sets: "2–3 x 8–12 por letra — tempo 2-1-2-1 — 45–60 s — RPE 7",
-        musculos: ["Trapecio medio/inferior", "Romboides", "Deltoide posterior"],
-        consejos: "Frente cerca del suelo, pulgares al techo, pausa 1 s arriba. Opcional: mancuernas de 1 kg.",
-        imagen: "https://i.ytimg.com/vi/6P3b9rfds0k/maxresdefault.jpg"
+        nombre: "Pino Asistido en Pared (Isométrico)",
+        sets: "4 x 20–40s",
+        consejos: "Empuja el suelo (hombros a las orejas), cuerpo recto, aprieta abdomen y glúteos. Prog: Wall walks / Reg: menos tiempo.",
+        imagen: "https://www.gymnasticsmethod.com/wp-content/uploads/2021/04/wall-handstand.jpg"
       },
+      {
+        nombre: "Flexiones Diamante",
+        sets: "3 x 6–10",
+        consejos: "Manos juntas bajo el pecho, codos pegados al cuerpo. Foco en tríceps. Prog: pies elevados / Reg: de rodillas.",
+        imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/diamondpushup-1456956700.gif"
+      }
+    ]
+  },
+  4: {
+    title: "Jueves: Descanso / Recuperación Activa",
+    objetivo: "Mejorar movilidad, facilitar la recuperación y trabajar la higiene postural de forma suave.",
+    ejercicios: [
       {
         nombre: "Wall Slides",
-        sets: "2 x 8–12 — tempo 3-1-2-1 — 45 s — RPE 6–7",
-        musculos: ["Serrato", "Rotadores externos", "Trapecio"],
-        consejos: "Codos y muñecas en la pared, sin arquear zona lumbar; costillas abajo.",
+        sets: "2 x 10–12",
+        consejos: "Lento y controlado. Codos y muñecas siempre en contacto con la pared, sin arquear la zona lumbar.",
         imagen: "https://i.ytimg.com/vi/ykbof4L1ZsA/maxresdefault.jpg"
       },
       {
-        nombre: "Dead Bug",
-        sets: "3 x 8–12 por lado — tempo 3-1-1-1 — 45–60 s — RPE 7",
-        musculos: ["Core", "Transverso", "Estabilidad"],
-        consejos: "Zona lumbar pegada, exhala al extender brazo/pierna contrarios. Control total.",
-        imagen: "https://i.ytimg.com/vi/4XLEnwUr1d8/maxresdefault.jpg"
+        nombre: "Gato-Vaca",
+        sets: "2 x 10",
+        consejos: "Moviliza toda la columna vertebral, coordinando el movimiento con una respiración profunda y controlada.",
+        imagen: "https://i.ytimg.com/vi/1_0W8tLNWsI/maxresdefault.jpg"
+      },
+      {
+        nombre: "Caminata Ligera",
+        sets: "1 x 20-30 min",
+        consejos: "Activa la circulación sin generar fatiga. Escucha a tu cuerpo y simplemente muévete.",
+        imagen: ""
       }
     ]
   },
-
-  3: {
-    title: "Miércoles – Piernas + Glúteos",
-    objetivo: "Construir base sólida en tren inferior con énfasis en cuádriceps y glúteos usando tempos/pausas.",
-    calentamiento: {
-      nombre: "Movilidad de Tren Inferior (5–8 min)",
-      descripcion: "Prepara caderas, rodillas y tobillos.",
-      ejercicios: [
-        "Círculos de cadera (CARs): 2x8 por lado",
-        "Dorsiflexión de tobillo en pared: 2x10 por lado",
-        "Buenos días sin carga: 1x12",
-        "Sentadillas con pausa 2 s: 1x10"
-      ],
-      imagen: "https://i.ytimg.com/vi/crCDRUhkAgc/maxresdefault.jpg"
-    },
-    estiramiento: {
-      nombre: "Estiramiento de Piernas (3–5 min)",
-      descripcion: "Flexibilidad de cuádriceps, isquios y glúteos.",
-      ejercicios: [
-        "Estiramiento de cuádriceps: 2x30 s por pierna",
-        "Isquiotibiales (tumbado con toalla): 2x30 s por pierna",
-        "Glúteo (Figura 4): 2x30 s por pierna"
-      ],
-      imagen: "https://www.nerdfitness.com/wp-content/uploads/2019/04/quad-stretch.gif"
-    },
-    ejercicios: [
-      {
-        nombre: "Split Squat (zancada estacionaria)",
-        sets: "4 x 10–12 por pierna — tempo 3-1-1-0 — 60–90 s — RPE 8",
-        musculos: ["Cuádriceps", "Glúteos"],
-        consejos: "Rodilla delantera sobre medio pie, torso erguido. Difícil: pausa 2 s abajo o elevar talón 2–3 cm; Fácil: apoyo ligero en pared.",
-        imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/splitsquat-1456956771.gif"
-      },
-      {
-        nombre: "Sentadilla con pausa",
-        sets: "3–4 x 8–12 — tempo 3-2-1-0 — 60–90 s — RPE 8",
-        musculos: ["Cuádriceps", "Glúteos"],
-        consejos: "Pausa 2 s en el fondo, rodillas alineadas con 2º–3º dedo del pie, columna neutra.",
-        imagen: "https://i.ytimg.com/vi/qrHu7D9hx6s/maxresdefault.jpg"
-      },
-      {
-        nombre: "Hip Thrust a una pierna (suelo)",
-        sets: "3–4 x 10–15 por pierna — tempo 2-1-2-1 — 60–90 s — RPE 8",
-        musculos: ["Glúteos", "Isquiotibiales"],
-        consejos: "Empuja con talón, cadera llega a extensión, pausa 1–2 s arriba. Fácil: bilateral; Difícil: isométrico final 20 s.",
-        imagen: "https://i.ytimg.com/vi/w5mF5ceOJwE/maxresdefault.jpg"
-      },
-      {
-        nombre: "Peso muerto a una pierna con banda (bajo pie)",
-        sets: "3 x 10–12 por pierna — tempo 3-1-1-1 — 60–75 s — RPE 8",
-        musculos: ["Isquiotibiales", "Glúteos", "Erectores"],
-        consejos: "Bisagra de cadera, cadera atrás, hombros abajo y atrás. Controla el equilibrio.",
-        imagen: "https://i.ytimg.com/vi/i24b0-Y-c5M/maxresdefault.jpg"
-      },
-      {
-        nombre: "Gemelos en suelo o escalón",
-        sets: "3 x 15–25 — tempo 2-2-2-1 — 45–60 s — RPE 8",
-        musculos: ["Sóleo", "Gastrocnemio"],
-        consejos: "Rango completo, pausa arriba. Difícil: a una pierna; Sin escalón: en suelo.",
-        imagen: "https://i.ytimg.com/vi/K6p-1q2SVOQ/maxresdefault.jpg"
-      }
-    ]
-  },
-
-  4: {
-    title: "Jueves – Recuperación Activa + Movilidad",
-    objetivo: "Descargar articulaciones, mejorar movilidad torácica/escapular y respiración para acelerar la recuperación.",
-    calentamiento: {
-      nombre: "Preparación Suave (3–5 min)",
-      descripcion: "Entradas de movilidad y activación ligera.",
-      ejercicios: [
-        "Círculos de muñecas y dedos: 60–90 s",
-        "Marcha respirando por la nariz: 2 min",
-        "Scapular CARs: 2x5 por sentido"
-      ],
-      imagen: "https://i.ytimg.com/vi/mSZ1_T_E014/maxresdefault.jpg"
-    },
-    estiramiento: {
-      nombre: "Movilidad y Respiración (8–12 min)",
-      descripcion: "Relaja y mejora control postural.",
-      ejercicios: [
-        "Open Book (torácica): 2x6–8 por lado",
-        "Wall Slides suaves: 2x10",
-        "Respiración 90/90: 3–5 min (exhala largo, costillas bajan, zona lumbar al suelo)"
-      ],
-      imagen: "https://i.ytimg.com/vi/a_eA158fP-w/maxresdefault.jpg"
-    },
-    ejercicios: [
-      {
-        nombre: "Lean planche suave (técnica)",
-        sets: "2–3 x 10–15 s — ISO — 60–90 s — RPE 6",
-        musculos: ["Hombros", "Serrato", "Core"],
-        consejos: "Solo técnica: protrae y deprime escápulas, codos bloqueados, lean moderado.",
-        imagen: "https://i.ytimg.com/vi/GgQ32eR8tIA/maxresdefault.jpg"
-      },
-      {
-        nombre: "Handstand en pared (cara a pared)",
-        sets: "2–3 x 20–30 s — ISO — 60–90 s — RPE 6–7",
-        musculos: ["Hombros", "Serrato", "Core"],
-        consejos: "Línea: costillas abajo, glúteo activo, empuja el suelo. Solo calidad.",
-        imagen: "https://www.nerdfitness.com/wp-content/uploads/2021/08/nerd-fitness-handstand-718x480.gif"
-      },
-      {
-        nombre: "Face pull suave (banda bajo pies, high row a la cara)",
-        sets: "2 x 15 — tempo 2-1-2-1 — 45–60 s — RPE 6–7",
-        musculos: ["Deltoide posterior", "Rotadores", "Trapecio"],
-        consejos: "Pisa la banda y lleva codos altos hacia la cara, rotación externa suave.",
-        imagen: "https://i.ytimg.com/vi/QG9w0WSpCzM/maxresdefault.jpg"
-      }
-    ]
-  },
-
   5: {
-    title: "Viernes – Full Tren Superior (Empuje + Tirón + Core)",
-    objetivo: "Sesión equilibrada: progresión de planche + tirón de espalda alta para estética y postura.",
-    calentamiento: {
-      nombre: "Calentamiento Superior (5–8 min)",
-      descripcion: "Activa escápulas y core.",
-      ejercicios: [
-        "Círculos de muñecas: 60 s",
-        "Scapular push-ups: 1x10",
-        "Pull-aparts ligeros: 1x15",
-        "Hollow body hold: 1x15 s"
-      ],
-      imagen: "https://i.ytimg.com/vi/H0bzt6yUj_s/maxresdefault.jpg"
-    },
-    estiramiento: {
-      nombre: "Estiramiento Completo Superior (3–5 min)",
-      descripcion: "Descarga pectoral, dorsal y hombros.",
-      ejercicios: [
-        "Estiramiento de pecho: 2x20 s",
-        "Estiramiento de dorsal: 2x20 s",
-        "Rotadores externos (cruce de brazo): 2x20 s por lado"
-      ],
-      imagen: "https://hips.hearstapps.com/hmg-prod/images/stretching-exercises-for-lower-back-pain-1582226871.jpg"
-    },
+    title: "Viernes: Full Body (Habilidad + Intensidad)",
+    objetivo: "Integrar habilidades (pino), fuerza de planche, y un estímulo completo de tren superior e inferior.",
     ejercicios: [
       {
-        nombre: "Lean Planche (más palanca)",
-        sets: "4 x 15–30 s — ISO — 90 s — RPE 8–9",
-        musculos: ["Hombros", "Serrato", "Core"],
-        consejos: "Igual que lunes pero con un poco más de lean/pies juntos si la técnica es sólida.",
+        nombre: "Pino (Práctica de Equilibrio)",
+        sets: "5-10 min",
+        consejos: "Práctica libre. Intenta separar los pies de la pared o patadas para subir. Foco en control, no en agotamiento.",
+        imagen: "https://www.gymnasticsmethod.com/wp-content/uploads/2021/04/wall-handstand.jpg"
+      },
+      {
+        nombre: "Planche Leans (Isométrico Largo)",
+        sets: "3 x Máx. tiempo (forma perfecta)",
+        consejos: "Aguanta con la mejor técnica posible. Grábate para revisar la protracción y el hollow. Supera tu marca anterior.",
         imagen: "https://i.ytimg.com/vi/GgQ32eR8tIA/maxresdefault.jpg"
       },
       {
-        nombre: "PPPU estricto",
-        sets: "3–4 x 6–10 — tempo 3-1-1-0 — 90 s — RPE 8",
-        musculos: ["Hombros", "Pectoral", "Tríceps"],
-        consejos: "Pausa 1 s abajo. Fácil: menos lean. Difícil: pies elevados 10–20 cm. Tabla de flexiones si molestan muñecas.",
-        imagen: "https://www.gymnasticsmethod.com/wp-content/uploads/2021/08/pseudo-planche-push-ups.jpg"
+        nombre: "Sentadilla Búlgara",
+        sets: "3 x 8–12 por pierna",
+        consejos: "Apoya el pie trasero en una silla. Baja controlado. Foco en la pierna delantera. Prog: con salto / Reg: zancada estática.",
+        imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/bulgariansplitsquat-1456956767.gif"
       },
       {
-        nombre: "Remo con banda (bajo pies, agarre corto)",
-        sets: "4 x 10–12 — tempo 2-1-2-1 — 60–90 s — RPE 8–9",
-        musculos: ["Dorsales", "Romboides", "Trapecio medio"],
-        consejos: "Pausa 1–2 s en retracción, cuello largo, hombros lejos de orejas.",
+        nombre: "Remo con Banda (o Invertido)",
+        sets: "3 x 10-12",
+        consejos: "Misma técnica que el miércoles. Si tienes mesa robusta, prueba el remo invertido. Alt: Más tensión en la banda.",
         imagen: "https://i.ytimg.com/vi/2JdK31C-gCM/maxresdefault.jpg"
       },
       {
-        nombre: "Face pulls (bajo pies, high row a la cara)",
-        sets: "3 x 12–15 — tempo 2-1-2-1 — 60 s — RPE 7–8",
-        musculos: ["Deltoide posterior", "Rotadores", "Trapecio"],
-        consejos: "Codos altos, pulgares hacia ti, aprieta escápulas sin subir hombros.",
-        imagen: "https://i.ytimg.com/vi/QG9w0WSpCzM/maxresdefault.jpg"
-      },
-      {
-        nombre: "Plancha alta con toques de hombro",
-        sets: "3 x 10–16 toques — tempo 2-0-1-0 — 45–60 s — RPE 7–8",
-        musculos: ["Core", "Estabilidad", "Oblicuos"],
-        consejos: "Rodillas bloqueadas, caderas estables, evita rotar el tronco.",
-        imagen: "https://i.ytimg.com/vi/xbUEZN3T7pE/maxresdefault.jpg"
+        nombre: "Dead Bug",
+        sets: "3 x 10-12 por lado",
+        consejos: "Lento y controlado. La zona lumbar NUNCA se despega del suelo. Aprieta el abdomen.",
+        imagen: "https://i.ytimg.com/vi/I5xbsA71v1A/maxresdefault.jpg"
       }
     ]
   },
-
   6: {
-    title: "Sábado – Piernas Intensas + Core",
-    objetivo: "Segundo estímulo de piernas (énfasis bisagra/glúteos) y core anti-extensión/anti-inclinación.",
-    calentamiento: {
-      nombre: "Activación Piernas y Core (5–8 min)",
-      descripcion: "Activa glúteos/isquios y estabiliza core.",
-      ejercicios: [
-        "Puente de glúteos: 2x15",
-        "Bird-Dog: 2x8 por lado",
-        "Sentadillas con pausa suave: 1x8"
-      ],
-      imagen: "https://i.ytimg.com/vi/zEk6o8x-x-I/maxresdefault.jpg"
-    },
-    estiramiento: {
-      nombre: "Estiramiento Profundo Piernas y Core (3–5 min)",
-      descripcion: "Enfócate en psoas, isquios y lumbar.",
-      ejercicios: [
-        "Estiramiento del psoas: 2x30 s por lado",
-        "Isquios tumbado: 2x30 s por lado",
-        "Torsión lumbar suave: 2x30 s por lado"
-      ],
-      imagen: "https://i.ytimg.com/vi/Sae0o_a-b2E/maxresdefault.jpg"
-    },
+    title: "Sábado: Piernas (Volumen) + Postura",
+    objetivo: "Añadir volumen al tren inferior con enfoque en isométricos e isquios, y reforzar la postura.",
     ejercicios: [
       {
-        nombre: "Peso muerto a una pierna con banda (bajo pie)",
-        sets: "4 x 8–12 por pierna — tempo 3-1-1-1 — 60–90 s — RPE 8",
-        musculos: ["Isquiotibiales", "Glúteos", "Erectores"],
-        consejos: "Bisagra controlada, hombros abajo y atrás, mirada al suelo 1–2 m adelante.",
+        nombre: "Sentadilla Isométrica en Pared",
+        sets: "3 x 45–60s",
+        consejos: "Muslos paralelos al suelo, espalda completamente pegada a la pared. ¡Aguanta la quemazón!",
+        imagen: "https://hips.hearstapps.com/hmg-prod/images/workouts/2016/03/wallsit-1456956790.gif"
+      },
+      {
+        nombre: "Peso Muerto Rumano a una pierna",
+        sets: "3 x 10-12 por pierna",
+        consejos: "Bisagra de cadera, espalda recta. Siente el estiramiento en los isquios. Reg: apóyate para equilibrio.",
         imagen: "https://i.ytimg.com/vi/i24b0-Y-c5M/maxresdefault.jpg"
       },
       {
-        nombre: "Hip Thrust a una pierna (pausa)",
-        sets: "3–4 x 10–15 por pierna — tempo 2-2-2-1 — 60–90 s — RPE 8",
-        musculos: ["Glúteos", "Isquiotibiales"],
-        consejos: "Pausa 2 s arriba, costillas abajo, evita hiperextender zona lumbar.",
-        imagen: "https://i.ytimg.com/vi/w5mF5ceOJwE/maxresdefault.jpg"
+        nombre: "Elevación de Gemelos en Escalón",
+        sets: "4 x 15–25",
+        consejos: "Rango de movimiento completo. Pausa de 2s abajo (estirando) y 1s arriba (apretando).",
+        imagen: "https://i.ytimg.com/vi/3h_34y_9-bo/maxresdefault.jpg"
       },
       {
-        nombre: "Hamstring Walkouts",
-        sets: "3 x 8–12 — tempo 2-1-2-1 — 60 s — RPE 8",
-        musculos: ["Isquiotibiales", "Glúteos", "Core"],
-        consejos: "Desde puente, camina con talones alejando/volviendo lentamente, cadera alta.",
-        imagen: "https://i.ytimg.com/vi/HQ6G6B_hWvY/maxresdefault.jpg"
-      },
-      {
-        nombre: "Gemelos a una pierna",
-        sets: "3 x 12–18 por pierna — tempo 2-2-2-1 — 45–60 s — RPE 8",
-        musculos: ["Sóleo", "Gastrocnemio"],
-        consejos: "Rango completo, control, sin rebote. En suelo o escalón si es seguro.",
-        imagen: "https://i.ytimg.com/vi/K6p-1q2SVOQ/maxresdefault.jpg"
-      },
-      {
-        nombre: "Hollow Rocks + Side Plank (superserie)",
-        sets: "3 rondas: 10–15 hollow rocks + 20–30 s side plank por lado — 60 s — RPE 7–8",
-        musculos: ["Core (anti-extensión)", "Oblicuos (anti-inclinación)"],
-        consejos: "Mantén PPT en hollow; en side plank, hombro lejos de oreja y cadera alta.",
-        imagen: "https://i.ytimg.com/vi/bE0Y_7yN3O8/maxresdefault.jpg"
+        nombre: "Wall Slides",
+        sets: "3 x 10-12",
+        consejos: "Movimiento lento. Enfócate en la sensación de activación en la espalda alta. Calidad sobre cantidad.",
+        imagen: "https://i.ytimg.com/vi/ykbof4L1ZsA/maxresdefault.jpg"
       }
     ]
   },
-
   0: {
     title: "Domingo: Descanso Total",
-    ejercicios: [],
-    descanso: "¡DÍA LIBRE TOTAL! Tu cuerpo se repara y crece. Duerme, come suficiente e hidrátate (2,5–3,5 L). Paseo suave opcional 15–20 min."
+    objetivo: "Nutrición, hidratación y sueño. El músculo se construye aquí. ¡Prepárate para la semana!",
+    ejercicios: []
   }
 };
-    
-    // --- FIN DEL CÓDIGO JS MODIFICADO ---
+    const COMPLETED_DATA_KEY = 'monoslocosFitnessCompleted';
 
-    // Menu móvil (sin cambios)
+    let selectedDate = null;
+    let calendarDate = new Date();
+    let progressChart = null;
+
     const menuToggle = document.getElementById('menu-toggle');
     const nav = document.getElementById('nav');
-    
-    menuToggle.addEventListener('click', function() {
+    menuToggle.addEventListener('click', () => {
       nav.classList.toggle('active');
-      const icon = this.querySelector('i');
-      icon.classList.toggle('fa-bars');
-      icon.classList.toggle('fa-times');
+      menuToggle.querySelector('i').classList.toggle('fa-bars');
+      menuToggle.querySelector('i').classList.toggle('fa-times');
     });
 
-    // Navegación entre secciones (sin cambios)
     document.querySelectorAll('.nav-link, [data-target]').forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
-        const target = this.getAttribute('data-target');
+        const targetId = this.getAttribute('data-target');
         
+        if (targetId === 'ejercicios') {
+          if (selectedDate) renderRoutine(selectedDate);
+          else document.getElementById('rutina').innerHTML = `<div class="rutina-header"><h2>No has seleccionado un día</h2></div><p>Vuelve al <a href="#" data-target="inicio" style="color: var(--primary-light);">inicio</a> y elige un día del calendario.</p>`;
+        } else if (targetId === 'progreso') {
+          renderProgressPage();
+        }
+        
+        showPage(targetId);
+      });
+    });
+
+    function showPage(pageId) {
         nav.classList.remove('active');
-        const icon = menuToggle.querySelector('i');
-        icon.classList.add('fa-bars');
-        icon.classList.remove('fa-times');
+        if (menuToggle.querySelector('.fa-times')) {
+            menuToggle.querySelector('i').classList.add('fa-bars');
+            menuToggle.querySelector('i').classList.remove('fa-times');
+        }
         
-        document.querySelectorAll('.nav-link').forEach(navLink => navLink.classList.remove('active'));
-        const navLink = document.querySelector(`.nav-link[data-target="${target}"]`);
-        if (navLink) navLink.classList.add('active');
-        
-        document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
-        document.getElementById(target).classList.add('active');
+        document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        const activeLink = document.querySelector(`.nav-link[data-target="${pageId}"]`);
+        if (activeLink) activeLink.classList.add('active');
         
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        
-        if (target === 'ejercicios') {
-          initCalendar();
-        }
-      });
-    });
-
-    // Mostrar desayuno al hacer clic en día (sin cambios)
-    document.querySelectorAll('.day-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
-        this.classList.add('active');
-        const dia = this.getAttribute('data-dia');
-        mostrarDesayuno(dia);
-      });
-    });
-
-    function mostrarDesayuno(dia) {
-        const desayuno = desayunos[dia];
-        const container = document.getElementById('desayuno');
-        
-        let diaCompleto = '';
-        switch(dia) {
-            case 'L': diaCompleto = 'Lunes'; break;
-            case 'M': diaCompleto = 'Martes'; break;
-            case 'X': diaCompleto = 'Miércoles'; break;
-            case 'J': diaCompleto = 'Jueves'; break;
-            case 'V': diaCompleto = 'Viernes'; break;
-            case 'S': diaCompleto = 'Sábado'; break;
-        }
-
-        container.innerHTML = `
-            <div class="desayuno-header">
-            <h2>${diaCompleto}: ${desayuno.nombre}</h2>
-            <span class="desayuno-calorias">${desayuno.calorias}</span>
-            </div>
-            <div class="desayuno-content">
-                <div class="desayuno-info">
-                    <div class="desayuno-section">
-                        <h3><i class="fas fa-list"></i> Ingredientes</h3>
-                        <ul>${desayuno.ingredientes.map(i => `<li>${i}</li>`).join('')}</ul>
-                    </div>
-                    <div class="desayuno-section">
-                        <h3><i class="fas fa-list-ol"></i> Preparación</h3>
-                        <ol>${desayuno.preparacion.map(p => `<li>${p}</li>`).join('')}</ol>
-                    </div>
-                    <div class="nutrition-facts">
-                        <h3><i class="fas fa-fire"></i> Información Nutricional</h3>
-                        <div class="nutrition-grid">
-                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.kcal}</span><span class="nutrition-label">kcal</span></div>
-                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.proteinas}g</span><span class="nutrition-label">Proteínas</span></div>
-                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.carbohidratos}g</span><span class="nutrition-label">Carbohidratos</span></div>
-                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.grasas}g</span><span class="nutrition-label">Grasas</span></div>
-                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.fibra}g</span><span class="nutrition-label">Fibra</span></div>
-                            <div class="nutrition-item"><span class="nutrition-value">${desayuno.nutricion.azucares}g</span><span class="nutrition-label">Azúcares</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>`;
-        container.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    // --- FUNCIONALIDAD DE COMPLETAR RUTINAS Y ESTADÍSTICAS ---
+    const getCompletedDates = () => JSON.parse(localStorage.getItem(COMPLETED_DATA_KEY) || '[]');
+    const saveCompletedDates = (dates) => localStorage.setItem(COMPLETED_DATA_KEY, JSON.stringify(dates));
+    const formatDate = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 
-    // Clave para guardar datos en el almacenamiento local del navegador
-    const COMPLETED_DATA_KEY = 'monoslocosFitnessCompleted';
-    let statsChart = null; // Variable para mantener la instancia del gráfico
-
-    /**
-     * Obtiene las fechas completadas desde localStorage.
-     * @returns {string[]} Un array de fechas en formato 'YYYY-MM-DD'.
-     */
-    function getCompletedDates() {
-      const data = localStorage.getItem(COMPLETED_DATA_KEY);
-      return data ? JSON.parse(data) : [];
-    }
-
-    /**
-     * Guarda las fechas completadas en localStorage.
-     * @param {string[]} dates - El array de fechas a guardar.
-     */
-    function saveCompletedDates(dates) {
-      localStorage.setItem(COMPLETED_DATA_KEY, JSON.stringify(dates));
-    }
-
-    /**
-     * Formatea un objeto Date a 'YYYY-MM-DD' para consistencia.
-     * @param {Date} date - La fecha a formatear.
-     * @returns {string} La fecha formateada.
-     */
-    function formatDate(date) {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
-
-    /**
-     * Marca o desmarca una rutina como completada.
-     * @param {string} dateString - La fecha en formato 'YYYY-MM-DD'.
-     */
     function toggleCompletion(dateString) {
         let completedDates = getCompletedDates();
         const dateIndex = completedDates.indexOf(dateString);
-
-        if (dateIndex > -1) {
-            // Si ya está completada, la quitamos (deshacer)
-            completedDates.splice(dateIndex, 1);
-        } else {
-            // Si no, la añadimos
-            completedDates.push(dateString);
-        }
+        if (dateIndex > -1) completedDates.splice(dateIndex, 1);
+        else completedDates.push(dateString);
         saveCompletedDates(completedDates);
-
-        // Volvemos a renderizar el calendario y las estadísticas para reflejar el cambio
-        initCalendar();
         
-        // También volvemos a mostrar la rutina para actualizar el botón
-        const [year, month, day] = dateString.split('-').map(Number);
-        const date = new Date(year, month - 1, day);
-        mostrarRutina(day, month - 1, year, date.getDay());
+        renderHomeCalendar(); 
+        renderRoutine(new Date(dateString.replace(/-/g, '/')));
     }
 
-    /**
-     * Renderiza el panel de estadísticas del mes.
-     * @param {number} month - El mes actual (0-11).
-     * @param {number} year - El año actual.
-     */
-    function renderStats(month, year) {
-      const completedDates = getCompletedDates();
-      const diasMes = new Date(year, month + 1, 0).getDate();
-      let totalTrainingDays = 0;
-      let completedInMonth = 0;
-
-      for (let day = 1; day <= diasMes; day++) {
-        const date = new Date(year, month, day);
-        const dayOfWeek = date.getDay();
-        // Contamos días de entrenamiento (Lunes a Sábado)
-        if (dayOfWeek >= 1 && dayOfWeek <= 6) {
-          totalTrainingDays++;
-          if (completedDates.includes(formatDate(date))) {
-            completedInMonth++;
-          }
-        }
-      }
-
-      const percentage = totalTrainingDays > 0 ? Math.round((completedInMonth / totalTrainingDays) * 100) : 0;
-      
-      const statsContainerWrapper = document.getElementById('stats-container-wrapper');
-      statsContainerWrapper.innerHTML = `
-        <div class="stats-container">
-          <div class="stats-chart">
-            <canvas id="completionChart"></canvas>
-            <div class="stats-percentage">${percentage}%</div>
-          </div>
-          <div class="stats-details">
-            <h3>Estadísticas del Mes</h3>
-            <div class="stats-grid">
-              <div class="stat-item">
-                <span class="stat-item-value">${completedInMonth}</span>
-                <span class="stat-item-label">Rutinas completadas</span>
-              </div>
-              <div class="stat-item">
-                <span class="stat-item-value">${totalTrainingDays}</span>
-                <span class="stat-item-label">Días de entrenamiento</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-
-      // Renderizar el gráfico
-      const ctx = document.getElementById('completionChart').getContext('2d');
-      if (statsChart) {
-          statsChart.destroy(); // Destruir gráfico anterior para evitar conflictos
-      }
-      statsChart = new Chart(ctx, {
-          type: 'doughnut',
-          data: {
-              datasets: [{
-                  data: [completedInMonth, totalTrainingDays - completedInMonth],
-                  backgroundColor: ['#10b981', 'rgba(17, 24, 39, 0.6)'],
-                  borderColor: ['#10b981', 'rgba(148, 163, 184, 0.1)'],
-                  borderWidth: 2,
-                  cutout: '80%',
-              }]
-          },
-          options: {
-              responsive: true,
-              plugins: {
-                  legend: { display: false },
-                  tooltip: { enabled: false }
-              }
-          }
-      });
-    }
-
-    // Funciones para el calendario de ejercicios (MODIFICADO)
-    function initCalendar() {
-      const calendar = document.getElementById('calendar');
-      const rutinaDiv = document.getElementById('rutina');
-      const currentMonthYear = document.getElementById('current-month-year');
-      const prevMonthBtn = document.getElementById('prev-month');
-      const nextMonthBtn = document.getElementById('next-month');
-      
-      const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
-      
-      let currentDate = new Date();
-      let currentMonth = currentDate.getMonth();
-      let currentYear = currentDate.getFullYear();
-      
-      // Variable para estado del calendario y evitar múltiples listeners
-      if (initCalendar.initialized) {
-          updateCalendar(currentMonth, currentYear);
-          return;
-      }
-      initCalendar.initialized = true;
-
-      function updateCalendar(mes, año) {
-        currentMonthYear.textContent = `${meses[mes]} ${año}`;
-        generarCalendario(mes, año);
-        renderStats(mes, año);
-      }
-      
-      function generarCalendario(mes, año) {
-        calendar.innerHTML = '';
-        const completedDates = getCompletedDates();
-        
-        const primerDia = new Date(año, mes, 1).getDay();
-        const diasMes = new Date(año, mes + 1, 0).getDate();
-        const offset = primerDia === 0 ? 6 : primerDia - 1;
-        
-        for (let i = 0; i < offset; i++) {
-          const div = document.createElement('div');
-          div.classList.add('day', 'empty');
-          calendar.appendChild(div);
-        }
-        
-        for (let dia = 1; dia <= diasMes; dia++) {
-          const fecha = new Date(año, mes, dia);
-          const diaSemana = fecha.getDay();
-          const dateString = formatDate(fecha);
-          const div = document.createElement('div');
-          div.classList.add('day');
-          
-          if (diaSemana === 0) div.classList.add('weekend');
-          
-          const hoy = new Date();
-          if (dia === hoy.getDate() && mes === hoy.getMonth() && año === hoy.getFullYear()) {
-            div.classList.add('today');
-          }
-          
-          // Marcar días completados desde localStorage
-          if (completedDates.includes(dateString)) {
-            div.classList.add('completed');
-          }
-          
-          div.textContent = dia;
-          div.addEventListener('click', () => mostrarRutina(dia, mes, año, diaSemana));
-          calendar.appendChild(div);
-        }
-      }
-      
-      function mostrarRutina(dia, mes, año, diaSemana) {
-        const rutina = rutinas[diaSemana];
-        const fecha = new Date(año, mes, dia);
-        const dateString = formatDate(fecha);
+    function renderRoutine(dateObject) {
+        const routineContainer = document.getElementById('rutina');
+        const dayOfWeek = dateObject.getDay();
+        const routine = rutinas[dayOfWeek];
+        const dateString = formatDate(dateObject);
         const isCompleted = getCompletedDates().includes(dateString);
 
-        let html = `
-          <div class="rutina-header">
-            <h2>${rutina.title}</h2>
-            <span class="rutina-date">${dia}/${mes + 1}/${año}</span>
-          </div>
-        `;
+        let html = `<div class="rutina-header"><h2>${routine.title}</h2><span class="rutina-date">${dateObject.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}</span></div>`;
+        if (routine.objetivo) html += `<div class="objetivo-rutina"><strong>Objetivo:</strong> ${routine.objetivo}</div>`;
         
-        if (rutina.objetivo) html += `<div class="objetivo-rutina"><strong>Objetivo:</strong> ${rutina.objetivo}</div>`;
-        
-        if (rutina.calentamiento) html += `<div class="ejercicio calentamiento"><div class="ejercicio-header" onclick="toggleDetalle(this)"><div class="ejercicio-title">${rutina.calentamiento.nombre}</div><div class="ejercicio-sets">Calentamiento</div></div><div class="ejercicio-detalle"><div class="ejercicio-tips"><h4>Descripción</h4><p>${rutina.calentamiento.descripcion}</p><h4 style="margin-top: 1rem;">Ejercicios</h4><ul>${rutina.calentamiento.ejercicios.map(e => `<li>${e}</li>`).join('')}</ul></div><div class="ejercicio-media"><img class="ejercicio-img" src="${rutina.calentamiento.imagen}" alt="${rutina.calentamiento.nombre}"></div></div></div>`;
-        
-        if (rutina.ejercicios.length > 0) {
-          rutina.ejercicios.forEach(ejercicio => {
-            html += `<div class="ejercicio"><div class="ejercicio-header" onclick="toggleDetalle(this)"><div class="ejercicio-title">${ejercicio.nombre}</div><div class="ejercicio-sets">${ejercicio.sets}</div></div><div class="ejercicio-detalle"><div class="ejercicio-info"><div class="ejercicio-muscles"><h4>Músculos trabajados</h4><ul>${ejercicio.musculos.map(m => `<li>${m}</li>`).join('')}</ul></div><div class="ejercicio-tips"><h4>Consejos</h4><p>${ejercicio.consejos}</p></div></div><div class="ejercicio-media"><img class="ejercicio-img" src="${ejercicio.imagen}" alt="${ejercicio.nombre}"></div></div></div>`;
-          });
+        if (routine.ejercicios.length > 0) {
+            routine.ejercicios.forEach(ex => { html += `<div class="ejercicio"><div class="ejercicio-header" onclick="toggleDetail(this)"><span class="ejercicio-title">${ex.nombre}</span><span class="ejercicio-sets">${ex.sets}</span></div><div class="ejercicio-detalle"><p>${ex.consejos || ''}</p><img src="${ex.imagen}" alt="${ex.nombre}" class="ejercicio-img"></div></div>`; });
+            html += `<button class="btn-completar ${isCompleted ? 'completed' : ''}" onclick="toggleCompletion('${dateString}')">${isCompleted ? '<i class="fas fa-check-circle"></i> ¡Completada!' : '<i class="fas fa-check"></i> Marcar como Completada'}</button>`;
         } else {
-          html += `<div class="ejercicio"><p style="text-align: center; font-size: 1.125rem; line-height: 1.8; color: var(--gray-light);"><i class="fas fa-bed" style="font-size: 2rem; margin-bottom: 1rem; display: block; color: var(--accent);"></i>${rutina.descanso}</p></div>`;
+            html += `<p style="text-align:center; padding: 2rem 0;">Día de descanso. ¡Aprovecha para recuperar!</p>`;
         }
-        
-        if (rutina.estiramiento) html += `<div class="ejercicio estiramiento"><div class="ejercicio-header" onclick="toggleDetalle(this)"><div class="ejercicio-title">${rutina.estiramiento.nombre}</div><div class="ejercicio-sets">Estiramiento</div></div><div class="ejercicio-detalle"><div class="ejercicio-tips"><h4>Descripción</h4><p>${rutina.estiramiento.descripcion}</p><h4 style="margin-top: 1rem;">Ejercicios</h4><ul>${rutina.estiramiento.ejercicios.map(e => `<li>${e}</li>`).join('')}</ul></div><div class="ejercicio-media"><img class="ejercicio-img" src="${rutina.estiramiento.imagen}" alt="${rutina.estiramiento.nombre}"></div></div></div>`;
-        
-        // Añadir botón para completar, solo si es un día de entrenamiento
-        if (diaSemana >= 1 && diaSemana <= 6) {
-            html += `
-              <button class="btn-completar ${isCompleted ? 'completed' : ''}" onclick="toggleCompletion('${dateString}')">
-                ${isCompleted 
-                  ? '<i class="fas fa-check-circle"></i> ¡Completada! (Deshacer)' 
-                  : '<i class="fas fa-check"></i> Marcar como Completada'}
-              </button>
-            `;
-        }
+        routineContainer.innerHTML = html;
+    }
 
-        rutinaDiv.innerHTML = html;
-        rutinaDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    function renderHomeCalendar() {
+      const calendarEl = document.getElementById('home-calendar');
+      const monthTitleEl = document.getElementById('home-current-month-year');
+      const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+      
+      const date = calendarDate;
+      date.setDate(1);
+      const firstDayIndex = date.getDay() === 0 ? 6 : date.getDay() - 1;
+      const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+      
+      monthTitleEl.textContent = `${meses[date.getMonth()]} ${date.getFullYear()}`;
+      calendarEl.innerHTML = '';
+      const completedDates = getCompletedDates();
+
+      for (let i = 0; i < firstDayIndex; i++) { calendarEl.innerHTML += `<div class="day empty"></div>`; }
+
+      for (let i = 1; i <= lastDay; i++) {
+        const dayEl = document.createElement('div');
+        dayEl.classList.add('day');
+        dayEl.textContent = i;
+        const currentDate = new Date(date.getFullYear(), date.getMonth(), i);
+        const today = new Date();
+
+        if (i === today.getDate() && date.getMonth() === today.getMonth() && date.getFullYear() === today.getFullYear()) dayEl.classList.add('today');
+        if (currentDate.getDay() === 0) dayEl.classList.add('weekend');
+        if (completedDates.includes(formatDate(currentDate))) dayEl.classList.add('completed');
+        if (selectedDate && formatDate(currentDate) === formatDate(selectedDate)) dayEl.classList.add('selected');
+
+        dayEl.addEventListener('click', () => {
+          selectedDate = currentDate;
+          renderHomeCalendar(); 
+          document.getElementById('opciones-dia').style.display = 'grid';
+          document.getElementById('opciones-dia').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+        calendarEl.appendChild(dayEl);
       }
-      
-      prevMonthBtn.addEventListener('click', () => {
-        currentMonth--;
-        if (currentMonth < 0) { currentMonth = 11; currentYear--; }
-        updateCalendar(currentMonth, currentYear);
-      });
-      
-      nextMonthBtn.addEventListener('click', () => {
-        currentMonth++;
-        if (currentMonth > 11) { currentMonth = 0; currentYear++; }
-        updateCalendar(currentMonth, currentYear);
-      });
-      
-      updateCalendar(currentMonth, currentYear);
+    }
+    
+    function renderBreakfast(dayKey) {
+        const breakfast = desayunos[dayKey];
+        const container = document.getElementById('desayuno');
+        container.innerHTML = `<div class="rutina-header"><h2>${breakfast.nombre}</h2><span class="rutina-date">${breakfast.calorias}</span></div><h4>Ingredientes</h4><ul>${breakfast.ingredientes.map(i => `<li>${i}</li>`).join('')}</ul><h4 style="margin-top: 1.5rem;">Preparación</h4><p>${breakfast.preparacion.join(' ')}</p>`;
     }
 
-    // Funciones globales (sin cambios)
-    function toggleDetalle(elemento) {
-      const detalle = elemento.parentElement.querySelector('.ejercicio-detalle');
-      detalle.classList.toggle('active');
+    function renderProgressPage() {
+        const completedDates = getCompletedDates().sort();
+        if (completedDates.length === 0) {
+            document.getElementById('stats-grid').innerHTML = "<p>Aún no has completado ningún entrenamiento. ¡Vamos a por el primero!</p>";
+            document.getElementById('progressChart').style.display = 'none';
+            return;
+        }
+        document.getElementById('progressChart').style.display = 'block';
+
+        let currentStreak = 0;
+        if (completedDates.length > 0) {
+            let today = new Date();
+            let yesterday = new Date();
+            yesterday.setDate(today.getDate() - 1);
+            if (completedDates.includes(formatDate(today)) || completedDates.includes(formatDate(yesterday))) {
+                currentStreak = 1;
+                let dateToCheck = new Date(completedDates[completedDates.length-1].replace(/-/g, '/'));
+                for (let i = completedDates.length - 2; i >= 0; i--) {
+                    let prevDate = new Date(completedDates[i].replace(/-/g, '/'));
+                    if ((dateToCheck - prevDate) / 86400000 === 1) { currentStreak++; dateToCheck = prevDate; } else break;
+                }
+            }
+        }
+        
+        const totalWorkouts = completedDates.length;
+        const workoutsPerWeek = {};
+        completedDates.forEach(dateStr => {
+            const date = new Date(dateStr.replace(/-/g, '/'));
+            const year = date.getFullYear();
+            const startOfYear = new Date(year, 0, 1);
+            const weekNumber = Math.ceil(((date - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+            const weekId = `${year}-W${weekNumber}`;
+            workoutsPerWeek[weekId] = (workoutsPerWeek[weekId] || 0) + 1;
+        });
+        const bestWeek = Math.max(0, ...Object.values(workoutsPerWeek));
+
+        document.getElementById('stats-grid').innerHTML = `
+            <div class="stat-card"><div class="value">${currentStreak}</div><div class="label">Racha actual (días)</div></div>
+            <div class="stat-card"><div class="value">${totalWorkouts}</div><div class="label">Entrenos totales</div></div>
+            <div class="stat-card"><div class="value">${bestWeek}</div><div class="label">Mejor semana</div></div>`;
+
+        const ctx = document.getElementById('progressChart').getContext('2d');
+        const weeklyData = { labels: [], data: [] };
+        for (let i = 3; i >= 0; i--) {
+            const date = new Date();
+            date.setDate(date.getDate() - i * 7);
+            const year = date.getFullYear();
+            const startOfYear = new Date(year, 0, 1);
+            const weekNumber = Math.ceil(((date - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+            const weekId = `${year}-W${weekNumber}`;
+            weeklyData.labels.push(`Semana ${weekNumber}`);
+            weeklyData.data.push(workoutsPerWeek[weekId] || 0);
+        }
+
+        if(progressChart) progressChart.destroy();
+        progressChart = new Chart(ctx, {
+            type: 'bar',
+            data: { labels: weeklyData.labels, datasets: [{ label: 'Entrenamientos por semana', data: weeklyData.data, backgroundColor: 'rgba(16, 185, 129, 0.6)', borderColor: 'rgba(16, 185, 129, 1)', borderWidth: 2, borderRadius: 8 }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, max: 7, grid: { color: 'rgba(148, 163, 184, 0.1)' }, ticks: { color: '#94a3b8', stepSize: 1 } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } } }
+        });
     }
 
-    window.toggleDetalle = toggleDetalle;
-    // NUEVO: Hacemos toggleCompletion accesible globalmente desde el HTML
+    function toggleDetail(element) { element.nextElementSibling.classList.toggle('active'); }
+    window.toggleDetail = toggleDetail;
     window.toggleCompletion = toggleCompletion;
 
     document.addEventListener('DOMContentLoaded', () => {
-      mostrarDesayuno('L');
-    });
+      renderHomeCalendar();
+      renderBreakfast('L');
 
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('home-prev-month').addEventListener('click', () => {
+        calendarDate.setMonth(calendarDate.getMonth() - 1);
+        document.getElementById('opciones-dia').style.display = 'none';
+        renderHomeCalendar();
+      });
+      document.getElementById('home-next-month').addEventListener('click', () => {
+        calendarDate.setMonth(calendarDate.getMonth() + 1);
+        document.getElementById('opciones-dia').style.display = 'none';
+        renderHomeCalendar();
+      });
+
+      document.querySelectorAll('.day-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          renderBreakfast(this.getAttribute('data-dia'));
+        });
       });
     });
+</script>
 
-    const images = document.querySelectorAll('img');
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('fade-in');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0, rootMargin: "0px 0px 50px 0px" });
-    images.forEach(img => imageObserver.observe(img));
-
-  </script>
 </body>
 </html>
-```
-
