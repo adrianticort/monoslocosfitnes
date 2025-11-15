@@ -83,14 +83,13 @@
     nav a:hover::after, nav a.active::after { width: 100%; }
     nav a.active { color: var(--primary-light); }
     
-    .menu-toggle { display: none; background: none; border: none; color: var(--light); font-size: 1.5rem; cursor: pointer; }
+    .menu-toggle { display: none; background: none; border: none; color: var(--light); font-size: 1.5rem; cursor: pointer; z-index: 1001; }
     
     .hero { text-align: center; padding: 5rem 0; }
-    .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 900; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--primary-light), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 900; margin-bottom: 1.5rem; background: linear-gradient(135deg, var(--primary-light), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     
     .objetivo { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--gradient-card); padding: 1rem 2rem; border-radius: var(--radius-xl); font-size: 1.125rem; margin: 1.5rem 0; border: 1px solid var(--border); backdrop-filter: blur(10px); box-shadow: var(--shadow-md); }
     
-    /* AJUSTADO: Se mantiene la estructura de grid pero se ajusta el minmax para que las tarjetas no sean demasiado anchas en ciertas vistas */
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin: 4rem 0; }
     .card { background: var(--gradient-card); border-radius: var(--radius-lg); text-decoration: none; color: var(--light); transition: var(--transition); border: 1px solid var(--border); backdrop-filter: blur(20px); position: relative; overflow: hidden; }
     .card:hover { transform: translateY(-8px); box-shadow: var(--shadow-xl); }
@@ -99,10 +98,10 @@
     .card.nutricion::before { background: var(--gradient-secondary); }
     .card.progreso::before { background: var(--gradient-success); }
     
-    /* AJUSTADO: Tarjetas de rutina y nutrición en formato horizontal */
+    /* Diseño horizontal para tarjetas en escritorio */
     .card.ejercicios, .card.nutricion { padding: 1.5rem 2rem; display: flex; align-items: center; gap: 1.5rem; }
     .card.ejercicios .card-icon, .card.nutricion .card-icon { margin-bottom: 0; flex-shrink: 0; }
-    .card.ejercicios .card-content, .card.nutricion .card-content { display: flex; flex-direction: column; }
+    .card.ejercicios .card-content, .card.nutricion .card-content { display: flex; flex-direction: column; text-align: left; }
     
     .card-icon { width: 50px; height: 50px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
     .card.ejercicios .card-icon { background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1)); color: var(--primary-light); }
@@ -112,94 +111,157 @@
     .card h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.25rem; }
     .card p { color: var(--gray-light); line-height: 1.5; font-size: 0.9rem; }
 
-    /* AJUSTADO: Tarjeta de progreso ancha y más delgada */
+    /* Tarjeta de progreso ancha en escritorio */
     .card.progreso {
-      grid-column: 1 / -1; /* Ocupa todo el ancho de la parrilla */
+      grid-column: 1 / -1; 
       padding: 1.5rem 2rem;
       display: flex;
       align-items: center;
       gap: 1.5rem;
     }
-    .card.progreso .card-icon { margin-bottom: 0; }
+    .card.progreso .card-content { text-align: left; }
     
     .motivacion { background: var(--gradient-card); border-radius: var(--radius-xl); padding: 3rem; margin-top: 4rem; border: 1px solid var(--border); text-align: center; }
     .motivacion h2 { font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent; }
     
     .page-header { text-align: center; margin-bottom: 3rem; }
-    .page-header h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary-light), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .page-header h1 { font-size: clamp(2rem, 7vw, 2.5rem); font-weight: 800; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary-light), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .page-header p { color: var(--gray-light); font-size: 1.125rem; }
     
-    .calendar-container { background: var(--gradient-card); border-radius: var(--radius-xl); padding: 2.5rem; margin-bottom: 3rem; border: 1px solid var(--border); backdrop-filter: blur(20px); }
+    .calendar-container { background: var(--gradient-card); border-radius: var(--radius-xl); padding: 1.5rem; margin-bottom: 3rem; border: 1px solid var(--border); backdrop-filter: blur(20px); }
     .calendar-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding: 1rem; background: rgba(10, 14, 39, 0.3); border-radius: var(--radius-md); }
-    .calendar-title { font-size: 1.5rem; font-weight: 700; color: var(--primary-light); }
+    .calendar-title { font-size: 1.25rem; font-weight: 700; color: var(--primary-light); }
     .calendar-nav-btn { background: rgba(99, 102, 241, 0.1); color: var(--primary-light); border: 1px solid rgba(99, 102, 241, 0.2); width: 44px; height: 44px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: var(--transition); }
     .calendar-nav-btn:hover { background: rgba(99, 102, 241, 0.2); transform: scale(1.1); }
-    .calendar-header { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.75rem; margin-bottom: 1.5rem; text-align: center; font-weight: 700; color: var(--gray); text-transform: uppercase; font-size: 0.875rem; }
-    .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.75rem; }
+    .calendar-header { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; margin-bottom: 1rem; text-align: center; font-weight: 700; color: var(--gray); text-transform: uppercase; font-size: 0.75rem; }
+    .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; }
     
-    .day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: rgba(17, 24, 39, 0.4); border-radius: var(--radius-md); cursor: pointer; transition: var(--transition); position: relative; border: 2px solid transparent; font-weight: 500; }
+    .day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: rgba(17, 24, 39, 0.4); border-radius: var(--radius-md); cursor: pointer; transition: var(--transition); position: relative; border: 2px solid transparent; font-weight: 500; font-size: 0.9rem; }
     .day:hover { background: rgba(99, 102, 241, 0.1); transform: translateY(-4px); }
     .day.selected { border-color: var(--primary-light); background: rgba(99, 102, 241, 0.2); transform: scale(1.05); }
     .day.empty { background: transparent; cursor: default; border-color: transparent; }
     .day.empty:hover { transform: none; }
     .day.today { background: var(--primary); color: white; font-weight: 700; animation: pulse 2s infinite; }
     .day.weekend { color: var(--accent); }
-    .day.completed::after { content: '✓'; position: absolute; bottom: 4px; right: 4px; width: 18px; height: 18px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: white; }
+    .day.completed::after { content: '✓'; position: absolute; bottom: 3px; right: 3px; width: 16px; height: 16px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: white; }
     
-    .rutina-container, .progreso-container, .desayuno-container { background: var(--gradient-card); border-radius: var(--radius-xl); padding: 2.5rem; border: 1px solid var(--border); backdrop-filter: blur(20px); }
-    .rutina-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
-    .rutina-header h2 { font-size: 1.875rem; color: var(--primary-light); }
-    .rutina-date { font-size: 1rem; color: var(--gray); }
-    .ejercicio { background: rgba(17, 24, 39, 0.6); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 1.5rem; border-left: 4px solid var(--primary); }
-    .ejercicio-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-    .ejercicio-title { font-size: 1.25rem; font-weight: 600; }
-    .ejercicio-sets { color: var(--gray-light); }
+    .rutina-container, .progreso-container, .desayuno-container { background: var(--gradient-card); border-radius: var(--radius-xl); padding: 1.5rem; border: 1px solid var(--border); backdrop-filter: blur(20px); }
+    .rutina-header { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0.5rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    .rutina-header h2 { font-size: 1.5rem; color: var(--primary-light); }
+    .rutina-date { font-size: 0.9rem; color: var(--gray); }
+    .ejercicio { background: rgba(17, 24, 39, 0.6); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; border-left: 4px solid var(--primary); }
+    .ejercicio-header { display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 1rem; }
+    .ejercicio-title { font-size: 1.1rem; font-weight: 600; }
+    .ejercicio-sets { color: var(--gray-light); font-size: 0.9rem; flex-shrink: 0; }
     .ejercicio-detalle { display: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
     .ejercicio-detalle.active { display: block; }
     .ejercicio-img { width: 100%; border-radius: var(--radius-md); margin-top: 1rem; }
-    .objetivo-rutina { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem; border-left: 4px solid var(--success); }
+    .objetivo-rutina { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 1.5rem; border-radius: var(--radius-md); margin-bottom: 2rem; border-left: 4px solid var(--success); font-size: 0.95rem; }
     
-    .btn-completar { width: 100%; padding: 1.25rem; margin-top: 2rem; font-size: 1.125rem; font-weight: 700; border-radius: var(--radius-lg); border: none; cursor: pointer; transition: var(--transition); color: white; }
+    .btn-completar { width: 100%; padding: 1rem; margin-top: 2rem; font-size: 1rem; font-weight: 700; border-radius: var(--radius-lg); border: none; cursor: pointer; transition: var(--transition); color: white; }
     .btn-completar:not(.completed) { background: var(--primary); }
     .btn-completar:not(.completed):hover { background: var(--primary-dark); }
     .btn-completar.completed { background: var(--success); }
     
-    .days-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-    .day-btn { background: var(--gradient-card); border-radius: var(--radius-lg); padding: 2rem 1.5rem; text-align: center; cursor: pointer; transition: var(--transition); border: 1px solid var(--border); }
+    .days-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
+    .day-btn { background: var(--gradient-card); border-radius: var(--radius-lg); padding: 1.5rem 1rem; text-align: center; cursor: pointer; transition: var(--transition); border: 1px solid var(--border); }
     .day-btn:hover, .day-btn.active { transform: translateY(-5px); border-color: var(--secondary); }
-    .day-btn i { font-size: 2rem; margin-bottom: 1rem; color: var(--secondary-light); }
-    .day-btn h3 { font-size: 1.125rem; }
+    .day-btn i { font-size: 1.75rem; margin-bottom: 0.75rem; color: var(--secondary-light); }
+    .day-btn h3 { font-size: 1rem; }
     
     .btn-volver { display: inline-flex; align-items: center; gap: 0.75rem; background: var(--primary); color: white; border: none; padding: 1rem 2rem; border-radius: var(--radius-md); font-weight: 600; text-decoration: none; margin-top: 3rem; transition: var(--transition); }
     .btn-volver:hover { background: var(--primary-dark); }
     
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-    .stat-card { background: rgba(17, 24, 39, 0.6); padding: 2rem; border-radius: var(--radius-lg); text-align: center; border-bottom: 4px solid var(--accent); }
-    .stat-card .value { font-size: 3rem; font-weight: 800; color: var(--accent); line-height: 1.2; }
-    .stat-card .label { font-size: 1rem; color: var(--gray-light); }
-    .chart-container { background: rgba(17, 24, 39, 0.6); padding: 2rem; border-radius: var(--radius-lg); }
+    .stats-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
+    .stat-card { background: rgba(17, 24, 39, 0.6); padding: 1.5rem; border-radius: var(--radius-lg); text-align: center; border-bottom: 4px solid var(--accent); }
+    .stat-card .value { font-size: 2.5rem; font-weight: 800; color: var(--accent); line-height: 1.2; }
+    .stat-card .label { font-size: 0.9rem; color: var(--gray-light); }
+    .chart-container { background: rgba(17, 24, 39, 0.6); padding: 1rem; border-radius: var(--radius-lg); }
 
     .page-section { display: none; animation: fadeIn 0.5s ease-out; }
     .page-section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
+    /* ============================================== */
+    /* AJUSTES PARA VERSIÓN MÓVIL (PANTALLAS PEQUEÑAS) */
+    /* ============================================== */
     @media (max-width: 768px) {
-      .container { padding: 1.5rem; }
-      nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(10, 14, 39, 0.95); backdrop-filter: blur(20px); padding: 1rem; }
+      .container { padding: 1rem; }
+      header { padding: 1rem; }
+      
+      .logo { font-size: 1.5rem; }
+
+      /* AJUSTE CLAVE: Menú de navegación */
+      nav { 
+        display: none; 
+        position: absolute; 
+        top: 100%; /* Se posiciona justo debajo del header */
+        left: 0; 
+        right: 0; 
+        background: rgba(10, 14, 39, 0.95); 
+        backdrop-filter: blur(20px); 
+        padding: 1rem; 
+        border-top: 1px solid var(--border);
+      }
       nav.active { display: block; }
-      nav ul { flex-direction: column; }
-      nav a { display: block; padding: 1rem; background: rgba(17, 24, 39, 0.5); border-radius: var(--radius-sm); }
-      .menu-toggle { display: block; }
-      .cards { grid-template-columns: 1fr; }
-      /* AJUSTADO: Forzar el diseño vertical en móvil para las tarjetas */
-      .card.ejercicios, .card.nutricion, .card.progreso { flex-direction: column; text-align: center; }
-      .card.ejercicios .card-icon, .card.nutricion .card-icon, .card.progreso .card-icon { margin: 0 auto 1.5rem auto; }
+      nav ul { flex-direction: column; gap: 0.5rem; }
+      nav a { 
+        display: block; 
+        padding: 1rem; 
+        background: rgba(17, 24, 39, 0.5); 
+        border-radius: var(--radius-sm); 
+      }
+      nav a:hover, nav a.active { background: rgba(99, 102, 241, 0.1); }
+      nav a::after { display: none; } /* Ocultamos la línea de abajo en móvil */
+
+      .menu-toggle { display: block; } /* Mostramos el botón de hamburguesa */
+
+      .hero { padding: 3rem 0; }
+      .objetivo { padding: 0.75rem 1.5rem; font-size: 1rem; }
+
+      /* AJUSTE CLAVE: Tarjetas principales */
+      .cards { 
+        grid-template-columns: 1fr; /* Forzamos una sola columna */
+        gap: 1.5rem;
+        margin: 2.5rem 0;
+      }
+      
+      /* AJUSTE CLAVE: Contenido de las tarjetas */
+      .card.ejercicios, .card.nutricion, .card.progreso {
+        flex-direction: column;   /* Apila el ícono y el texto verticalmente */
+        text-align: center;       /* Centra el texto */
+        padding: 2rem 1.5rem;
+      }
+      .card.ejercicios .card-icon, 
+      .card.nutricion .card-icon, 
+      .card.progreso .card-icon {
+        margin: 0 auto 1.5rem auto; /* Centra el ícono y le da espacio abajo */
+      }
+      .card.ejercicios .card-content, 
+      .card.nutricion .card-content,
+      .card.progreso .card-content {
+          text-align: center; /* Aseguramos que el contenido esté centrado */
+      }
+
+      /* AJUSTE: Tarjeta de progreso en móvil */
+      .card.progreso {
+          grid-column: auto; /* Restablecemos el span para que ocupe una sola columna */
+      }
+      
+      .motivacion { padding: 2rem; }
+      .motivacion h2 { font-size: 1.5rem; }
+
+      /* AJUSTE: Rejilla de estadísticas */
+      .stats-grid {
+          grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* Hacemos que quepan 2 por fila si hay espacio */
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- El resto del HTML (body) permanece igual, ya que los cambios son solo de CSS -->
   <header>
     <div class="logo">
       <i class="fas fa-dumbbell"></i>
@@ -299,7 +361,8 @@
     </section>
   </div>
 
-<script>
+  <script>
+    // El Javascript no necesita cambios para la responsividad, así que se mantiene igual.
     const desayunos = { L:{nombre:"Pancakes estilo stracciatella",calorias:"600-700 kcal",ingredientes:["1 huevo","25g de azúcar","1 pizca de sal","1/2 cdta de vainilla","35 ml de leche","1/2 yogur griego","100g de harina","4g de levadura"],preparacion:["Mezclar todo hasta obtener una masa homogénea.","Cocinar en sartén antiadherente."]},
                         M:{nombre:"Batido energético",calorias:"900-1000 kcal",ingredientes:["500 ml de leche","1 plátano","100g de avena","30g de nueces","2 cdas de crema de cacahuete","1 cda de ColaCao","1 yogur griego"],preparacion:["Licuar todos los ingredientes."]},
                         X:{nombre:"Tostadas con aguacate y huevo",calorias:"600-700 kcal",ingredientes:["2 rebanadas de pan integral","1 aguacate","2 huevos","1 tomate","Aceite, sal y pimienta"],preparacion:["Tostar el pan.","Untar aguacate, añadir tomate y el huevo frito o cocido."]},
@@ -476,7 +539,7 @@
         nombre: "Elevación de Gemelos en Escalón",
         sets: "4 x 15–25",
         consejos: "Rango de movimiento completo. Pausa de 2s abajo (estirando) y 1s arriba (apretando).",
-        imagen: "https://i.ytimg.com/vi/3h_34y_9-bo/maxresdefault.jpg"
+        imagen: "https://i.ytimg.com/vi/3h_34y-bo/maxresdefault.jpg"
       },
       {
         nombre: "Wall Slides",
