@@ -19,7 +19,7 @@ INSTRUCCIÓN:
 
 ¡Prueba la aplicación ahora mismo! La web está desplegada usando GitHub Pages y puedes acceder a ella aquí:
 
-**[https://TU_USUARIO.github.io/NOMBRE_DE_TU_REPOSITORIO/](https://TU_USUARIO.github.io/NOMBRE_DE_TU_REPOSITORIO/)**
+**[https://TU_USUARIO.github.io/monoslocosfitnes/](https://TU_USUARIO.github.io/monoslocosfitnes)**
 
 <!--
 INSTRUCCIÓN:
